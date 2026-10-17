@@ -759,7 +759,7 @@ const RAW = JSON.parse(document.getElementById('dashboard-data').textContent);
 const BLDC_RAW = JSON.parse(document.getElementById('bldc-data').textContent);
 const ASM_REASON_CAT = RAW.meta.assemblyReasonCategory || {};
 const UNITS = {
-  PSC:{icon:'', depts:['winding','shell','assembly']},
+  PSC:{icon:'', depts:['winding',/*'shell'*/,'assembly']},
   BLDC:{icon:'', depts:['winding','molding','assembly']}
 };
 const DEPT_LABELS = {assembly:'Assembly', winding:'Winding', molding:'Moulding', shell:'Shell'};
