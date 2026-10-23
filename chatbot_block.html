@@ -109,6 +109,14 @@
 #pbQuick button:hover{background:var(--pb-blue);border-color:var(--pb-blue);color:#fff}
 #pbTA{display:none;margin:0 12px 6px;border:1px solid var(--border-hi,#c9d2df);border-radius:12px;background:var(--panel,#fff);box-shadow:0 8px 22px rgba(11,37,69,.15);overflow:hidden;flex-shrink:0}
 #pbTA button{display:block;width:100%;text-align:left;border:0;background:transparent;color:var(--text,#16233b);padding:8px 12px;font:12px var(--font-body,Inter,sans-serif);cursor:pointer}#pbTA button:hover,#pbTA button.on{background:var(--blue-dim,#e8f0fe)}
+#pbMic{border:0;background:transparent;color:var(--text-dim,#5b6b83);width:34px;height:34px;border-radius:50%;display:none;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;position:relative}
+#pbMic svg{width:18px;height:18px}#pbMic:hover{background:var(--blue-dim,#e8f0fe);color:var(--pb-blue)}
+#pbMic.on{background:#e2483c;color:#fff;animation:pbRec 1.1s infinite}
+@keyframes pbRec{0%{box-shadow:0 0 0 0 rgba(226,72,60,.5)}100%{box-shadow:0 0 0 12px rgba(226,72,60,0)}}
+#pbSpk.on{background:rgba(255,255,255,.35)}
+#pbVoiceMsg{display:none;margin:0 14px 6px;font-size:11.5px;color:var(--pb-blue);font-weight:600;flex-shrink:0}
+.pbch{width:100%;height:auto;margin:8px 0 2px;color:var(--text,#16233b);background:var(--panel-2,#f6f8fb);border:1px solid var(--border,#e2e7ee);border-radius:12px;padding:6px 8px;box-sizing:border-box}
+.pbfb{display:flex;gap:2px;margin-left:auto}.pbfb button{border:0;background:transparent;cursor:pointer;font-size:13px;opacity:.5;padding:4px 6px;border-radius:8px;filter:grayscale(1)}.pbfb button:hover,.pbfb button.on{opacity:1;filter:none;background:var(--blue-dim,#e8f0fe)}
 @media print{#pbFab,#pbPanel{display:none!important}}
 </style>
 
@@ -121,14 +129,16 @@
   <div id="pbHead">
     <div class="pbAv"><svg viewBox="0 0 40 40"><rect x="5" y="6" width="30" height="27" rx="11" fill="#fff"/><rect x="9.5" y="10.5" width="21" height="17.5" rx="7.5" fill="#0b2545"/><ellipse cx="16" cy="18" rx="2.3" ry="2.8" fill="#5ee1ff"/><ellipse cx="24" cy="18" rx="2.3" ry="2.8" fill="#5ee1ff"/><path d="M16 23Q20 26.5 24 23" fill="none" stroke="#5ee1ff" stroke-width="1.7" stroke-linecap="round"/><circle cx="20" cy="3" r="2.1" fill="#5ee1ff"/></svg></div>
     <div class="t"><b>Avishkaar</b><span id="pbSub">Online · reads your dashboard</span></div>
+    <button id="pbSpk" type="button" title="Read answers aloud (off)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
     <button id="pbWide" type="button" title="Expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
     <button id="pbClear" type="button" title="New chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg></button>
     <button id="pbClose" type="button" title="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
   <div id="pbMsgs"></div>
   <div id="pbTA"></div>
+  <div id="pbVoiceMsg"></div>
   <div id="pbQuick"></div>
-  <div id="pbForm"><input id="pbIn" type="text" placeholder="Ask Avishkaar anything about the dashboard…" maxlength="300" autocomplete="off"><button id="pbSend" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
+  <div id="pbForm"><input id="pbIn" type="text" placeholder="Ask Avishkaar anything about the dashboard…" maxlength="300" autocomplete="off"><button id="pbMic" type="button" title="Speak your question" aria-label="Voice input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button id="pbSend" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
   <div class="pbFoot">Avishkaar answers only from this dashboard’s data</div>
 </div>
 
@@ -136,9 +146,23 @@
 (function(){
 'use strict';
 /* Read the data straight from the page's JSON blocks (independent of the dashboard script's variables) */
-function readJSON(id){try{const el=document.getElementById(id);return el?JSON.parse(el.textContent):null;}catch(e){console.warn('PICL chatbot: cannot parse #'+id,e);return null;}}
+function readJSON(id){
+  try{const el=document.getElementById(id);if(el&&el.textContent.trim())return JSON.parse(el.textContent);}catch(e){console.warn('PICL chatbot: cannot parse #'+id,e);}
+  /* fallback: look for any JSON data block that has the dashboard's shape */
+  try{const want=id==='bldc-data'?/"molding"|"bldc"/i:/"assembly"/;const all=[...document.querySelectorAll('script[type="application/json"]')];
+    for(const el of all){ if(el.id==='dashboard-data'||el.id==='bldc-data'){ if(el.id!==id) continue; }
+      const t=el.textContent; if(t.length>1000&&want.test(t.slice(0,3000))&&(id==='bldc-data')===(el.id==='bldc-data')){try{return JSON.parse(t);}catch(e){}} } }catch(e){}
+  return null;
+}
 const _psc=readJSON('dashboard-data'), _bldc=readJSON('bldc-data');
-if(!_psc&&!_bldc){ console.warn('PICL chatbot: no #dashboard-data / #bldc-data found'); return; }
+if(!_psc&&!_bldc){
+  /* data not there (yet): hide the launcher and try once more when the page has fully loaded */
+  const _f=document.getElementById('pbFab'); if(_f) _f.style.display='none';
+  if(!window.__piclRetry){ window.__piclRetry=1; const me=document.getElementById('picl-bot-js');
+    const again=()=>{ if(document.getElementById('dashboard-data')||document.getElementById('bldc-data')){ const n=document.createElement('script'); n.textContent=me.textContent; me.parentNode.replaceChild(n,me); const f=document.getElementById('pbFab'); if(f) f.style.display=''; } else console.info('PICL chatbot: this page has no dashboard data blocks (open index.html, not chatbot_block.html).'); };
+    if(document.readyState==='complete') setTimeout(again,300); else window.addEventListener('load',()=>setTimeout(again,300)); }
+  return;
+}
 const DATASETS={};
 if(_psc) DATASETS.PSC={assembly:_psc.assembly||[],winding:_psc.winding||[],shell:_psc.shell||[],assemblyRejection:_psc.assemblyRejection||[],windingRejection:_psc.windingRejection||[],shellRejection:_psc.shellRejection||[]};
 if(_bldc) DATASETS.BLDC=_bldc;
@@ -541,6 +565,18 @@ function tableHTML(head,rows,tot){
   if(tot) h+='<tr class="tot"><td>'+esc(tot.label)+'</td>'+tot.cells.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>';
   return h+'</tbody></table></div>';
 }
+function lineChart(pts,fmt){ /* pts:[{l,v}] */
+  const W=330,H=110,pl=8,pr=8,pt=14,pb=22; const vs=pts.map(x=>x.v); let mn=Math.min.apply(null,vs),mx=Math.max.apply(null,vs); if(mn===mx){mn-=1;mx+=1;} const lo=Math.min(0,mn);
+  const X=i=>pl+(W-pl-pr)*(pts.length===1?.5:i/(pts.length-1)), Y=v=>pt+(H-pt-pb)*(1-(v-lo)/(mx-lo));
+  const d=pts.map((q,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(q.v).toFixed(1)).join(''), area=d+'L'+X(pts.length-1).toFixed(1)+' '+(H-pb)+'L'+X(0).toFixed(1)+' '+(H-pb)+'Z';
+  const hi=vs.indexOf(mx), lw=vs.indexOf(Math.min.apply(null,vs));
+  const dot=(i,c)=>'<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(vs[i]).toFixed(1)+'" r="3.5" fill="'+c+'"/><text x="'+Math.min(Math.max(X(i),22),W-22).toFixed(1)+'" y="'+(Y(vs[i])-6).toFixed(1)+'" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor">'+esc(fmt(vs[i]))+'</text>';
+  return '<svg class="pbch" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="trend chart"><path d="'+area+'" fill="rgba(47,111,237,.14)"/><path d="'+d+'" fill="none" stroke="#2f6fed" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'+dot(hi,'#1fa15a')+(lw!==hi?dot(lw,'#e2483c'):'')+
+   '<text x="'+pl+'" y="'+(H-6)+'" font-size="9" fill="currentColor" opacity=".6">'+esc(pts[0].l)+'</text><text x="'+(W-pr)+'" y="'+(H-6)+'" text-anchor="end" font-size="9" fill="currentColor" opacity=".6">'+esc(pts[pts.length-1].l)+'</text></svg>';
+}
+function barChart(items,fmt){ const mx=Math.max.apply(null,items.map(x=>Math.abs(x.v)).concat([1e-9])); const rh=20,W=330,lw=92,H=items.length*rh+4;
+  return '<svg class="pbch" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="bar chart">'+items.map((x,i)=>{const w=Math.max(2,(W-lw-58)*Math.abs(x.v)/mx),y=i*rh+2;const lab=String(x.l).length>15?String(x.l).slice(0,14)+'…':x.l;
+   return '<text x="0" y="'+(y+13)+'" font-size="10" fill="currentColor">'+esc(lab)+'</text><rect x="'+lw+'" y="'+(y+3)+'" width="'+w.toFixed(1)+'" height="12" rx="4" fill="'+(i===0?'#2f6fed':'rgba(47,111,237,.45)')+'"/><text x="'+(lw+w+5).toFixed(1)+'" y="'+(y+13)+'" font-size="10" font-weight="700" fill="currentColor">'+esc(fmt(x.v))+'</text>';}).join('')+'</svg>'; }
 function tsv(head,rows,tot){const L=[head.join('\t')];rows.forEach(r=>L.push([r.label].concat(r.cells.map(c=>(c&&typeof c==='object')?c.t:c)).join('\t')));if(tot)L.push([tot.label].concat(tot.cells).join('\t'));return L.join('\n');}
 let CURCOL=null,CURAGG='sum';
 function kpiCards(m,keys){
@@ -738,6 +774,7 @@ function answer(p){
       }
       html+='<p>'+lead+'</p>';
       if(!chrono&&metric!=='summary') html+=kpiCards(mAll,KSET[metric].slice(0,3)); else if(chrono||metric==='summary') html+=kpiCards(mAll,KSET[metric].slice(0,metric==='summary'?8:3));
+      try{ const pv=x=>spec.get(x.m); if(chrono&&list.length>=3&&shown.every(x=>isFinite(pv(x)))) html+=lineChart(list.map(x=>({l:groupLabel(x.k,g),v:pv(x)})),spec.fmt); else if(!chrono&&shown.length>=2&&shown.length<=12&&shown.every(x=>isFinite(pv(x)))) html+=barChart(shown.map(x=>({l:groupLabel(x.k,g),v:pv(x)})),spec.fmt); }catch(e){}
       html+=tableHTML(head,trs,list.length>1?tot:null); tsvOut=tsv(head,trs,tot);
       if(list.length>shown.length) notes.push('Showing '+shown.length+' of '+list.length+' '+gname+'s.');
       chips=chrono?['By line','Rejection trend','Which day had the highest loss?']:['Last 7 days trend','By model','Top loss reasons'];
@@ -912,9 +949,21 @@ function addBot(res){
   const d=document.createElement('div');d.className='pbm b';d.innerHTML=res.html;
   const row=chipRow((res.chips||[]).slice(0,4));
   if(res.tsv){const c=document.createElement('button');c.type='button';c.className='pbcopy';c.textContent='⧉ Copy table';c.onclick=()=>{try{navigator.clipboard.writeText(res.tsv);c.textContent='✓ Copied';setTimeout(()=>c.textContent='⧉ Copy table',1500);}catch(e){}};row.appendChild(c);}
+  if(!res.noTools){
+    const c2=document.createElement('button');c2.type='button';c2.className='pbcopy';c2.textContent='⧉ Copy answer';c2.onclick=()=>{try{navigator.clipboard.writeText(d.firstElementChild?[...d.children].filter(x=>!x.classList.contains('pbc')&&x.tagName!=='DETAILS').map(x=>x.innerText).join('\n'):d.innerText);c2.textContent='✓ Copied';setTimeout(()=>c2.textContent='⧉ Copy answer',1500);}catch(e){}};row.appendChild(c2);
+    const fb=document.createElement('span');fb.className='pbfb';[['👍','up'],['👎','down']].forEach(([e,v])=>{const b=document.createElement('button');b.type='button';b.textContent=e;b.title=v==='up'?'Correct answer':'Wrong / not helpful';b.onclick=()=>{fb.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');saveFeedback(res.q||'',v,d.innerText.slice(0,200));};fb.appendChild(b);});row.appendChild(fb);}
   if(row.childNodes.length) d.appendChild(row);
   msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+  try{window.__pbSpeak&&window.__pbSpeak(d);}catch(e){}
 }
+const CHAT_KEY='pbChat1';
+function saveChat(q,res){try{const L=JSON.parse(localStorage.getItem(CHAT_KEY)||'[]');L.push({q:q,html:res.html,chips:(res.chips||[]).slice(0,4),tsv:res.tsv||'',d:GLOBAL_LATEST});localStorage.setItem(CHAT_KEY,JSON.stringify(L.slice(-10)));}catch(e){}}
+function restoreChat(){try{const L=JSON.parse(localStorage.getItem(CHAT_KEY)||'[]');if(!L.length)return;const h=msgs.querySelector('.pbHome');if(h)h.remove();
+  const nt=document.createElement('div');nt.className='note';nt.style.cssText='text-align:center;font-size:11px;color:var(--text-faint,#8a97ab)';nt.textContent='Earlier chat restored · answers below were calculated on the data of that time';msgs.appendChild(nt);
+  L.forEach(x=>{addUser(x.q);addBot({html:x.html,chips:x.chips,tsv:x.tsv,q:x.q});});}catch(e){}}
+function saveFeedback(q,v,a){try{const L=JSON.parse(localStorage.getItem('pbFeedback')||'[]');L.push({t:new Date().toISOString(),q:q,v:v,a:a});localStorage.setItem('pbFeedback',JSON.stringify(L.slice(-200)));}catch(e){}}
+function feedbackMsg(){let L=[];try{L=JSON.parse(localStorage.getItem('pbFeedback')||'[]');}catch(e){}const bad=L.filter(x=>x.v==='down');
+  return {noTools:1,html:'<p><b>Feedback saved in this browser</b>: '+L.filter(x=>x.v==='up').length+' 👍 · '+bad.length+' 👎</p>'+(bad.length?'<p>Questions marked wrong:</p><ul>'+bad.slice(-15).map(x=>'<li>'+esc(x.q)+'</li>').join('')+'</ul><p class="note">Send this list to your developer to improve Avishkaar.</p>':'<p class="note">No 👎 yet.</p>'),chips:[],tsv:bad.map(x=>x.q).join('\n')};}
 function ask(text){
   text=(text||'').trim(); if(!text) return;
   history.unshift(text);hIdx=-1;
@@ -923,9 +972,9 @@ function ask(text){
   if(typeof aiOn==='function'&&aiOn()){runAI(text,typing);return;}
   setTimeout(()=>{
     let res;
-    try{ res=answer(applyFollowUp(parse(text))); }
+    try{ res=/^\s*(show |my )?feedback\s*$/i.test(text)?feedbackMsg():answer(applyFollowUp(parse(text))); res.q=text; }
     catch(e){ console.error(e); res={html:'<p>Sorry — something went wrong while reading the data for that question. Try rephrasing it, e.g. “PSC assembly production on 15 Oct”.</p>',chips:SUGGEST}; }
-    typing.remove();addBot(res);
+    typing.remove();addBot(res);saveChat(text,res);
   },120);
 }
 function welcome(){
@@ -945,6 +994,35 @@ function showTA(){const v=inp.value.trim().toLowerCase();ta.innerHTML='';if(v.le
   m.forEach(x=>{const b=document.createElement('button');b.type='button';b.textContent=x;b.onmousedown=e=>{e.preventDefault();inp.value=x;ta.style.display='none';sendNow();};ta.appendChild(b);});ta.style.display='block';}
 inp.addEventListener('input',showTA);inp.addEventListener('blur',()=>setTimeout(()=>ta.style.display='none',150));
 buildQuick();
+
+/* ---------- voice: speak a question (mic) and optionally hear the answer (speaker) ---------- */
+(function(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition, mic=$b('pbMic'), vm=$b('pbVoiceMsg'), spk=$b('pbSpk');
+  const note=t=>{vm.textContent=t||'';vm.style.display=t?'block':'none';};
+  if(SR){ mic.style.display='flex'; let rec=null,listening=false;
+    mic.addEventListener('click',()=>{
+      if(listening){try{rec.stop();}catch(e){}return;}
+      try{ rec=new SR(); rec.lang='en-IN'; rec.interimResults=true; rec.continuous=false; rec.maxAlternatives=1; }catch(e){note('Voice input is not available here.');return;}
+      let finalT='';
+      rec.onstart=()=>{listening=true;mic.classList.add('on');note('Listening… speak your question');try{speechSynthesis.cancel();}catch(e){}};
+      rec.onresult=ev=>{let t='';for(let i=0;i<ev.results.length;i++){t+=ev.results[i][0].transcript;if(ev.results[i].isFinal)finalT=t;}inp.value=t;};
+      rec.onerror=ev=>{const m={'not-allowed':'Microphone access is blocked — allow it in the browser address bar.','service-not-allowed':'Microphone access is blocked — allow it in the browser address bar.','no-speech':'I didn’t hear anything. Tap the mic and try again.','audio-capture':'No microphone found.','network':'Voice input needs an internet connection.'}[ev.error]||'Voice input stopped ('+ev.error+').';note(m);};
+      rec.onend=()=>{listening=false;mic.classList.remove('on');const t=(finalT||inp.value).trim();if(t){note('');inp.value=t;sendNow();}else if(vm.textContent.indexOf('Listening')===0)note('');};
+      try{rec.start();}catch(e){note('Voice input could not start.');}
+    });
+  }
+  /* read answers aloud */
+  let speakOn=false; try{speakOn=localStorage.getItem('pbSpeak')==='1';}catch(e){}
+  const TTS='speechSynthesis' in window;
+  if(!TTS){spk.style.display='none';}
+  function sync(){spk.classList.toggle('on',speakOn);spk.title='Read answers aloud ('+(speakOn?'on':'off')+')';}
+  sync();
+  spk.addEventListener('click',()=>{speakOn=!speakOn;try{localStorage.setItem('pbSpeak',speakOn?'1':'0');}catch(e){}sync();if(!speakOn){try{speechSynthesis.cancel();}catch(e){}}else say('Voice answers on.');});
+  function say(t){ if(!TTS||!t) return; try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-IN';u.rate=1;const v=speechSynthesis.getVoices().find(x=>/en-IN/i.test(x.lang))||speechSynthesis.getVoices().find(x=>/^en/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u);}catch(e){} }
+  window.__pbSpeak=function(el){ if(!speakOn) return; const ps=[...el.querySelectorAll(':scope > p')].slice(0,2).map(p=>p.textContent.trim()).filter(Boolean);
+    say((ps.join(' ')||el.textContent).replace(/\s+/g,' ').slice(0,420)); };
+  $b('pbClose').addEventListener('click',()=>{try{speechSynthesis.cancel();}catch(e){}});
+})();
 function setSub(){}
 function openBot(){panel.classList.add('open');fab.style.display='none';fab.classList.remove('peek');setTimeout(()=>inp.focus(),50);}
 function closeBot(){panel.classList.remove('open');fab.style.display='block';}
@@ -955,7 +1033,7 @@ $b('pbClose').onclick=closeBot;
 function peek(){ if(panel.classList.contains('open')) return; fab.classList.remove('peek'); void fab.offsetWidth; fab.classList.add('peek'); setTimeout(()=>fab.classList.remove('peek'),7400); }
 setTimeout(peek,1200); setInterval(peek,5*60*1000);
 $b('pbWide').onclick=()=>panel.classList.toggle('wide');
-$b('pbClear').onclick=()=>{CTX=null;aiHist=[];welcome();};
+$b('pbClear').onclick=()=>{CTX=null;aiHist=[];try{localStorage.removeItem(CHAT_KEY);}catch(e){}welcome();};
 function sendNow(){const v=inp.value;if(!v.trim())return;inp.value='';ask(v);}
 $b('pbSend').addEventListener('click',e=>{e.preventDefault();sendNow();});
 inp.addEventListener('keydown',e=>{
@@ -1085,7 +1163,7 @@ async function runAI(text,typing){
 }
 
 function refreshMode(){$b('pbSub').textContent='Online · data to '+fmtD(GLOBAL_LATEST);}
-setSub();refreshMode();welcome();
+setSub();refreshMode();welcome();restoreChat();
 window.piclBotRun=function(t){const r=answer(applyFollowUp(parse(t)));const d=document.createElement('div');d.innerHTML=r.html;return {html:r.html,text:d.textContent,tsv:r.tsv||''};};
 window.piclBotAsk=ask; // handy for testing: piclBotAsk('PSC summary')
 })();
