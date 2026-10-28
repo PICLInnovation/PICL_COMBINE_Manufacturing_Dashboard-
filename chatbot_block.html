@@ -91,7 +91,7 @@
 .pbdot:nth-child(2){animation-delay:.15s}.pbdot:nth-child(3){animation-delay:.3s}
 @keyframes pbb{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
 @media(max-width:640px){#pbPanel,#pbPanel.wide{right:0;bottom:0;width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0}#pbFab{right:14px;bottom:12px}}
-@media(prefers-reduced-motion:reduce){#pbBoxSvg,.pbEye,.pbAnt,#pbFab.peek .pbWv,.pbm,#pbPanel.open{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.pbRing,.pbSpark,#pbFab.peek .pbBot,#pbFab.peek .pbBot .pbWv,.pbm,#pbPanel.open{animation:none!important}}
 
 .pbm .how{font-size:11.5px;margin-top:10px;border-top:1px dashed var(--border,#e2e7ee);padding-top:6px}.pbm .how p{margin:6px 0;color:var(--text-dim,#5b6b83)}
 .pbt td.dg{color:var(--green,#1fa15a);font-weight:700}.pbt td.db{color:var(--red,#e2483c);font-weight:700}
@@ -116,19 +116,97 @@
 #pbSpk.on{background:rgba(255,255,255,.35)}
 #pbVoiceMsg{display:none;margin:0 14px 6px;font-size:11.5px;color:var(--pb-blue);font-weight:600;flex-shrink:0}
 .pbch{width:100%;height:auto;margin:8px 0 2px;color:var(--text,#16233b);background:var(--panel-2,#f6f8fb);border:1px solid var(--border,#e2e7ee);border-radius:12px;padding:6px 8px;box-sizing:border-box}
-.pbfb{display:flex;gap:2px;margin-left:auto}.pbfb button{border:0;background:transparent;cursor:pointer;font-size:13px;opacity:.5;padding:4px 6px;border-radius:8px;filter:grayscale(1)}.pbfb button:hover,.pbfb button.on{opacity:1;filter:none;background:var(--blue-dim,#e8f0fe)}
+.pbfb{display:flex;gap:2px;margin-left:auto}.pbfb button{border:0;background:transparent;cursor:pointer;color:var(--text-faint,#8a97ab);padding:4px 6px;border-radius:8px;display:flex}.pbfb button svg{width:14px;height:14px}.pbfb button:hover{color:var(--pb-blue);background:var(--blue-dim,#e8f0fe)}.pbfb button.on{color:#fff;background:var(--pb-blue)}
+/* ---- v13 polish ---- */
+#pbPanel{width:440px;height:700px;border-radius:26px;box-shadow:0 30px 80px rgba(8,22,48,.42),0 0 0 1px rgba(255,255,255,.06)}
+#pbHead{padding:18px 16px 16px 18px;background:radial-gradient(120% 160% at 0% 0%,#2f6fed 0%,rgba(47,111,237,0) 55%),radial-gradient(90% 140% at 100% 100%,#7c4dff 0%,rgba(124,77,255,0) 60%),linear-gradient(135deg,#0b2545,#123a7a)}
+.pbAv{position:relative;width:46px;height:46px;border-radius:16px;background:rgba(255,255,255,.16)}
+.pbAv:after{content:"";position:absolute;inset:-4px;border-radius:19px;border:2px solid rgba(94,225,255,.45);animation:pbRing 2.6s ease-out infinite}
+@keyframes pbRing{0%{transform:scale(.92);opacity:.9}100%{transform:scale(1.18);opacity:0}}
+#pbHead .t b{font-size:17px;letter-spacing:.02em}
+#pbHead .t span:before{background:#5ee1ff;box-shadow:0 0 0 3px rgba(94,225,255,.25)}
+#pbMsgs{background:radial-gradient(60% 40% at 100% 0%,rgba(47,111,237,.07),transparent),radial-gradient(50% 40% at 0% 100%,rgba(124,77,255,.06),transparent),var(--bg,#eef1f5);gap:14px}
+.pbrow{display:flex;gap:8px;align-items:flex-start}.pbrow.u{justify-content:flex-end}
+.pbmini{width:28px;height:28px;border-radius:10px;background:linear-gradient(135deg,#0b2545,#2f6fed);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;box-shadow:0 3px 8px rgba(47,111,237,.3)}
+.pbmini svg{width:19px;height:19px}
+.pbts{font-size:9.5px;color:var(--text-faint,#8a97ab);margin:3px 6px 0;display:block}.pbrow.u .pbts{text-align:right}
+.pbm.b{border-radius:4px 18px 18px 18px;width:auto}.pbm.u{border-radius:18px 18px 4px 18px}
+.pbSnap{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:2px 0 12px}
+.pbSnap div{background:var(--panel,#fff);border:1px solid var(--border,#e2e7ee);border-radius:14px;padding:9px 6px;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(11,37,69,.06)}
+.pbSnap div:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--border-hi,#c9d2df)}
+.pbSnap .good:before{background:var(--green,#1fa15a)}.pbSnap .warn:before{background:var(--amber,#f5921f)}.pbSnap .bad:before{background:var(--red,#e2483c)}
+.pbSnap b{display:block;font-size:18px;letter-spacing:-.02em}.pbSnap small{display:block;font-size:9.5px;color:var(--text-dim,#5b6b83);text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin-top:2px}
+.pbHome .gr{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--pb-blue);margin:0 0 2px}
+.pbHome h3{font-size:21px}
+.pbCards button{border-radius:16px;padding:12px}.pbCards .ic{display:flex;width:30px;height:30px;border-radius:9px;align-items:center;justify-content:center;background:var(--blue-dim,#e8f0fe);color:var(--pb-blue);margin-bottom:8px}.pbCards .ic svg{width:17px;height:17px}
+#pbForm{border-radius:18px;padding:6px 6px 6px 16px}#pbSend{border-radius:13px}
+@media(max-width:640px){#pbPanel,#pbPanel.wide{border-radius:0}}
+/* ---- v16: logo launcher ---- */
+#pbFab{width:58px;height:58px;filter:none}
+#pbFab:hover{transform:translateY(-3px) scale(1.04)}
+.pbBadge{position:relative;width:58px;height:58px;border-radius:19px;background:linear-gradient(150deg,#0a1f3d 0%,#123a7a 55%,#1f58c9 100%);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.28);box-shadow:0 10px 24px -4px rgba(10,31,61,.55),inset 0 1px 0 rgba(255,255,255,.25)}
+.pbBadge svg{width:38px;height:38px;position:relative;z-index:1;overflow:visible}
+.pbRing{position:absolute;inset:-5px;border-radius:23px;border:2px solid rgba(94,225,255,.5);animation:pbRing 2.8s ease-out infinite;pointer-events:none}
+.pbSpark{transform-box:fill-box;transform-origin:50% 50%;animation:pbTw 3.2s ease-in-out infinite}
+@keyframes pbTw{0%,100%{transform:scale(1) rotate(0);opacity:1}50%{transform:scale(1.35) rotate(45deg);opacity:.7}}
+#pbFab.peek .pbBadge{animation:pbHop 1.2s ease-in-out 3}
+@keyframes pbHop{0%,100%{transform:none}30%{transform:translateY(-9px) rotate(-6deg)}60%{transform:translateY(0) rotate(4deg)}}
+/* robot pops out of the badge and says hii */
+.pbBot{position:absolute;right:-2px;bottom:50px;width:66px;height:59px;z-index:0;pointer-events:none;opacity:0;transform:translateY(34px);transform-origin:50% 100%}
+.pbBot svg{width:100%;height:100%;overflow:visible;display:block;filter:drop-shadow(0 4px 6px rgba(10,31,61,.35))}
+.pbBadge{z-index:1}
+#pbFab.peek .pbBot{animation:pbBotUp 7.2s ease-in-out both}
+@keyframes pbBotUp{0%,8%{opacity:0;transform:translateY(34px)}9%{opacity:1}22%{transform:translateY(-4px)}27%,78%{opacity:1;transform:translateY(0)}90%{opacity:1;transform:translateY(34px)}91%,100%{opacity:0;transform:translateY(34px)}}
+#pbFab.peek .pbBot .pbWv{animation:pbWave2 .45s ease-in-out 1.7s 9 alternate both}
+@keyframes pbWave2{from{transform:rotate(-7deg)}to{transform:rotate(11deg)}}
+.pbBot .pbWv{transform-box:view-box;transform-origin:52px 46px}
+@keyframes pbWave{from{transform:rotate(-18deg)}to{transform:rotate(22deg)}}
+.pbWv{transform-box:view-box;transform-origin:45px 38px}
+.pbEye{transform-box:fill-box;transform-origin:50% 50%;animation:pbBlink 4.4s infinite}
+#pbFab.peek .pbBadge{animation:none}
+/* optional real photo: window.NAVACHAR_AVATAR (data URI) puts a person's photo in the popup instead of the illustration */
+.pbBot.photo{width:62px;height:62px;right:-2px;bottom:52px}
+.pbBot.photo img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 8px 20px rgba(10,31,61,.45);display:block;background:#fff}
+.pbBot.photo:after{content:"Hii";position:absolute;right:-6px;bottom:-4px;background:#2f6fed;color:#fff;font:800 10px/1 var(--font-body,Inter,sans-serif);padding:4px 6px;border-radius:9px;border:2px solid #fff;animation:pbWave2 .45s ease-in-out infinite alternate;transform-origin:20% 80%}
+#pbFab.peek .pbBot.photo{animation:pbBotUp 7.2s ease-in-out both}
+.pbHome .big.photo{background:#fff;padding:0;overflow:hidden}.pbHome .big.photo img{width:100%;height:100%;object-fit:cover;border-radius:20px}
+/* ---- v14 premium refinement ---- */
+#pbPanel{font-feature-settings:"tnum" 1,"cv11" 1;-webkit-font-smoothing:antialiased;border:1px solid rgba(120,140,175,.28);box-shadow:0 2px 4px rgba(8,22,48,.08),0 24px 60px -12px rgba(8,22,48,.45)}
+#pbHead{padding:16px 14px 15px 16px;background:linear-gradient(160deg,#0a1f3d 0%,#0f2f5e 60%,#14397a 100%);border-bottom:0}
+#pbHead:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:22px 22px;mask-image:linear-gradient(90deg,transparent 20%,#000);-webkit-mask-image:linear-gradient(90deg,transparent 20%,#000);pointer-events:none}
+#pbHead:after{height:2px;background:linear-gradient(90deg,transparent,#5ee1ff 30%,#2f6fed 70%,transparent)}
+#pbHead>*{position:relative;z-index:1}
+#pbHead .t b{font-size:16px;font-weight:700;letter-spacing:.015em}
+#pbHead .t span{font-size:11px;opacity:.78;margin-top:2px;letter-spacing:.01em}
+#pbHead button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:9px;width:28px;height:28px}
+.pbAv{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1)}
+#pbMsgs{padding:18px 14px;background:var(--bg,#f1f4f8)}
+.pbm.b{border:1px solid var(--border,#e2e7ee);box-shadow:0 1px 2px rgba(11,37,69,.05);padding:13px 14px;font-size:13px;line-height:1.5}
+.pbm.u{background:linear-gradient(135deg,#123a7a,#1f58c9);box-shadow:0 2px 8px rgba(18,58,122,.28);font-size:13px}
+.pbm .scope{background:transparent;border:1px solid var(--border-hi,#c9d2df);color:var(--text-dim,#5b6b83);border-radius:6px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px}
+.pbk{gap:8px}.pbk div{background:var(--panel,#fff);border-radius:10px;padding:9px 11px 9px 13px}
+.pbk small{font-size:9.5px;letter-spacing:.07em}.pbk b{font-size:18px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pbt{border-radius:10px}.pbt th{font-size:9.5px;letter-spacing:.07em;background:var(--panel-2,#f6f8fb)}
+.pbt td{font-variant-numeric:tabular-nums}.pbt td.two{white-space:pre-line;line-height:1.25}.pbt th,.pbt td{padding-left:8px;padding-right:8px}.pbt tbody tr:hover td{background:rgba(47,111,237,.06)}
+.pbc button{border-radius:8px;font-weight:600;font-size:11px;padding:6px 10px}
+.pbHome .big{border-radius:18px;box-shadow:0 8px 20px -4px rgba(18,58,122,.45);background:linear-gradient(160deg,#0a1f3d,#1f58c9)}
+.pbHome h3{font-weight:700;letter-spacing:-.02em}
+.pbSnap div{border-radius:12px}.pbSnap b{font-variant-numeric:tabular-nums}
+.pbCards button{border-radius:12px;font-weight:600;box-shadow:0 1px 2px rgba(11,37,69,.05)}
+#pbQuick button{border-radius:8px;font-weight:600;letter-spacing:.01em}
+#pbForm{border-radius:14px;background:var(--panel,#fff);box-shadow:0 1px 3px rgba(11,37,69,.08)}
+#pbSend{background:linear-gradient(135deg,#123a7a,#1f58c9);border-radius:10px;width:36px;height:36px}
+.pbFoot{letter-spacing:.02em}
+.pbmini{border-radius:9px;background:linear-gradient(160deg,#0a1f3d,#1f58c9)}
+#pbPanel ::-webkit-scrollbar{width:8px;height:8px}#pbPanel ::-webkit-scrollbar-thumb{background:rgba(120,140,175,.35);border-radius:8px}
 @media print{#pbFab,#pbPanel{display:none!important}}
 </style>
 
-<div id="pbFab" role="button" tabindex="0" aria-label="Open Avishkaar" title="Ask Avishkaar"><div class="pbBub">Hii, I’m Avishkaar!</div><svg id="pbBoxSvg" viewBox="0 0 64 76" aria-hidden="true"><defs><linearGradient id="pbBx" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f86f5"/><stop offset="1" stop-color="#1b46a3"/></linearGradient><linearGradient id="pbBk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b2545"/><stop offset="1" stop-color="#14397a"/></linearGradient></defs>
-<rect x="8" y="38" width="48" height="10" rx="2" fill="url(#pbBk)"/>
-<g id="pbRob"><line x1="32" y1="12" x2="32" y2="8" stroke="#9fd8ff" stroke-width="2" stroke-linecap="round"/><circle class="pbAnt" cx="32" cy="6.5" r="2.6" fill="#5ee1ff"/><rect x="29" y="33" width="6" height="9" rx="2" fill="#cfe0ff"/><rect x="19" y="12" width="26" height="23" rx="9" fill="#fff" stroke="#2f6fed" stroke-width="2"/><rect x="22.5" y="15.5" width="19" height="14.5" rx="6.5" fill="#0b2545"/><ellipse class="pbEye" cx="28.3" cy="22" rx="2.2" ry="2.7" fill="#5ee1ff"/><ellipse class="pbEye" cx="35.7" cy="22" rx="2.2" ry="2.7" fill="#5ee1ff"/><path d="M28.5 26.4Q32 29.2 35.5 26.4" fill="none" stroke="#5ee1ff" stroke-width="1.7" stroke-linecap="round"/><g class="pbWv"><path d="M45 38L55.5 22" stroke="#2f6fed" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M45 38L55.5 22" stroke="#fff" stroke-width="3.6" stroke-linecap="round" fill="none"/><circle cx="57" cy="19.5" r="4.6" fill="#fff" stroke="#2f6fed" stroke-width="2"/></g></g>
-<path d="M6 44H58V66a6 6 0 0 1-6 6H12a6 6 0 0 1-6-6Z" fill="url(#pbBx)"/><rect x="27.5" y="44" width="9" height="28" fill="#fff" opacity=".2"/><rect x="11" y="55" width="13" height="9" rx="3" fill="#fff" opacity=".9"/><circle cx="14.6" cy="59.5" r="1.1" fill="#2f6fed"/><circle cx="17.5" cy="59.5" r="1.1" fill="#2f6fed"/><circle cx="20.4" cy="59.5" r="1.1" fill="#2f6fed"/>
-<g id="pbFL"><path d="M6 44H32V38.5H8.5Q6 38.5 6 41Z" fill="#6aa6ff"/></g><g id="pbFR"><path d="M58 44H32V38.5H55.5Q58 38.5 58 41Z" fill="#4f8ef5"/></g></svg></div>
-<div id="pbPanel" role="dialog" aria-label="Avishkaar">
+<div id="pbFab" role="button" tabindex="0" aria-label="Open Navachar" title="Ask Navachar"><div class="pbBub">Hii, I’m Navachar!</div><div class="pbBot" aria-hidden="true"><svg viewBox="0 0 72 64"><defs><linearGradient id="pbpskin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7cfa8"/><stop offset="1" stop-color="#e4a981"/></linearGradient><linearGradient id="pbphat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9e4f5"/></linearGradient><linearGradient id="pbpvest" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffa033"/><stop offset="1" stop-color="#f07a0f"/></linearGradient></defs><!-- torso --><path d="M6 64V52c0-7 6-11 14-13l8-2h16l8 2c8 2 14 6 14 13v12z" fill="#16335f"/><path d="M17 40.5l11-3.5v27H14V46c0-3 1.5-4.5 3-5.5z" fill="url(#pbpvest)"/><path d="M55 40.5L44 37v27h14V46c0-3-1.5-4.5-3-5.5z" fill="url(#pbpvest)"/><path d="M14 52h14v3H14zM44 52h14v3H44z" fill="#e9eef5" opacity=".95"/><!-- collar and neck --><path d="M29 37l7 9 7-9z" fill="#fff"/><rect x="31.5" y="30" width="9" height="9" rx="3" fill="#e0a37c"/><!-- ears --><ellipse cx="22.5" cy="26" rx="2.4" ry="3.4" fill="#e9b790"/><ellipse cx="49.5" cy="26" rx="2.4" ry="3.4" fill="#e9b790"/><!-- head --><path d="M24 24c0-9 5-14 12-14s12 5 12 14c0 8-5 13.5-12 13.5S24 32 24 24z" fill="url(#pbpskin)"/><!-- hair --><path d="M24.5 22c.5-6 4-9 11.5-9s11 3 11.5 9c-2-3.5-5-5-11.5-5s-9.500 1.500-11.500 5z" fill="#2a1d17"/><!-- helmet --><path d="M22 20c0-8 6-14 14-14s14 6 14 14v1.500H22z" fill="url(#pbphat)"/><path d="M33.500 6.200h5v15.300h-5z" fill="#cfdcf0"/><path d="M20 21h32a2.500 2.500 0 0 1 0 4H20a2.500 2.500 0 0 1 0-4z" fill="#2f6fed"/><path d="M30 11.500l6-.8 6 .8" stroke="#fff" stroke-width="0" fill="none"/><path d="M35.500 10.500l1.200-2 1.200 2-1.200 1.800z" fill="#2f6fed" opacity="0"/><!-- brows, eyes --><path d="M28.800 25.500q2.500-1.600 5 0M38.200 25.500q2.500-1.600 5 0" stroke="#2a1d17" stroke-width="1.100" fill="none" stroke-linecap="round"/><ellipse cx="31.300" cy="28.600" rx="1.700" ry="2" fill="#fff"/><ellipse cx="40.700" cy="28.600" rx="1.700" ry="2" fill="#fff"/><circle cx="31.500" cy="28.700" r="1.150" fill="#2a1d17"/><circle cx="40.900" cy="28.700" r="1.150" fill="#2a1d17"/><circle cx="31.900" cy="28.200" r=".35" fill="#fff"/><circle cx="41.300" cy="28.200" r=".35" fill="#fff"/><!-- nose, smile, cheeks --><path d="M36 29.500q-1.200 2.500 .2 3.200" stroke="#c98a63" stroke-width=".9" fill="none" stroke-linecap="round"/><path d="M31.800 33.800q4.200 3.600 8.400 0" stroke="#9b4a3a" stroke-width="1.200" fill="none" stroke-linecap="round"/><path d="M32.600 34.200q3.400 2.800 6.800 0q-3.400 1.200-6.800 0z" fill="#fff"/><circle cx="28" cy="32.500" r="2.200" fill="#f08a7a" opacity=".28"/><circle cx="44" cy="32.500" r="2.200" fill="#f08a7a" opacity=".28"/><!-- waving arm (group rotates at shoulder) --><g class="pbWv"><path d="M52 46c3-3 6-9 7.500-17" stroke="#16335f" stroke-width="8.500" stroke-linecap="round" fill="none"/><path d="M52 46c3-3 6-9 7.500-17" stroke="#ffa033" stroke-width="2" stroke-linecap="round" fill="none" opacity="0"/><rect x="55.500" y="25.500" width="8" height="3.500" rx="1.500" fill="#e9eef5" transform="rotate(14 59.500 27)"/><g transform="translate(59.800 20.500) rotate(10)"><rect x="-4" y="-2" width="8" height="9" rx="3.200" fill="url(#pbpskin)"/><rect x="-4.500" y="-8" width="2" height="7.500" rx="1" fill="url(#pbpskin)"/><rect x="-2.100" y="-9.500" width="2" height="8.500" rx="1" fill="url(#pbpskin)"/><rect x=".3" y="-9.200" width="2" height="8.500" rx="1" fill="url(#pbpskin)"/><rect x="2.600" y="-7.500" width="1.900" height="7" rx=".95" fill="url(#pbpskin)"/><rect x="-8.200" y="1.200" width="2.100" height="6" rx="1.050" fill="url(#pbpskin)" transform="rotate(-38 -5 5)"/></g></g></svg></div><div class="pbBadge"><span class="pbRing"></span><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19 7.5l12.6 7.25v14.5L19 36.5 6.4 29.25v-14.5z" fill="rgba(94,225,255,.10)" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M13.5 28V16l11 12V16" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path class="pbSpark" d="M32 3l1.2 3.8L37 8l-3.8 1.2L32 13l-1.2-3.8L27 8l3.8-1.2z" fill="#5ee1ff"/></svg></div></div>
+<div id="pbPanel" role="dialog" aria-label="Navachar">
   <div id="pbHead">
-    <div class="pbAv"><svg viewBox="0 0 40 40"><rect x="5" y="6" width="30" height="27" rx="11" fill="#fff"/><rect x="9.5" y="10.5" width="21" height="17.5" rx="7.5" fill="#0b2545"/><ellipse cx="16" cy="18" rx="2.3" ry="2.8" fill="#5ee1ff"/><ellipse cx="24" cy="18" rx="2.3" ry="2.8" fill="#5ee1ff"/><path d="M16 23Q20 26.5 24 23" fill="none" stroke="#5ee1ff" stroke-width="1.7" stroke-linecap="round"/><circle cx="20" cy="3" r="2.1" fill="#5ee1ff"/></svg></div>
-    <div class="t"><b>Avishkaar</b><span id="pbSub">Online · reads your dashboard</span></div>
+    <div class="pbAv"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19 7.5l12.6 7.25v14.5L19 36.5 6.4 29.25v-14.5z" fill="rgba(94,225,255,.10)" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M13.5 28V16l11 12V16" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 3l1.2 3.8L37 8l-3.8 1.2L32 13l-1.2-3.8L27 8l3.8-1.2z" fill="#5ee1ff"/></svg></div>
+    <div class="t"><b>Navachar</b><span id="pbSub">Your plant-data companion</span></div>
     <button id="pbSpk" type="button" title="Read answers aloud (off)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
     <button id="pbWide" type="button" title="Expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
     <button id="pbClear" type="button" title="New chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg></button>
@@ -138,8 +216,8 @@
   <div id="pbTA"></div>
   <div id="pbVoiceMsg"></div>
   <div id="pbQuick"></div>
-  <div id="pbForm"><input id="pbIn" type="text" placeholder="Ask Avishkaar anything about the dashboard…" maxlength="300" autocomplete="off"><button id="pbMic" type="button" title="Speak your question" aria-label="Voice input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button id="pbSend" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
-  <div class="pbFoot">Avishkaar answers only from this dashboard’s data</div>
+  <div id="pbForm"><input id="pbIn" type="text" placeholder="Ask Navachar anything about the dashboard…" maxlength="300" autocomplete="off"><button id="pbMic" type="button" title="Speak your question" aria-label="Voice input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button id="pbSend" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
+  <div class="pbFoot">Navachar answers only from this dashboard’s data</div>
 </div>
 
 <script id="picl-bot-js">
@@ -629,7 +707,7 @@ function sentenceCore(p,spec,m,scope){
 }
 
 function answer(p){
-  if(p.intent==='hello') return {html:'<p><b>Hello! I’m Avishkaar.</b> Ask me anything about this dashboard — production vs plan, rejections, OEE, losses, manpower, safety — for PSC and BLDC. You can ask in plain English.</p>',chips:SUGGEST};
+  if(p.intent==='hello') return {html:'<p><b>Hello! I’m Navachar.</b> Ask me anything about this dashboard — production vs plan, rejections, OEE, losses, manpower, safety — for PSC and BLDC. You can ask in plain English.</p>',chips:SUGGEST};
   if(p.intent==='about') return aboutMsg();
   if(p.intent==='thanks') return {html:'<p>You’re welcome! Ask me anything else about the dashboard.</p>',chips:SUGGEST.slice(0,3)};
   if(p.intent==='bye') return {html:'<p>Goodbye! I’ll be right here whenever you need the numbers.</p>',chips:[]};
@@ -801,7 +879,7 @@ function howHTML(metric,p,rows,dr){
   const nd=new Set(rows.map(r=>r.date)).size;
   return '<details class="how"><summary>How this was calculated</summary><p>'+esc(f)+'</p><p>Based on <b>'+n0(rows.length)+'</b> production row(s) over <b>'+nd+'</b> day(s) ('+esc(dr.label)+'). Same formulas as the dashboard’s KPI cards.</p></details>';
 }
-function aboutMsg(){return {html:'<p><b>I’m Avishkaar</b> — the assistant built into this dashboard (<i>आविष्कार</i> means “invention”).</p><p>I read every row on this page — production, plan, rejections, losses, manpower and safety for <b>PSC</b> and <b>BLDC</b> — and answer by <b>calculating from that data</b>. I never guess: if something isn’t in the data, I’ll tell you. Ask in plain English, or type any column name.</p>',chips:SUGGEST};}
+function aboutMsg(){return {html:'<p><b>I’m Navachar</b> — the assistant built into this dashboard (<i>नवाचार</i> means “innovation”).</p><p>I read every row on this page — production, plan, rejections, losses, manpower and safety for <b>PSC</b> and <b>BLDC</b> — and answer by <b>calculating from that data</b>. I never guess: if something isn’t in the data, I’ll tell you. Ask in plain English, or type any column name.</p>',chips:SUGGEST};}
 const DEFS=[
  [/\boee\b|efficiency/,'OEE','OEE = Availability × Performance. Availability = (Actual man-hours − availability-loss man-hours) ÷ Actual man-hours. Performance = Target man-hours for the actual output ÷ (Actual man-hours − availability loss). It shows how much of the available time was used productively.'],
  [/availability/,'Availability','Availability = (Actual man-hours − availability-loss man-hours) ÷ Actual man-hours. Availability losses are stoppages such as material shortage, breakdown, power trip or model change.'],
@@ -831,8 +909,8 @@ function compareAnswer(p){
     const I=[['Production (units)',m=>m.actual,n0,1],['Production / day',m=>m.days?m.actual/m.days:null,n0,1],['Plan',m=>m.plan,n0,0],['Achievement %',m=>m.ach,pct,1],['Rejections',m=>m.rej,n0,-1],['Rejection %',m=>m.rejRate,pct,-1],['OEE %',m=>m.oee,pct,1],['Availability %',m=>m.avail,pct,1],['Performance %',m=>m.perf,pct,1],['UPH (actual)',m=>m.uphA,n1,1],['Loss man-hrs',m=>m.loss,n1,-1],['Manpower / day',m=>m.mpAvg,n1,0],['Injuries',m=>m.inj,n0,-1],['Days with data',m=>m.days,n0,0]];
     const trs=I.map(([lab,f,fmt,good])=>{const va=f(a),vb=f(b);let ch='–',pc='–',cls='';
       if(va!=null&&vb!=null&&ra.length&&rb.length){const d=va-vb;ch=(d>0?'▲ ':d<0?'▼ ':'')+fmt(Math.abs(d));const q=pctChg(va,vb);pc=q==null?'–':(q>0?'+':'')+n1(q)+'%';cls=d===0||good===0?'':((d>0)===(good>0)?'dg':'db');}
-      return {label:lab,cells:[va==null?'–':fmt(va),vb==null?'–':fmt(vb),{t:ch,cls},{t:pc,cls}]};});
-    const head=['Metric',short(A.label),short(B.label),'Change','%'];
+      return {label:lab,cells:[va==null?'–':fmt(va),vb==null?'–':fmt(vb),{t:pc==='–'?ch:ch+'\n'+pc,cls:(cls+' two').trim()}]};});
+    const head=['Metric',short(A.label),short(B.label),'Change'];
     html+=(units.length>1?'<p style="margin:10px 0 2px"><b>'+u+'</b></p>':'')+tableHTML(head,trs); tsvAll+=(tsvAll?'\n':'')+u+'\n'+tsv(head,trs);
     if(ra.length&&rb.length){const q1=pctChg(a.days?a.actual/a.days:0,b.days?b.actual/b.days:0);const bits=[];
       if(q1!=null)bits.push('production per day '+(q1>=0?'up':'down')+' <b>'+n1(Math.abs(q1))+'%</b> ('+n0(a.days?a.actual/a.days:0)+' vs '+n0(b.days?b.actual/b.days:0)+')');
@@ -944,16 +1022,19 @@ const SUGGEST=['Overall summary','PSC assembly production yesterday','Which line
 const panel=$b('pbPanel'),msgs=$b('pbMsgs'),inp=$b('pbIn'),fab=$b('pbFab');
 const history=[];let hIdx=-1;
 function chipRow(list){const d=document.createElement('div');d.className='pbc';list.forEach(t=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.onclick=()=>ask(t);d.appendChild(b);});return d;}
-function addUser(t){const d=document.createElement('div');d.className='pbm u';d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
+const MINI='<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19 7.5l12.6 7.25v14.5L19 36.5 6.4 29.25v-14.5z" fill="rgba(94,225,255,.10)" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M13.5 28V16l11 12V16" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 3l1.2 3.8L37 8l-3.8 1.2L32 13l-1.2-3.8L27 8l3.8-1.2z" fill="#5ee1ff"/></svg>';
+function hhmm(){try{return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}catch(e){return '';}}
+function wrapRow(el,who){const r=document.createElement('div');r.className='pbrow '+who;if(who==='b'){const a=document.createElement('div');a.className='pbmini';a.innerHTML=MINI;r.appendChild(a);}const col=document.createElement('div');col.style.cssText='min-width:0;'+(who==='b'?'flex:1;max-width:calc(100% - 38px)':'max-width:86%');col.appendChild(el);const t=document.createElement('span');t.className='pbts';t.textContent=hhmm();col.appendChild(t);r.appendChild(col);return r;}
+function addUser(t){const d=document.createElement('div');d.className='pbm u';d.textContent=t;msgs.appendChild(wrapRow(d,'u'));msgs.scrollTop=msgs.scrollHeight;}
 function addBot(res){
   const d=document.createElement('div');d.className='pbm b';d.innerHTML=res.html;
   const row=chipRow((res.chips||[]).slice(0,4));
   if(res.tsv){const c=document.createElement('button');c.type='button';c.className='pbcopy';c.textContent='⧉ Copy table';c.onclick=()=>{try{navigator.clipboard.writeText(res.tsv);c.textContent='✓ Copied';setTimeout(()=>c.textContent='⧉ Copy table',1500);}catch(e){}};row.appendChild(c);}
   if(!res.noTools){
     const c2=document.createElement('button');c2.type='button';c2.className='pbcopy';c2.textContent='⧉ Copy answer';c2.onclick=()=>{try{navigator.clipboard.writeText(d.firstElementChild?[...d.children].filter(x=>!x.classList.contains('pbc')&&x.tagName!=='DETAILS').map(x=>x.innerText).join('\n'):d.innerText);c2.textContent='✓ Copied';setTimeout(()=>c2.textContent='⧉ Copy answer',1500);}catch(e){}};row.appendChild(c2);
-    const fb=document.createElement('span');fb.className='pbfb';[['👍','up'],['👎','down']].forEach(([e,v])=>{const b=document.createElement('button');b.type='button';b.textContent=e;b.title=v==='up'?'Correct answer':'Wrong / not helpful';b.onclick=()=>{fb.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');saveFeedback(res.q||'',v,d.innerText.slice(0,200));};fb.appendChild(b);});row.appendChild(fb);}
+    const fb=document.createElement('span');fb.className='pbfb';[['','up'],['','down']].forEach(([e,v])=>{const b=document.createElement('button');b.type='button';b.innerHTML=ICO[v];b.title=v==='up'?'Correct answer':'Wrong / not helpful';b.onclick=()=>{fb.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');saveFeedback(res.q||'',v,d.innerText.slice(0,200));};fb.appendChild(b);});row.appendChild(fb);}
   if(row.childNodes.length) d.appendChild(row);
-  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+  d.style.maxWidth='none';msgs.appendChild(wrapRow(d,'b'));msgs.scrollTop=msgs.scrollHeight;
   try{window.__pbSpeak&&window.__pbSpeak(d);}catch(e){}
 }
 const CHAT_KEY='pbChat1';
@@ -963,12 +1044,12 @@ function restoreChat(){try{const L=JSON.parse(localStorage.getItem(CHAT_KEY)||'[
   L.forEach(x=>{addUser(x.q);addBot({html:x.html,chips:x.chips,tsv:x.tsv,q:x.q});});}catch(e){}}
 function saveFeedback(q,v,a){try{const L=JSON.parse(localStorage.getItem('pbFeedback')||'[]');L.push({t:new Date().toISOString(),q:q,v:v,a:a});localStorage.setItem('pbFeedback',JSON.stringify(L.slice(-200)));}catch(e){}}
 function feedbackMsg(){let L=[];try{L=JSON.parse(localStorage.getItem('pbFeedback')||'[]');}catch(e){}const bad=L.filter(x=>x.v==='down');
-  return {noTools:1,html:'<p><b>Feedback saved in this browser</b>: '+L.filter(x=>x.v==='up').length+' 👍 · '+bad.length+' 👎</p>'+(bad.length?'<p>Questions marked wrong:</p><ul>'+bad.slice(-15).map(x=>'<li>'+esc(x.q)+'</li>').join('')+'</ul><p class="note">Send this list to your developer to improve Avishkaar.</p>':'<p class="note">No 👎 yet.</p>'),chips:[],tsv:bad.map(x=>x.q).join('\n')};}
+  return {noTools:1,html:'<p><b>Feedback saved in this browser</b>: '+L.filter(x=>x.v==='up').length+' helpful · '+bad.length+' marked wrong</p>'+(bad.length?'<p>Questions marked wrong:</p><ul>'+bad.slice(-15).map(x=>'<li>'+esc(x.q)+'</li>').join('')+'</ul><p class="note">Send this list to your developer to improve Navachar.</p>':'<p class="note">Nothing marked wrong yet.</p>'),chips:[],tsv:bad.map(x=>x.q).join('\n')};}
 function ask(text){
   text=(text||'').trim(); if(!text) return;
   history.unshift(text);hIdx=-1;
   addUser(text);
-  const typing=document.createElement('div');typing.className='pbm b';typing.innerHTML='<span class="pbdot"></span><span class="pbdot"></span><span class="pbdot"></span>';msgs.appendChild(typing);msgs.scrollTop=msgs.scrollHeight;
+  const typing=document.createElement('div');typing.className='pbm b';typing.innerHTML='<span class="pbdot"></span><span class="pbdot"></span><span class="pbdot"></span> <span style="font-size:11px;color:var(--text-dim,#5b6b83)">reading the data…</span>';const trow=wrapRow(typing,'b');msgs.appendChild(trow);typing.remove=()=>trow.remove();msgs.scrollTop=msgs.scrollHeight;
   if(typeof aiOn==='function'&&aiOn()){runAI(text,typing);return;}
   setTimeout(()=>{
     let res;
@@ -977,12 +1058,24 @@ function ask(text){
     typing.remove();addBot(res);saveChat(text,res);
   },120);
 }
+const ICO={grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+bars:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+trend:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>',
+clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v17H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>',
+up:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11v9H4v-9zM7 11l4-8a2 2 0 0 1 2 2v4h6a2 2 0 0 1 2 2.2l-1 7A2 2 0 0 1 18 20H7"/></svg>',
+down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(180deg)"><path d="M7 11v9H4v-9zM7 11l4-8a2 2 0 0 1 2 2v4h6a2 2 0 0 1 2 2.2l-1 7A2 2 0 0 1 18 20H7"/></svg>'};
+function greet(){const h=new Date().getHours();return h<12?'Good morning':h<17?'Good afternoon':'Good evening';}
+function snapHTML(){try{const m=metrics(REC.filter(r=>r.date===GLOBAL_LATEST));if(!m||!m.plan)return '';
+  const c=(v,a,b,hi)=>hi?(v>=a?'good':v>=b?'warn':'bad'):(v<=a?'good':v<=b?'warn':'bad');
+  return '<div class="pbSnap"><div class="'+c(m.ach,90,75,true)+'"><b>'+pct(m.ach)+'</b><small>Achievement</small></div><div class="'+c(m.oee,85,70,true)+'"><b>'+pct(m.oee)+'</b><small>OEE</small></div><div class="'+(m.rejRate==null?'':c(m.rejRate,3,7,false))+'"><b>'+(m.rejRate==null?'–':pct(m.rejRate))+'</b><small>Rejection</small></div></div>';}catch(e){return '';}}
 function welcome(){
   msgs.innerHTML='';
   const d=document.createElement('div');d.className='pbHome';
-  d.innerHTML='<div class="big"><svg viewBox="0 0 40 40"><rect x="5" y="6" width="30" height="27" rx="11" fill="#fff"/><rect x="9.5" y="10.5" width="21" height="17.5" rx="7.5" fill="#0b2545"/><ellipse cx="16" cy="18" rx="2.3" ry="2.8" fill="#5ee1ff"/><ellipse cx="24" cy="18" rx="2.3" ry="2.8" fill="#5ee1ff"/><path d="M16 23Q20 26.5 24 23" stroke="#5ee1ff" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></div><h3>Hii, I’m Avishkaar</h3><p>Ask in plain English — or type any column name. Data up to <b>'+fmtD(GLOBAL_LATEST)+'</b>.</p>';
+  d.innerHTML='<div class="big"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19 7.5l12.6 7.25v14.5L19 36.5 6.4 29.25v-14.5z" fill="rgba(94,225,255,.10)" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M13.5 28V16l11 12V16" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 3l1.2 3.8L37 8l-3.8 1.2L32 13l-1.2-3.8L27 8l3.8-1.2z" fill="#5ee1ff"/></svg></div><div class="gr">'+greet()+'</div><h3>Hii, I’m Navachar</h3><p>Ask in plain English — or type any column name. Data up to <b>'+fmtD(GLOBAL_LATEST)+'</b>.</p>';
   const g=document.createElement('div');g.className='pbCards';
-  [['Overall summary','PSC + BLDC, latest day'],['Why was output low yesterday?','Shortfall, losses, rejects'],['Which line has the highest rejection this month?','Ranking by line'],['This week vs last week production','Period comparison'],['Top 5 loss reasons in BLDC winding','Pareto of losses'],['What is OEE?','Formulas explained']].forEach(([q,sub])=>{const b=document.createElement('button');b.type='button';b.innerHTML=esc(q)+'<small>'+esc(sub)+'</small>';b.onclick=()=>ask(q);g.appendChild(b);});
+  [['Overall summary','PSC + BLDC, latest day','grid'],['Why was output low yesterday?','Shortfall, losses, rejects','search'],['Which line has the highest rejection this month?','Ranking by line','bars'],['This week vs last week production','Period comparison','trend'],['Top 5 loss reasons in BLDC winding','Pareto of losses','clock'],['What is OEE?','Formulas explained','book']].forEach(([q,sub,ic])=>{const b=document.createElement('button');b.type='button';b.innerHTML='<span class="ic">'+ICO[ic]+'</span>'+esc(q)+'<small>'+esc(sub)+'</small>';b.onclick=()=>ask(q);g.appendChild(b);});
   d.appendChild(g);msgs.appendChild(d);
 }
 function buildQuick(){const q=$b('pbQuick');q.innerHTML='';[['Summary','Overall summary'],['Losses','Top 5 loss reasons'],['Rejections','Rejection by line this month'],['OEE','OEE by line yesterday'],['Trend','Production trend last 7 days'],['Compare','Compare PSC and BLDC this month']].forEach(([l,t])=>{const b=document.createElement('button');b.type='button';b.textContent=l;b.onclick=()=>ask(t);q.appendChild(b);});}
@@ -994,6 +1087,9 @@ function showTA(){const v=inp.value.trim().toLowerCase();ta.innerHTML='';if(v.le
   m.forEach(x=>{const b=document.createElement('button');b.type='button';b.textContent=x;b.onmousedown=e=>{e.preventDefault();inp.value=x;ta.style.display='none';sendNow();};ta.appendChild(b);});ta.style.display='block';}
 inp.addEventListener('input',showTA);inp.addEventListener('blur',()=>setTimeout(()=>ta.style.display='none',150));
 buildQuick();
+
+/* optional real-person photo for the greeting popup (set by the generator when Dashboard\navachar_avatar.* exists) */
+(function(){try{const u=window.NAVACHAR_AVATAR;if(!u)return;const bot=document.querySelector('#pbFab .pbBot');if(!bot)return;bot.classList.add('photo');bot.innerHTML='<img alt="" src="'+String(u).replace(/"/g,'')+'">';}catch(e){}})();
 
 /* ---------- voice: speak a question (mic) and optionally hear the answer (speaker) ---------- */
 (function(){
