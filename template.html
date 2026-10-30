@@ -864,10 +864,11 @@ function filterLabel(){
 function computeMetrics(records){
   const m = { plan:0, actual:0, targetHrs:0, actualHrs:0, manHoursTarget:0, manHoursActual:0,
               availLossManHr:0, perfLossManHr:0, injury:0, nearMiss:0, count: records.length,
-              planHrsAtOwnTarget:0, planPersonHrsAtOwnTarget:0 };
+              planHrsAtOwnTarget:0, planPersonHrsAtOwnTarget:0, uphRowSum:0, uphRowN:0 };
   records.forEach(r=>{
     m.plan += r.plan; m.actual += r.actual;
     m.targetHrs += r.targetHrs; m.actualHrs += r.actualHrs;
+    if(typeof r.actualUph==='number'){ m.uphRowSum += r.actualUph; m.uphRowN++; }  /* winding: Excel's own row Actual UPH */
     m.manHoursTarget += (r.manHoursTarget||0); m.manHoursActual += (r.manHoursActual||0);
     m.availLossManHr += (r.availLossManHr||0); m.perfLossManHr += (r.perfLossManHr||0);
     m.injury += (r.injury||0); m.nearMiss += (r.nearMiss||0);
@@ -881,7 +882,8 @@ function computeMetrics(records){
      Plan drifts away from the sheet's own stated target whenever Plan and
      Actual diverge). A single model/row reproduces its Excel value exactly. */
   m.uphTarget = m.planHrsAtOwnTarget>0 ? (m.plan/m.planHrsAtOwnTarget) : 0;
-  m.uphActual = m.actualHrs>0 ? (m.actual/m.actualHrs) : 0;
+  /* Winding only (rows carry actualUph): average of Excel's Actual UPH, same as the Excel TOTAL row. Other depts unchanged. */
+  m.uphActual = (m.uphRowN>0 && m.uphRowN===m.count) ? (m.uphRowSum/m.uphRowN) : (m.actualHrs>0 ? (m.actual/m.actualHrs) : 0);
   m.upphTarget = m.planPersonHrsAtOwnTarget>0 ? (m.plan/m.planPersonHrsAtOwnTarget) : 0;
   m.upphActual = m.manHoursActual>0 ? (m.actual/m.manHoursActual) : 0;
   /* Availability/Performance: same man-hour formulas as the Excel OEE templates —
