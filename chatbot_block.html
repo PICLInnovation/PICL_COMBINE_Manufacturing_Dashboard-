@@ -26,9 +26,6 @@
 @keyframes pbFr{0%,2%{transform:none}10%,86%{transform:rotate(80deg)}96%,100%{transform:none}}
 @keyframes pbRise{0%,10%{transform:translateY(34px)}22%{transform:translateY(-3px)}27%,78%{transform:translateY(0)}90%,100%{transform:translateY(34px)}}
 @keyframes pbWave{from{transform:rotate(-18deg)}to{transform:rotate(22deg)}}
-.pbBub{position:absolute;right:62px;bottom:34px;white-space:nowrap;background:linear-gradient(135deg,#0b2545,#2f6fed);color:#fff;font:700 13px/1 var(--font-body,Inter,sans-serif);padding:10px 14px;border-radius:14px 14px 3px 14px;box-shadow:0 8px 22px rgba(11,37,69,.35);border:1px solid rgba(255,255,255,.25);opacity:0;transform:translateY(8px) scale(.9);pointer-events:none;transform-origin:100% 100%}
-#pbFab.peek .pbBub{animation:pbBub 7.2s ease-in-out both}
-@keyframes pbBub{0%,20%{opacity:0;transform:translateY(8px) scale(.9)}28%,76%{opacity:1;transform:none}86%,100%{opacity:0;transform:translateY(6px) scale(.92)}}
 .pbHand{transform-origin:70% 85%}
 .pbm .pbHand{width:19px;height:19px;vertical-align:-4px;color:var(--pb-blue);margin-right:4px;animation:pbWave .6s ease-in-out 2 alternate .3s both}
 /* ---------- panel ---------- */
@@ -90,7 +87,7 @@
 .pbdot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--pb-blue);margin-right:4px;opacity:.35;animation:pbb 1s infinite}
 .pbdot:nth-child(2){animation-delay:.15s}.pbdot:nth-child(3){animation-delay:.3s}
 @keyframes pbb{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
-@media(max-width:640px){#pbPanel,#pbPanel.wide{right:0;bottom:0;width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0}#pbFab{right:14px;bottom:12px}}
+@media(max-width:640px){#pbPanel{right:0;bottom:0;width:100vw;max-width:100vw;height:56dvh;max-height:56dvh;border-radius:18px 18px 0 0}#pbPanel.wide{height:100dvh;max-height:100dvh;border-radius:0}#pbFab{right:14px;bottom:12px}}
 @media(prefers-reduced-motion:reduce){.pbRing,.pbSpark,#pbFab.peek .pbBot,#pbFab.peek .pbBot .pbWv,.pbm,#pbPanel.open{animation:none!important}}
 
 .pbm .how{font-size:11.5px;margin-top:10px;border-top:1px dashed var(--border,#e2e7ee);padding-top:6px}.pbm .how p{margin:6px 0;color:var(--text-dim,#5b6b83)}
@@ -170,6 +167,55 @@
 .pbBot.photo:after{content:"Hii";position:absolute;right:-6px;bottom:-4px;background:#2f6fed;color:#fff;font:800 10px/1 var(--font-body,Inter,sans-serif);padding:4px 6px;border-radius:9px;border:2px solid #fff;animation:pbWave2 .45s ease-in-out infinite alternate;transform-origin:20% 80%}
 #pbFab.peek .pbBot.photo{animation:pbBotUp 7.2s ease-in-out both}
 .pbHome .big.photo{background:#fff;padding:0;overflow:hidden}.pbHome .big.photo img{width:100%;height:100%;object-fit:cover;border-radius:20px}
+/* ---- v22: Aura ---- */
+#pbFab{width:60px;height:60px}
+.pbBadge{width:60px;height:60px;border-radius:20px;background:#2f6fed;padding:0;overflow:visible;border:2px solid rgba(255,255,255,.9);box-shadow:0 10px 26px -4px rgba(31,88,201,.65)}
+.pbBadge img{width:100%;height:100%;border-radius:18px;object-fit:cover;display:block;position:relative;z-index:1}
+.pbGlow{position:absolute;inset:-4px;border-radius:24px;background:conic-gradient(from 0deg,#5ee1ff,#2f6fed,#7c4dff,#5ee1ff);filter:blur(7px);opacity:.75;animation:pbSpin 4s linear infinite;z-index:0}
+@keyframes pbSpin{to{transform:rotate(360deg)}}
+.pbDot{position:absolute;top:-4px;right:-4px;width:14px;height:14px;border-radius:50%;background:#ff4d4f;border:2px solid #fff;z-index:2;animation:pbPulse 1.6s ease-in-out infinite}
+@keyframes pbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+#pbFab:hover .pbBadge{animation:pbHop .8s ease-in-out}
+#pbFab.open-bot .pbDot{display:none}
+.pbBub{position:absolute;right:0;bottom:76px;width:262px;max-width:calc(100vw - 40px);background:var(--panel,#fff);color:var(--text,#16233b);border:1px solid var(--border-hi,#c9d2df);border-radius:18px 18px 6px 18px;padding:14px 16px 12px;box-shadow:0 18px 40px -10px rgba(10,31,61,.45);opacity:0;visibility:hidden;transform:translateY(14px) scale(.92);transform-origin:100% 100%;transition:opacity .3s,transform .35s cubic-bezier(.2,1.3,.4,1),visibility .3s;font-family:var(--font-body,Inter,sans-serif)}
+.pbBub:after{content:"";position:absolute;right:22px;bottom:-7px;width:13px;height:13px;background:var(--panel,#fff);border-right:1px solid var(--border-hi,#c9d2df);border-bottom:1px solid var(--border-hi,#c9d2df);transform:rotate(45deg)}
+#pbFab.peek .pbBub{opacity:1;visibility:visible;transform:none}
+.pbBg{font-size:15px;font-weight:800;letter-spacing:-.01em;background:linear-gradient(90deg,#1f58c9,#7c4dff);-webkit-background-clip:text;background-clip:text;color:transparent;min-height:20px}
+.pbBt{font-size:12.5px;color:var(--text-dim,#5b6b83);line-height:1.45;margin-top:3px;min-height:36px}
+.pbBt:after{content:"";display:inline-block;width:2px;height:12px;background:var(--pb-blue);margin-left:2px;vertical-align:-2px;animation:pbCur .8s steps(1) infinite}
+.pbBt.done:after{display:none}
+@keyframes pbCur{50%{opacity:0}}
+.pbBq{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.pbBq button{border:1px solid var(--border-hi,#c9d2df);background:var(--blue-dim,#e8f0fe);color:var(--pb-blue);border-radius:999px;padding:5px 10px;font:700 11px var(--font-body,Inter,sans-serif);cursor:pointer;transition:all .15s}
+.pbBq button:hover{background:var(--pb-blue);color:#fff;transform:translateY(-1px)}
+.pbX{position:absolute;top:6px;right:8px;border:0;background:transparent;color:var(--text-faint,#8a97ab);font-size:17px;line-height:1;cursor:pointer;padding:2px 5px}
+.pbX:hover{color:var(--text,#16233b)}
+.pbAv{padding:0;overflow:hidden}.pbAv img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit}
+.pbHome .big{padding:0;overflow:hidden;background:#2f6fed;box-shadow:0 10px 26px -6px rgba(31,88,201,.6)}.pbHome .big img{width:100%;height:100%;object-fit:cover;display:block}
+.pbmini{padding:0;overflow:hidden;background:#2f6fed}.pbmini img{width:100%;height:100%;object-fit:cover;display:block}
+/* ---- v23: clean launcher (no background, glow or dot) ---- */
+.pbBadge{background:none!important;border:0!important;box-shadow:none!important;border-radius:50%!important;width:58px;height:58px}
+.pbBadge img{border-radius:50%!important;filter:drop-shadow(0 4px 8px rgba(10,31,61,.35))}
+.pbGlow,.pbRing,.pbDot{display:none!important}
+#pbFab{filter:none}
+/* ---- v24: greeting is plain text only ---- */
+.pbBub{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;width:auto!important;max-width:none;right:62px;bottom:18px;white-space:nowrap;border-radius:0;cursor:pointer;transform-origin:100% 50%}
+.pbBub:after{display:none!important}
+.pbBg{display:inline-block;font:800 16px/1.2 var(--font-body,Inter,sans-serif);letter-spacing:-.01em;color:var(--text,#16233b);-webkit-text-fill-color:currentColor;background:none;
+  text-shadow:0 0 3px var(--panel,#fff),0 0 6px var(--panel,#fff),0 0 10px var(--panel,#fff),0 2px 12px rgba(31,88,201,.35)}
+.pbBg:after{content:"";display:inline-block;width:2px;height:15px;background:var(--pb-blue);margin-left:3px;vertical-align:-2px;animation:pbCur .8s steps(1) infinite}
+.pbBg.done:after{display:none}
+/* ---- v25: Aura talks: speech bubble + moving mouth ---- */
+#pbFab{width:64px;height:64px}
+.pbBadge{width:64px!important;height:64px!important;position:relative}
+.pbMouth{position:absolute;left:50%;top:61.2%;width:10.5%;height:7%;transform:translate(-50%,-50%) scaleY(0);background:#07104f;border-radius:50%;z-index:2;opacity:0;pointer-events:none}
+#pbFab.talking .pbMouth{opacity:1;animation:pbTalk .2s ease-in-out infinite alternate}
+@keyframes pbTalk{from{transform:translate(-50%,-50%) scaleY(.2) scaleX(.8)}to{transform:translate(-50%,-50%) scaleY(1) scaleX(1.05)}}
+#pbFab.talking .pbBadge img{animation:pbBob .4s ease-in-out infinite alternate}
+@keyframes pbBob{from{transform:translateY(0) rotate(-2.5deg)}to{transform:translateY(-2px) rotate(2.5deg)}}
+.pbBub{background:var(--panel,#fff)!important;border:1px solid var(--border-hi,#c9d2df)!important;border-radius:16px 16px 4px 16px!important;padding:10px 15px!important;box-shadow:0 12px 30px -8px rgba(10,31,61,.45)!important;right:76px;bottom:16px;transform-origin:100% 60%}
+.pbBub:after{display:block!important;content:"";position:absolute;right:-7px;bottom:14px;width:13px;height:13px;background:var(--panel,#fff);border-top:1px solid var(--border-hi,#c9d2df);border-right:1px solid var(--border-hi,#c9d2df);transform:rotate(45deg);left:auto}
+.pbBg{text-shadow:none!important;color:var(--text,#16233b);font-size:14.5px}
 /* ---- v14 premium refinement ---- */
 #pbPanel{font-feature-settings:"tnum" 1,"cv11" 1;-webkit-font-smoothing:antialiased;border:1px solid rgba(120,140,175,.28);box-shadow:0 2px 4px rgba(8,22,48,.08),0 24px 60px -12px rgba(8,22,48,.45)}
 #pbHead{padding:16px 14px 15px 16px;background:linear-gradient(160deg,#0a1f3d 0%,#0f2f5e 60%,#14397a 100%);border-bottom:0}
@@ -200,13 +246,72 @@
 .pbmini{border-radius:9px;background:linear-gradient(160deg,#0a1f3d,#1f58c9)}
 #pbPanel ::-webkit-scrollbar{width:8px;height:8px}#pbPanel ::-webkit-scrollbar-thumb{background:rgba(120,140,175,.35);border-radius:8px}
 @media print{#pbFab,#pbPanel{display:none!important}}
+/* ---------- v3 polish: voice states, motion, depth ---------- */
+#pbPanel{box-shadow:0 30px 70px -12px rgba(8,22,48,.55),0 0 0 1px rgba(47,111,237,.12)}
+#pbHead{background-size:200% 200%;animation:pbAur 14s ease infinite}
+@keyframes pbAur{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+#pbEq{display:none;align-items:center;gap:3px;height:22px;margin-right:2px}
+#pbPanel.speaking #pbEq,#pbPanel.listening #pbEq{display:flex}
+#pbEq i{width:3px;border-radius:3px;background:#5ee1ff;height:6px;animation:pbEq 0.9s ease-in-out infinite}
+#pbEq i:nth-child(2){animation-delay:.12s}#pbEq i:nth-child(3){animation-delay:.24s}#pbEq i:nth-child(4){animation-delay:.36s}#pbEq i:nth-child(5){animation-delay:.48s}
+@keyframes pbEq{0%,100%{height:5px}50%{height:20px}}
+#pbPanel.listening #pbEq i{background:#ff8a80}
+#pbSpk.talk{background:rgba(94,225,255,.35);animation:pbRec 1.2s infinite}
+#pbVoice{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;width:28px;height:28px;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#pbVoice svg{width:15px;height:15px}#pbVoice:hover{background:rgba(255,255,255,.28)}
+#pbVMenu{display:none;position:absolute;top:70px;right:12px;z-index:20;width:312px;max-width:calc(100% - 24px);max-height:calc(100% - 90px);overflow:auto;background:linear-gradient(165deg,#0d2750 0%,#0a1f3f 100%);color:#e8eefc;border:1px solid rgba(120,160,255,.28);border-radius:18px;padding:14px;box-shadow:0 22px 50px -8px rgba(2,10,30,.7),0 0 0 1px rgba(255,255,255,.04) inset;font:12.5px var(--font-body,Inter,sans-serif)}
+#pbVMenu.open{display:block;animation:pbPop .18s ease-out}
+#pbVMenu .vh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+#pbVMenu .vhi{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#2f6fed,#7c4dff);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#pbVMenu .vhi svg{width:18px;height:18px;color:#fff}
+#pbVMenu .vh b{display:block;font-size:14px;color:#fff;letter-spacing:.01em}
+#pbVMenu small{display:block;font-size:11px;color:#9db2d8;font-weight:500}
+#pbVMenu .vs{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7f95c0;margin:12px 2px 6px}
+#pbVMenu .vc{display:flex;align-items:center;gap:11px;width:100%;text-align:left;margin-bottom:7px;padding:10px 11px;border-radius:13px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#e8eefc;cursor:pointer;transition:all .15s;font:inherit}
+#pbVMenu .vc:hover{background:rgba(255,255,255,.09)}
+#pbVMenu .vc.on{border-color:#5ea0ff;background:linear-gradient(135deg,rgba(47,111,237,.32),rgba(124,77,255,.2));box-shadow:0 0 0 1px rgba(94,160,255,.35)}
+#pbVMenu .vi{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;color:#cfe0ff}
+#pbVMenu .vc.on .vi{background:linear-gradient(135deg,#2f6fed,#5ee1ff);color:#fff}
+#pbVMenu .vt{flex:1;min-width:0}#pbVMenu .vt b{display:block;font-size:13.5px;color:#fff}
+#pbVMenu .vt em{display:block;font-style:normal;font-size:10.5px;color:#7f95c0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+#pbVMenu .vk{width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;color:transparent;flex-shrink:0}
+#pbVMenu .vk svg{width:12px;height:12px}
+#pbVMenu .vc.on .vk{background:#3ddc84;border-color:#3ddc84;color:#06361b}
+#pbVMenu .seg{display:flex;background:rgba(255,255,255,.07);border-radius:11px;padding:3px;gap:3px}
+#pbVMenu .seg button{flex:1;border:0;background:transparent;color:#b9c9e8;border-radius:8px;padding:7px 4px;cursor:pointer;font:600 12px inherit;transition:all .15s}
+#pbVMenu .seg button.on{background:#2f6fed;color:#fff;box-shadow:0 3px 8px rgba(47,111,237,.5)}
+#pbVMenu .vsw{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:10px 11px;border-radius:13px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+#pbVMenu .vsw b{display:block;font-size:12.5px;color:#fff}
+#pbVMenu .sw{width:42px;height:24px;border-radius:999px;border:0;background:rgba(255,255,255,.2);position:relative;cursor:pointer;flex-shrink:0;transition:background .2s;padding:0}
+#pbVMenu .sw i{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+#pbVMenu .sw.on{background:#3ddc84}#pbVMenu .sw.on i{transform:translateX(18px)}
+#pbVTest{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;border:0;border-radius:12px;padding:11px;cursor:pointer;color:#fff;font:700 13px inherit;background:linear-gradient(135deg,#2f6fed,#7c4dff);box-shadow:0 8px 18px -6px rgba(79,70,229,.7)}
+#pbVTest svg{width:13px;height:13px}#pbVTest:hover{filter:brightness(1.1)}
+@keyframes pbPop{from{opacity:0;transform:translateY(-6px) scale(.97)}to{opacity:1;transform:none}}
+#pbWave{display:none;align-items:center;gap:3px;flex:1;height:34px;color:#e2483c;font:600 12.5px var(--font-body,Inter,sans-serif)}
+#pbWave i{width:3px;border-radius:3px;background:#e2483c;height:8px;animation:pbEq .8s ease-in-out infinite}
+#pbWave i:nth-child(2n){animation-delay:.1s}#pbWave i:nth-child(3n){animation-delay:.22s}#pbWave i:nth-child(5n){animation-delay:.34s}
+#pbWave span{margin-left:8px}
+#pbPanel.listening #pbWave{display:flex}#pbPanel.listening #pbIn{display:none}
+#pbPanel.listening #pbForm{border-color:#e2483c;box-shadow:0 0 0 3px rgba(226,72,60,.15)}
+.pbrow{animation:pbIn .28s cubic-bezier(.2,.9,.3,1.1) both}
+@keyframes pbIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pbm.u{background:linear-gradient(135deg,#123a7a,#2f6fed)!important;color:#fff!important;box-shadow:0 6px 14px -6px rgba(31,88,201,.55)}
+.pbm.b{box-shadow:0 2px 10px -4px rgba(11,37,69,.18);border-left:3px solid rgba(47,111,237,.55)}
+#pbMic{background:rgba(47,111,237,.08)}#pbMic:hover{background:rgba(47,111,237,.18)}
+#pbFab.talking .pbBadge{animation:pbTalkGlow 1s ease-in-out infinite}
+@keyframes pbTalkGlow{0%,100%{filter:drop-shadow(0 0 0 rgba(94,225,255,0))}50%{filter:drop-shadow(0 0 10px rgba(94,225,255,.9))}}
+@media(prefers-reduced-motion:reduce){#pbHead,#pbEq i,#pbWave i,.pbrow{animation:none!important}}
+
 </style>
 
-<div id="pbFab" role="button" tabindex="0" aria-label="Open Navachar" title="Ask Navachar"><div class="pbBub">Hii, I’m Navachar!</div><div class="pbBot" aria-hidden="true"><svg viewBox="0 0 72 64"><defs><linearGradient id="pbpskin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7cfa8"/><stop offset="1" stop-color="#e4a981"/></linearGradient><linearGradient id="pbphat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9e4f5"/></linearGradient><linearGradient id="pbpvest" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffa033"/><stop offset="1" stop-color="#f07a0f"/></linearGradient></defs><!-- torso --><path d="M6 64V52c0-7 6-11 14-13l8-2h16l8 2c8 2 14 6 14 13v12z" fill="#16335f"/><path d="M17 40.5l11-3.5v27H14V46c0-3 1.5-4.5 3-5.5z" fill="url(#pbpvest)"/><path d="M55 40.5L44 37v27h14V46c0-3-1.5-4.5-3-5.5z" fill="url(#pbpvest)"/><path d="M14 52h14v3H14zM44 52h14v3H44z" fill="#e9eef5" opacity=".95"/><!-- collar and neck --><path d="M29 37l7 9 7-9z" fill="#fff"/><rect x="31.5" y="30" width="9" height="9" rx="3" fill="#e0a37c"/><!-- ears --><ellipse cx="22.5" cy="26" rx="2.4" ry="3.4" fill="#e9b790"/><ellipse cx="49.5" cy="26" rx="2.4" ry="3.4" fill="#e9b790"/><!-- head --><path d="M24 24c0-9 5-14 12-14s12 5 12 14c0 8-5 13.5-12 13.5S24 32 24 24z" fill="url(#pbpskin)"/><!-- hair --><path d="M24.5 22c.5-6 4-9 11.5-9s11 3 11.5 9c-2-3.5-5-5-11.5-5s-9.500 1.500-11.500 5z" fill="#2a1d17"/><!-- helmet --><path d="M22 20c0-8 6-14 14-14s14 6 14 14v1.500H22z" fill="url(#pbphat)"/><path d="M33.500 6.200h5v15.300h-5z" fill="#cfdcf0"/><path d="M20 21h32a2.500 2.500 0 0 1 0 4H20a2.500 2.500 0 0 1 0-4z" fill="#2f6fed"/><path d="M30 11.500l6-.8 6 .8" stroke="#fff" stroke-width="0" fill="none"/><path d="M35.500 10.500l1.200-2 1.200 2-1.200 1.800z" fill="#2f6fed" opacity="0"/><!-- brows, eyes --><path d="M28.800 25.500q2.500-1.600 5 0M38.200 25.500q2.500-1.600 5 0" stroke="#2a1d17" stroke-width="1.100" fill="none" stroke-linecap="round"/><ellipse cx="31.300" cy="28.600" rx="1.700" ry="2" fill="#fff"/><ellipse cx="40.700" cy="28.600" rx="1.700" ry="2" fill="#fff"/><circle cx="31.500" cy="28.700" r="1.150" fill="#2a1d17"/><circle cx="40.900" cy="28.700" r="1.150" fill="#2a1d17"/><circle cx="31.900" cy="28.200" r=".35" fill="#fff"/><circle cx="41.300" cy="28.200" r=".35" fill="#fff"/><!-- nose, smile, cheeks --><path d="M36 29.500q-1.200 2.500 .2 3.200" stroke="#c98a63" stroke-width=".9" fill="none" stroke-linecap="round"/><path d="M31.800 33.800q4.200 3.600 8.400 0" stroke="#9b4a3a" stroke-width="1.200" fill="none" stroke-linecap="round"/><path d="M32.600 34.200q3.400 2.800 6.800 0q-3.400 1.200-6.800 0z" fill="#fff"/><circle cx="28" cy="32.500" r="2.200" fill="#f08a7a" opacity=".28"/><circle cx="44" cy="32.500" r="2.200" fill="#f08a7a" opacity=".28"/><!-- waving arm (group rotates at shoulder) --><g class="pbWv"><path d="M52 46c3-3 6-9 7.500-17" stroke="#16335f" stroke-width="8.500" stroke-linecap="round" fill="none"/><path d="M52 46c3-3 6-9 7.500-17" stroke="#ffa033" stroke-width="2" stroke-linecap="round" fill="none" opacity="0"/><rect x="55.500" y="25.500" width="8" height="3.500" rx="1.500" fill="#e9eef5" transform="rotate(14 59.500 27)"/><g transform="translate(59.800 20.500) rotate(10)"><rect x="-4" y="-2" width="8" height="9" rx="3.200" fill="url(#pbpskin)"/><rect x="-4.500" y="-8" width="2" height="7.500" rx="1" fill="url(#pbpskin)"/><rect x="-2.100" y="-9.500" width="2" height="8.500" rx="1" fill="url(#pbpskin)"/><rect x=".3" y="-9.200" width="2" height="8.500" rx="1" fill="url(#pbpskin)"/><rect x="2.600" y="-7.500" width="1.900" height="7" rx=".95" fill="url(#pbpskin)"/><rect x="-8.200" y="1.200" width="2.100" height="6" rx="1.050" fill="url(#pbpskin)" transform="rotate(-38 -5 5)"/></g></g></svg></div><div class="pbBadge"><span class="pbRing"></span><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19 7.5l12.6 7.25v14.5L19 36.5 6.4 29.25v-14.5z" fill="rgba(94,225,255,.10)" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M13.5 28V16l11 12V16" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path class="pbSpark" d="M32 3l1.2 3.8L37 8l-3.8 1.2L32 13l-1.2-3.8L27 8l3.8-1.2z" fill="#5ee1ff"/></svg></div></div>
-<div id="pbPanel" role="dialog" aria-label="Navachar">
+<div id="pbFab" role="button" tabindex="0" aria-label="Open Aura" title="Ask Aura">
+<div class="pbBub" id="pbBub"><span class="pbBg" id="pbBg"></span></div>
+<div class="pbBadge"><img data-pblogo alt=""><span class="pbMouth"></span></div></div>
+<div id="pbPanel" role="dialog" aria-label="Aura">
   <div id="pbHead">
-    <div class="pbAv"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19 7.5l12.6 7.25v14.5L19 36.5 6.4 29.25v-14.5z" fill="rgba(94,225,255,.10)" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M13.5 28V16l11 12V16" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 3l1.2 3.8L37 8l-3.8 1.2L32 13l-1.2-3.8L27 8l3.8-1.2z" fill="#5ee1ff"/></svg></div>
-    <div class="t"><b>Navachar</b><span id="pbSub">Your plant-data companion</span></div>
+    <div class="pbAv"><img data-pblogo alt=""></div>
+    <div class="t"><b>Aura</b><span id="pbSub">Ask me about your plant</span></div><div id="pbEq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
     <button id="pbSpk" type="button" title="Read answers aloud (off)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
     <button id="pbWide" type="button" title="Expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
     <button id="pbClear" type="button" title="New chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg></button>
@@ -216,13 +321,15 @@
   <div id="pbTA"></div>
   <div id="pbVoiceMsg"></div>
   <div id="pbQuick"></div>
-  <div id="pbForm"><input id="pbIn" type="text" placeholder="Ask Navachar anything about the dashboard…" maxlength="300" autocomplete="off"><button id="pbMic" type="button" title="Speak your question" aria-label="Voice input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button id="pbSend" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
-  <div class="pbFoot">Navachar answers only from this dashboard’s data</div>
+  <div id="pbForm"><div id="pbWave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><span>Listening… speak now</span></div><input id="pbIn" type="text" placeholder="Ask Aura anything about the dashboard…" maxlength="300" autocomplete="off"><button id="pbMic" type="button" title="Speak your question" aria-label="Voice input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button id="pbSend" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
+  <div class="pbFoot">Aura answers only from this dashboard’s data</div>
 </div>
 
 <script id="picl-bot-js">
 (function(){
 'use strict';
+const LOGO_IMG='data:image/jpeg;base64,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';
+document.querySelectorAll('[data-pblogo]').forEach(i=>{i.src=LOGO_IMG;});
 /* Read the data straight from the page's JSON blocks (independent of the dashboard script's variables) */
 function readJSON(id){
   try{const el=document.getElementById(id);if(el&&el.textContent.trim())return JSON.parse(el.textContent);}catch(e){console.warn('PICL chatbot: cannot parse #'+id,e);}
@@ -489,7 +596,7 @@ function parse(raw){
   if(sm){p.shifts.push(sm[1].toUpperCase());if(sm[2])p.shifts.push(sm[2].toUpperCase());}
   else{const s2=q.match(/\b([abc])\s*shift\b/);if(s2)p.shifts.push(s2[1].toUpperCase());}
   FRAMES.forEach(f=>{
-    if(f.length<=1){ if(new RegExp('\\bframes?\\s*(?:[a-z]\\s*(?:,|and|&|vs|or)\\s*)*'+f+'\\b').test(q)) p.frames.push(f);}
+    if(f.length<=1){ if(new RegExp('\\bframes?\\s*(?:[a-z]\\s*(?:,|and|&|vs|or)\\s*)*'+f+'\\b').test(q)||new RegExp('\\b'+f+'\\s+frames?\\b').test(q)||new RegExp('\\b'+f+'\\s*(?:,|and|&|vs)\\s*[a-z]\\s+frames?\\b').test(q)) p.frames.push(f);}
     else if(new RegExp('(^|[^a-z])'+f.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&')+'([^a-z]|$)').test(q)) p.frames.push(f);
   });
   const qn=normStr(q);
@@ -572,6 +679,22 @@ function parse(raw){
   { const per=splitPeriods(q); if(per){ p.periods=per; p.intent='periods'; p.date=null; p.q=q; if(!p.metric) p.metric='summary'; return p; } }
   /* "why / what went wrong / biggest problem" -> diagnostic analysis */
   if(!p.group&&/\b(why|what (went|is|was|are|were) wrong|what happened|what is happening|whats happening|problems?|issues?|bottlenecks?|root cause|reason for|cause of|causing|struggl\w*|trouble|concerns?|pulling down|hurting|dragging|lagging|underperform\w*|not (good|ok)|poor)\b/.test(q)&&!p.colObj){ p.intent='diagnose'; p.q=q; return p; }
+  /* "frame wise model count", "models per frame", "how many lines in each shop" -> distinct count per group */
+  { const G='frame|line|shift|shop|unit', W='model|line|frame|shift';
+    let m1=q.match(new RegExp('\\b('+G+')s?[ -]?wise\\s+('+W+')s?\\b'));
+    let grp=null,what=null;
+    if(m1){grp=m1[1];what=m1[2];}
+    else{ const m2=q.match(new RegExp('\\b(?:how many|number of|count of|count|total)?\\s*('+W+')s?\\s*(?:count|number|total)?\\s*(?:are there\\s+)?(?:per|by|in each|in every|for each|for every|of each|across|under each)\\s+('+G+')s?\\b'))
+        ||q.match(new RegExp('\\b(?:how many|number of|count of|count)\\s+('+W+')s?\\s+(?:are there\\s+)?(?:in|on|for|under)\\s+(?:each |every )?('+G+')s?\\b'));
+      if(m2){what=m2[1];grp=m2[2];} }
+    if(grp&&what&&grp!==what&&!(p.group&&0)){ p.intent='countby'; p.cbGroup=grp==='shop'?'dept':grp; p.cbWhat=what; p.q=q; p.group=null; return p; } }
+  { /* "PSC E frame model list", "models in c frame", "list models of e frame in psc" -> distinct list (respects unit / frame / line filters) */
+    let t=' '+q+' '; p.frames.forEach(f=>{t=t.replace(new RegExp('\\b'+f+'\\b','g'),' ');});
+    t=t.replace(/\b(psc|bldc|assembly|assy|winding|moulding|molding|shell|frames?|the|all|of|in|for|show|me|list|lists|give|my|our|please|tell|us|names?|available|total|what|are|is|which|there|that|have|has|with|under|and|wise|present|exist|exists|running|run|ran|used|use)\b/g,' ').replace(/\s+/g,' ').trim();
+    const dd=t.match(/^(lines?|models?|shifts?|frames?|days|dates|reasons|departments|shops)$/);
+    if(dd&&!p.metric&&!p.group&&!p.date&&!p.colObj&&!p.models.length){ const k=dd[1].replace(/s$/,'');p.intent='distinct';p.dim=({line:'line',model:'model',shift:'shift',frame:'frame',day:'date',date:'date',reason:'reason',department:'lossdept',shop:'dept'})[k]||'model';return p;} }
+  const _bare=q.replace(/\b(psc|bldc|assembly|assy|winding|moulding|molding|shell|the|all|of|in|for|show|me|list|give|my|our|please|tell|us|names?|available|total|what|are|is)\b/g,' ').replace(/\s+/g,' ').trim().match(/^(lines|models|shifts|frames|days|dates|reasons|departments|shops)$/);
+  if(_bare&&!p.metric&&!p.group&&!p.date&&!p.colObj){p.intent='distinct';p.dim=({lines:'line',models:'model',shifts:'shift',frames:'frame',days:'date',dates:'date',reasons:'reason',departments:'lossdept',shops:'dept'})[_bare[1]];return p;}
   const anyEnt=p.units.length||p.depts.length||p.lines.length||p.shifts.length||p.frames.length||p.models.length||p.date||p.group||p.lossReasons.length||p.lossDepts.length||p.remarks.length||p.rejReasons.length||p.rejCats.length;
   let dm=q.match(/\b(?:how many|number of|list(?: of)?(?: all)?|which|what)\s+(lines|models|shifts|frames|days|dates|reasons|departments|shops)\b/);
   if(dm&&/\b(how many|number of|list|all|available|exist|ran|run|are there)\b/.test(q)&&!p.metric){p.intent='distinct';p.dim=({lines:'line',models:'model',shifts:'shift',frames:'frame',days:'date',dates:'date',reasons:'reason',departments:'lossdept',shops:'dept'})[dm[1]];return p;}
@@ -707,12 +830,13 @@ function sentenceCore(p,spec,m,scope){
 }
 
 function answer(p){
-  if(p.intent==='hello') return {html:'<p><b>Hello! I’m Navachar.</b> Ask me anything about this dashboard — production vs plan, rejections, OEE, losses, manpower, safety — for PSC and BLDC. You can ask in plain English.</p>',chips:SUGGEST};
+  if(p.intent==='hello') return {html:'<p><b>Hello! I’m Aura.</b> Ask me anything about this dashboard — production vs plan, rejections, OEE, losses, manpower, safety — for PSC and BLDC. You can ask in plain English.</p>',chips:SUGGEST};
   if(p.intent==='about') return aboutMsg();
   if(p.intent==='thanks') return {html:'<p>You’re welcome! Ask me anything else about the dashboard.</p>',chips:SUGGEST.slice(0,3)};
   if(p.intent==='bye') return {html:'<p>Goodbye! I’ll be right here whenever you need the numbers.</p>',chips:[]};
   if(p.intent==='define') return defineMsg(p);
   if(p.intent==='periods') return compareAnswer(p);
+  if(p.intent==='countby') return countByAnswer(p);
   if(p.intent==='diagnose') return diagnoseAnswer(p);
   if(p.intent==='help') return helpMsg();
   if(p.intent==='meta') return metaMsg();
@@ -879,7 +1003,7 @@ function howHTML(metric,p,rows,dr){
   const nd=new Set(rows.map(r=>r.date)).size;
   return '<details class="how"><summary>How this was calculated</summary><p>'+esc(f)+'</p><p>Based on <b>'+n0(rows.length)+'</b> production row(s) over <b>'+nd+'</b> day(s) ('+esc(dr.label)+'). Same formulas as the dashboard’s KPI cards.</p></details>';
 }
-function aboutMsg(){return {html:'<p><b>I’m Navachar</b> — the assistant built into this dashboard (<i>नवाचार</i> means “innovation”).</p><p>I read every row on this page — production, plan, rejections, losses, manpower and safety for <b>PSC</b> and <b>BLDC</b> — and answer by <b>calculating from that data</b>. I never guess: if something isn’t in the data, I’ll tell you. Ask in plain English, or type any column name.</p>',chips:SUGGEST};}
+function aboutMsg(){return {html:'<p><b>I’m Aura</b> — the assistant built into this dashboard.</p><p>I read every row on this page — production, plan, rejections, losses, manpower and safety for <b>PSC</b> and <b>BLDC</b> — and answer by <b>calculating from that data</b>. I never guess: if something isn’t in the data, I’ll tell you. Ask in plain English, or type any column name.</p>',chips:SUGGEST};}
 const DEFS=[
  [/\boee\b|efficiency/,'OEE','OEE = Availability × Performance. Availability = (Actual man-hours − availability-loss man-hours) ÷ Actual man-hours. Performance = Target man-hours for the actual output ÷ (Actual man-hours − availability loss). It shows how much of the available time was used productively.'],
  [/availability/,'Availability','Availability = (Actual man-hours − availability-loss man-hours) ÷ Actual man-hours. Availability losses are stoppages such as material shortage, breakdown, power trip or model change.'],
@@ -983,15 +1107,33 @@ function rowsAnswer(p){
   const trs=shown.map(r=>({label:fmtDs(r.date)+' · '+r.unit+' '+DEPT_LABEL[r.dept],cells:[r.line,r.shift,r.model,r.frame||'–'].concat(NUMCOLS.map(c=>typeof r[c.key]==='number'?n2(r[c.key]):'–'))}));
   return {html:'<div class="scope">'+esc(scopeText(p,dr,''))+'</div><p><b>'+n0(rows.length)+'</b> row(s) match'+(rows.length>lim?' — showing the newest '+lim:'')+'.</p>'+tableHTML(head,trs),chips:['Summary for these rows','By model','Loss reasons'],tsv:tsv(head,trs)};
 }
+function frameLabel(f){f=String(f||'').trim();if(!f)return '(no frame)';return f.length<=3?f.toUpperCase():f[0].toUpperCase()+f.slice(1);}
+function countByAnswer(p){
+  const dr=p.date||null; const rows=filt(REC,p,dr); if(!rows.length) return notFound(p);
+  const gk=r=>p.cbGroup==='frame'?frameLabel(frameNorm(r.frame)):p.cbGroup==='line'?'Line '+r.line:p.cbGroup==='shift'?'Shift '+r.shift:p.cbGroup==='dept'?r.unit+' '+DEPT_LABEL[r.dept]:r.unit;
+  const wk=r=>p.cbWhat==='model'?String(r.model||'').trim().toUpperCase():p.cbWhat==='frame'?frameLabel(frameNorm(r.frame)):p.cbWhat==='shift'?'Shift '+r.shift:'Line '+r.line;
+  const map=new Map(),all=new Set(); rows.forEach(r=>{const g=gk(r),w=wk(r);if(!w)return;all.add(w);(map.get(g)||map.set(g,new Set()).get(g)).add(w);});
+  const list=[...map.entries()].map(([g,st])=>({g,n:st.size,vals:[...st].sort((a,b)=>String(a).localeCompare(String(b),undefined,{numeric:true}))})).sort((a,b)=>b.n-a.n||String(a.g).localeCompare(String(b.g),undefined,{numeric:true}));
+  const wname={model:'model',line:'line',frame:'frame',shift:'shift'}[p.cbWhat], gname={frame:'frame',line:'line',shift:'shift',dept:'shop',unit:'unit'}[p.cbGroup];
+  const head=[gname[0].toUpperCase()+gname.slice(1),'Distinct '+wname+'s','Examples'];
+  const trs=list.map(x=>({label:x.g,cells:[n0(x.n),x.vals.slice(0,4).join(', ')+(x.vals.length>4?' +'+(x.vals.length-4)+' more':'')],bar:x.n/list[0].n*100}));
+  const tot={label:'All '+gname+'s (distinct)',cells:[n0(all.size),'']};
+  const lead='<b>'+n0(all.size)+'</b> distinct '+wname+'s in total. By '+gname+': '+list.slice(0,6).map(x=>'<b>'+esc(x.g)+'</b> '+n0(x.n)).join(', ')+(list.length>6?' …':'')+'.';
+  const sc=scopeText(p,dr||range(ALLDATES[0],GLOBAL_LATEST,'All dates'),'');
+  return {html:'<div class="scope">Count of '+wname+'s per '+gname+' · '+esc(sc)+'</div><p>'+lead+'</p>'+tableHTML(head,trs,list.length>1?tot:null)+'<div class="note">A '+wname+' that runs under more than one '+gname+' is counted in each, so the rows can add up to more than the total.</div>',chips:['PSC models','Frame wise production','Which frame has the most models?'],tsv:tsv(head,trs,tot)};
+}
 function distinctAnswer(p){
   const dr=p.date||null; const rows=filt(REC,p,dr); if(!rows.length) return notFound(p);
   let vals,name;
   if(p.dim==='reason'){const s=new Set();rows.forEach(r=>(r.lossDetails||[]).forEach(l=>l.reason&&s.add(l.reason)));vals=[...s];name='loss reasons';}
   else if(p.dim==='lossdept'){const s=new Set();rows.forEach(r=>(r.lossDetails||[]).forEach(l=>l.dept&&s.add(l.dept)));vals=[...s];name='loss departments';}
   else if(p.dim==='dept'){vals=[...new Set(rows.map(r=>r.unit+' '+DEPT_LABEL[r.dept]))];name='shops';}
-  else {const k=p.dim==='frame'?'frame':p.dim;vals=[...new Set(rows.map(r=>p.dim==='frame'?(frameNorm(r.frame)||''):r[k]).filter(Boolean))];name={line:'lines',model:'models',shift:'shifts',frame:'frames',date:'dates'}[p.dim];}
+  else {const k=p.dim==='frame'?'frame':p.dim;vals=[...new Set(rows.map(r=>p.dim==='frame'?(frameNorm(r.frame)||''):p.dim==='model'?String(r.model||'').trim().toUpperCase():r[k]).filter(Boolean))];name={line:'lines',model:'models',shift:'shifts',frame:'frames',date:'dates'}[p.dim];}
   vals.sort((a,b)=>String(a).localeCompare(String(b),undefined,{numeric:true}));
-  return {html:'<div class="scope">'+esc(scopeText(p,dr||range(ALLDATES[0],GLOBAL_LATEST,'All dates'),''))+'</div><p>There are <b>'+vals.length+'</b> distinct '+name+':</p><p>'+vals.slice(0,80).map(esc).join(', ')+(vals.length>80?' …':'')+'</p>',chips:SUGGEST};
+  let extra='',tsvX='';
+  if(p.dim==='model'){ const fm=new Map(); rows.forEach(r=>{const f=frameLabel(frameNorm(r.frame));const m=String(r.model||'').trim().toUpperCase();if(!m)return;(fm.get(f)||fm.set(f,new Set()).get(f)).add(m);});
+    const L=[...fm.entries()].map(([f,st])=>({label:f,cells:[n0(st.size)],n:st.size})).sort((a,b)=>b.n-a.n); if(L.length>1){const mx=L[0].n;L.forEach(x=>x.bar=x.n/mx*100);extra='<p style="margin-top:10px"><b>Models per frame</b></p>'+tableHTML(['Frame','Distinct models'],L,null);tsvX=tsv(['Frame','Distinct models'],L,null);} }
+  return {html:'<div class="scope">'+esc(scopeText(p,dr||range(ALLDATES[0],GLOBAL_LATEST,'All dates'),''))+'</div><p>There are <b>'+vals.length+'</b> distinct '+name+':</p><p>'+vals.slice(0,80).map(esc).join(', ')+(vals.length>80?' …':'')+'</p>'+extra,chips:p.dim==='model'?['Frame wise model count','PSC frame wise production','Which frame has the most models?']:SUGGEST,tsv:tsvX};
 }
 function searchAnswer(p){
   const src=(p.q||p.raw||'').toLowerCase();
@@ -1022,7 +1164,7 @@ const SUGGEST=['Overall summary','PSC assembly production yesterday','Which line
 const panel=$b('pbPanel'),msgs=$b('pbMsgs'),inp=$b('pbIn'),fab=$b('pbFab');
 const history=[];let hIdx=-1;
 function chipRow(list){const d=document.createElement('div');d.className='pbc';list.forEach(t=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.onclick=()=>ask(t);d.appendChild(b);});return d;}
-const MINI='<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19 7.5l12.6 7.25v14.5L19 36.5 6.4 29.25v-14.5z" fill="rgba(94,225,255,.10)" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M13.5 28V16l11 12V16" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 3l1.2 3.8L37 8l-3.8 1.2L32 13l-1.2-3.8L27 8l3.8-1.2z" fill="#5ee1ff"/></svg>';
+const MINI='<img src="'+LOGO_IMG+'" alt="">';
 function hhmm(){try{return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}catch(e){return '';}}
 function wrapRow(el,who){const r=document.createElement('div');r.className='pbrow '+who;if(who==='b'){const a=document.createElement('div');a.className='pbmini';a.innerHTML=MINI;r.appendChild(a);}const col=document.createElement('div');col.style.cssText='min-width:0;'+(who==='b'?'flex:1;max-width:calc(100% - 38px)':'max-width:86%');col.appendChild(el);const t=document.createElement('span');t.className='pbts';t.textContent=hhmm();col.appendChild(t);r.appendChild(col);return r;}
 function addUser(t){const d=document.createElement('div');d.className='pbm u';d.textContent=t;msgs.appendChild(wrapRow(d,'u'));msgs.scrollTop=msgs.scrollHeight;}
@@ -1044,7 +1186,7 @@ function restoreChat(){try{const L=JSON.parse(localStorage.getItem(CHAT_KEY)||'[
   L.forEach(x=>{addUser(x.q);addBot({html:x.html,chips:x.chips,tsv:x.tsv,q:x.q});});}catch(e){}}
 function saveFeedback(q,v,a){try{const L=JSON.parse(localStorage.getItem('pbFeedback')||'[]');L.push({t:new Date().toISOString(),q:q,v:v,a:a});localStorage.setItem('pbFeedback',JSON.stringify(L.slice(-200)));}catch(e){}}
 function feedbackMsg(){let L=[];try{L=JSON.parse(localStorage.getItem('pbFeedback')||'[]');}catch(e){}const bad=L.filter(x=>x.v==='down');
-  return {noTools:1,html:'<p><b>Feedback saved in this browser</b>: '+L.filter(x=>x.v==='up').length+' helpful · '+bad.length+' marked wrong</p>'+(bad.length?'<p>Questions marked wrong:</p><ul>'+bad.slice(-15).map(x=>'<li>'+esc(x.q)+'</li>').join('')+'</ul><p class="note">Send this list to your developer to improve Navachar.</p>':'<p class="note">Nothing marked wrong yet.</p>'),chips:[],tsv:bad.map(x=>x.q).join('\n')};}
+  return {noTools:1,html:'<p><b>Feedback saved in this browser</b>: '+L.filter(x=>x.v==='up').length+' helpful · '+bad.length+' marked wrong</p>'+(bad.length?'<p>Questions marked wrong:</p><ul>'+bad.slice(-15).map(x=>'<li>'+esc(x.q)+'</li>').join('')+'</ul><p class="note">Send this list to your developer to improve Aura.</p>':'<p class="note">Nothing marked wrong yet.</p>'),chips:[],tsv:bad.map(x=>x.q).join('\n')};}
 function ask(text){
   text=(text||'').trim(); if(!text) return;
   history.unshift(text);hIdx=-1;
@@ -1073,7 +1215,7 @@ function snapHTML(){try{const m=metrics(REC.filter(r=>r.date===GLOBAL_LATEST));i
 function welcome(){
   msgs.innerHTML='';
   const d=document.createElement('div');d.className='pbHome';
-  d.innerHTML='<div class="big"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19 7.5l12.6 7.25v14.5L19 36.5 6.4 29.25v-14.5z" fill="rgba(94,225,255,.10)" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M13.5 28V16l11 12V16" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 3l1.2 3.8L37 8l-3.8 1.2L32 13l-1.2-3.8L27 8l3.8-1.2z" fill="#5ee1ff"/></svg></div><div class="gr">'+greet()+'</div><h3>Hii, I’m Navachar</h3><p>Ask in plain English — or type any column name. Data up to <b>'+fmtD(GLOBAL_LATEST)+'</b>.</p>';
+  d.innerHTML='<div class="big"><img src="'+LOGO_IMG+'" alt=""></div><div class="gr">Your plant-data assistant</div><h3>'+greet()+'! I’m Aura</h3><p>What would you like to know today? Ask in plain English — or type any column name. Data up to <b>'+fmtD(GLOBAL_LATEST)+'</b>.</p>';
   const g=document.createElement('div');g.className='pbCards';
   [['Overall summary','PSC + BLDC, latest day','grid'],['Why was output low yesterday?','Shortfall, losses, rejects','search'],['Which line has the highest rejection this month?','Ranking by line','bars'],['This week vs last week production','Period comparison','trend'],['Top 5 loss reasons in BLDC winding','Pareto of losses','clock'],['What is OEE?','Formulas explained','book']].forEach(([q,sub,ic])=>{const b=document.createElement('button');b.type='button';b.innerHTML='<span class="ic">'+ICO[ic]+'</span>'+esc(q)+'<small>'+esc(sub)+'</small>';b.onclick=()=>ask(q);g.appendChild(b);});
   d.appendChild(g);msgs.appendChild(d);
@@ -1093,42 +1235,166 @@ buildQuick();
 
 /* ---------- voice: speak a question (mic) and optionally hear the answer (speaker) ---------- */
 (function(){
+  const UA=navigator.userAgent||'', isAndroid=/Android/i.test(UA), isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition, mic=$b('pbMic'), vm=$b('pbVoiceMsg'), spk=$b('pbSpk');
-  const note=t=>{vm.textContent=t||'';vm.style.display=t?'block':'none';};
-  if(SR){ mic.style.display='flex'; let rec=null,listening=false;
-    mic.addEventListener('click',()=>{
-      if(listening){try{rec.stop();}catch(e){}return;}
-      try{ rec=new SR(); rec.lang='en-IN'; rec.interimResults=true; rec.continuous=false; rec.maxAlternatives=1; }catch(e){note('Voice input is not available here.');return;}
-      let finalT='';
-      rec.onstart=()=>{listening=true;mic.classList.add('on');note('Listening… speak your question');try{speechSynthesis.cancel();}catch(e){}};
-      rec.onresult=ev=>{let t='';for(let i=0;i<ev.results.length;i++){t+=ev.results[i][0].transcript;if(ev.results[i].isFinal)finalT=t;}inp.value=t;};
-      rec.onerror=ev=>{const m={'not-allowed':'Microphone access is blocked — allow it in the browser address bar.','service-not-allowed':'Microphone access is blocked — allow it in the browser address bar.','no-speech':'I didn’t hear anything. Tap the mic and try again.','audio-capture':'No microphone found.','network':'Voice input needs an internet connection.'}[ev.error]||'Voice input stopped ('+ev.error+').';note(m);};
-      rec.onend=()=>{listening=false;mic.classList.remove('on');const t=(finalT||inp.value).trim();if(t){note('');inp.value=t;sendNow();}else if(vm.textContent.indexOf('Listening')===0)note('');};
-      try{rec.start();}catch(e){note('Voice input could not start.');}
-    });
+  const inApp=/(FBAN|FBAV|Instagram|WhatsApp|Line\/|Snapchat|MicroMessenger|GSA\/|; wv\)|Version\/[\d.]+ Chrome\/[\d.]+ Mobile.*wv)/i.test(UA);
+  const KB=isTouch?' Tip: you can also tap the microphone key on your phone keyboard to speak into the box.':'';
+  let vAsked=0; let noteT=null; const note=(t,keep)=>{clearTimeout(noteT);vm.textContent=t||'';vm.style.display=t?'block':'none';if(t&&!keep)noteT=setTimeout(()=>note(''),14000);};
+  const HOWTO=isAndroid?'If Android says “This site can’t ask for your permission”, close floating bubbles/overlays (chat heads, screen filter or blue-light apps, floating windows, screen recorder) or switch them off in Settings → Apps → Special app access → Display over other apps, then tap Try again. Or skip the popup: tap the lock icon in the address bar → Permissions → Microphone → Allow. Also check Android Settings → Apps → Chrome → Permissions → Microphone → Allow. Then reload the page.':'Click the lock / tune icon left of the web address → Site settings → Microphone → Allow, then reload the page.';
+  mic.style.display='flex';
+  let rec=null,listening=false,held=null,relT=null;
+  /* keep the already-allowed mic stream for a while so the browser does not ask again for every question (file:// pages cannot remember the choice) */
+  function releaseMic(){try{held&&held.getTracks().forEach(t=>t.stop());}catch(e){}held=null;clearTimeout(relT);}
+  function armRelease(){clearTimeout(relT);relT=setTimeout(()=>{if(!listening)releaseMic();else armRelease();},10*60*1000);}
+  function begin(){
+    try{ rec=new SR(); rec.lang='en-IN'; rec.interimResults=true; rec.continuous=false; rec.maxAlternatives=1; }catch(e){note('Voice input is not available in this browser.'+KB,true);inp.focus();return;}
+    wire(); try{rec.start();}catch(e){note('Voice input could not start. Tap the mic again.');}
   }
-  /* read answers aloud */
-  let speakOn=false; try{speakOn=localStorage.getItem('pbSpeak')==='1';}catch(e){}
-  const TTS='speechSynthesis' in window;
-  if(!TTS){spk.style.display='none';}
-  function sync(){spk.classList.toggle('on',speakOn);spk.title='Read answers aloud ('+(speakOn?'on':'off')+')';}
+  function wire(){
+    let finalT='';
+    rec.onstart=()=>{listening=true;mic.classList.add('on');panel.classList.add('listening');setSub();note('Listening… speak your question',true);try{speechSynthesis.cancel();}catch(e){}};
+    rec.onresult=ev=>{let t='';for(let i=0;i<ev.results.length;i++){t+=ev.results[i][0].transcript;if(ev.results[i].isFinal)finalT=t;}inp.value=t;};
+    rec.onerror=ev=>{const m={'not-allowed':'Microphone is blocked for this page. '+HOWTO,'service-not-allowed':'Voice service is blocked in this browser. Use Chrome, and '+HOWTO,'no-speech':'I didn’t hear anything. Tap the mic and try again.','audio-capture':'No microphone found or another app is using it.','network':'Voice input needs an internet connection.','language-not-supported':'Voice input language is not supported on this device.'}[ev.error]||'Voice input stopped ('+ev.error+').'+KB;note(m+(ev.error==='not-allowed'||ev.error==='service-not-allowed'?KB:''),true);};
+    rec.onend=()=>{listening=false;panel.classList.remove('listening');setSub();if(held)armRelease();mic.classList.remove('on');const t=(finalT||inp.value).trim();if(t){note('');inp.value=t;vAsked=Date.now();sendNow();}else if(vm.textContent.indexOf('Listening')===0)note('');};
+  }
+  function askMic(){
+    if(!window.isSecureContext){note('Your browser only allows the microphone on a secure page. This dashboard was opened as “'+location.protocol+'//”, so Android cannot show the Allow popup. Open it from its https:// link in Chrome (a file opened from Downloads or an http://192.168… link will not work).'+KB,true);inp.focus();return;}
+    if(inApp){note('This app’s built-in browser blocks the microphone. Tap ⋮ (menu) → “Open in Chrome”, then try again.'+KB,true);inp.focus();return;}
+    if(!SR){note('Voice typing is not supported in this browser. Please open the dashboard in Chrome.'+KB,true);inp.focus();return;}
+    if(window.top!==window.self){note('This dashboard is embedded inside another page, which blocks the microphone. Open it in its own browser tab.',true);}
+    if(isAndroid){ begin(); return; }   /* Chrome on Android shows its own Allow popup when listening starts */
+    const go=()=>{ if(held&&held.active){ begin(); return; }
+      if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+        note('Please click “Allow” in the browser popup…',true);
+        navigator.mediaDevices.getUserMedia({audio:true}).then(st=>{held=st;armRelease();note('');begin();})
+          .catch(err=>{ if(err&&(err.name==='NotFoundError'||err.name==='DevicesNotFoundError'))note('No microphone found on this device.'); else note('Microphone is blocked for this page. '+HOWTO,true); });
+      } else begin(); };
+    try{ if(navigator.permissions&&navigator.permissions.query){ navigator.permissions.query({name:'microphone'}).then(r=>{ if(r.state==='denied'){note('Microphone is blocked for this page. '+HOWTO,true);} else go(); },go);} else go(); }catch(e){go();}
+  }
+  mic.addEventListener('click',()=>{ if(listening){try{rec.stop();}catch(e){}return;} askMic(); });
+
+  /* ---- read answers aloud ---- */
+  let speakOn=true; try{const sv=localStorage.getItem('pbSpeak');if(sv!==null)speakOn=sv==='1';}catch(e){}
+  const TTS='speechSynthesis' in window&&typeof SpeechSynthesisUtterance!=='undefined';
+  let voices=[]; const loadV=()=>{try{voices=speechSynthesis.getVoices()||[];}catch(e){}};
+  if(TTS){loadV();try{speechSynthesis.addEventListener('voiceschanged',loadV);}catch(e){speechSynthesis.onvoiceschanged=loadV;}}
+  const keep=[];
+  const FEM=/(female|woman|zira|heera|neerja|swara|aditi|raveena|veena|priya|kalpana|hemant_f|samantha|karen|moira|tessa|serena|fiona|victoria|susan|hazel|libby|sonia|aria|jenny|natasha|google (uk english female|us english|hindi))/i;
+  const MALE=/(\bmale\b|ravi|hemant|prabhat|david|mark|george|james|daniel|guy|ryan|alex|fred|rishi|\bman\b)/i;
+  let vLang='en',vName='',vRate=0.92; try{vLang=localStorage.getItem('pbVLang')==='hi'?'hi':'en';vRate=parseFloat(localStorage.getItem('pbVRate'))||0.92;}catch(e){}
+  const eq=$b('pbEq'); let talking=false;
+  function setTalk(on){ talking=on; fab.classList.toggle('talking',on); panel.classList.toggle('speaking',on); spk.classList.toggle('talk',on); setSub(); }
+  function setSub(){ const el=$b('pbSub'); if(!el)return; el.textContent=talking?'Speaking…':listening?'Listening…':'Online · data to '+fmtD(GLOBAL_LATEST); }
+  function prep(t){ if(vLang==='hi'&&pickLang('hi')) return String(t).replace(/%/g,' प्रतिशत').replace(/\bvs\.?\b/gi,'बनाम').replace(/\s+/g,' '); return String(t).replace(/\bOEE\b/g,'O E E').replace(/\bPSC\b/g,'P S C').replace(/\bBLDC\b/g,'B L D C').replace(/\bUPH\b/g,'U P H').replace(/\bUPPH\b/g,'U P P H').replace(/%/g,' percent').replace(/\bvs\.?\b/gi,'versus').replace(/\s*[—–]\s*/g,', ').replace(/[·•]/g,', ').replace(/\s+/g,' '); }
+  const SOFT=['Jenny','Aria','Sonia','Libby','Michelle','Emma','Ava','Neerja','Samantha','Google UK English Female','Zira','Heera','Hazel','Susan','Karen','Tessa','Moira','Serena','Fiona','Victoria'];
+  function pickLang(l){
+    const isF=v=>!MALE.test(v.name)||/female/i.test(v.name);
+    if(l==='hi'){ const hi=voices.filter(v=>/^hi[-_]/i.test(v.lang)); return hi.find(v=>FEM.test(v.name)||/swara|kalpana|google/i.test(v.name))||hi.find(isF)||hi[0]||null; }
+    const inn=voices.filter(v=>/^en[-_]IN/i.test(v.lang));
+    return inn.find(v=>/neerja|heera|veena|female|natural/i.test(v.name)&&isF(v))||inn.find(isF)||inn[0]||
+      voices.filter(v=>/^en[-_]/i.test(v.lang)&&isF(v)).find(v=>/Jenny|Aria|Sonia|Libby|Zira|Samantha|Female/i.test(v.name))||voices.find(v=>/^en[-_]/i.test(v.lang))||null;
+  }
+  function pick(){return pickLang(vLang)||pickLang('en')||voices[0]||null;}
+  function greetText(){ const h=new Date().getHours(); if(vLang==='hi'&&pickLang('hi')){ return (h<12?'शुभ प्रभात':h<17?'नमस्कार':'शुभ संध्या')+'! मैं ऑरा हूँ। आप डैशबोर्ड के बारे में कुछ भी पूछ सकते हैं।'; } return (h<12?'Good morning':h<17?'Good afternoon':'Good evening')+'! I am Aura. Ask me anything about the dashboard.'; }
+  function say(t,test){
+    if(!TTS||!t) return;
+    try{
+      if(speechSynthesis.speaking||speechSynthesis.pending) speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(prep(t)); const v=pick(); if(v){u.voice=v;u.lang=v.lang;}else u.lang='en-IN'; u.rate=vRate; u.pitch=1.05; u.volume=0.95;
+      let started=false; u.onstart=()=>{started=true;setTalk(true);setSub();}; u.onend=()=>{setTalk(false);setSub();}; u.onerror=e=>{setTalk(false);if(e&&e.error&&e.error!=='interrupted'&&e.error!=='canceled')note('Speaker problem ('+e.error+'). Check the media volume and your phone’s text-to-speech settings.',true);};
+      keep.push(u); if(keep.length>6)keep.shift();
+      speechSynthesis.speak(u); if(speechSynthesis.paused)speechSynthesis.resume();
+      setTimeout(()=>{ if(!started&&speakOn){ note('I could not play sound. Raise the MEDIA volume, and on Android check Settings → System → Languages → Text-to-speech output (install an English voice).'+(inApp?' This app’s built-in browser may block sound — open the dashboard in Chrome.':''),true);} },2800);
+    }catch(e){ note('Reading aloud is not available in this browser.',true); }
+  }
+  function sync(){spk.classList.toggle('on',speakOn);spk.title='Read answers aloud ('+(speakOn?'on':'off')+')';spk.setAttribute('aria-pressed',speakOn?'true':'false');}
   sync();
-  spk.addEventListener('click',()=>{speakOn=!speakOn;try{localStorage.setItem('pbSpeak',speakOn?'1':'0');}catch(e){}sync();if(!speakOn){try{speechSynthesis.cancel();}catch(e){}}else say('Voice answers on.');});
-  function say(t){ if(!TTS||!t) return; try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-IN';u.rate=1;const v=speechSynthesis.getVoices().find(x=>/en-IN/i.test(x.lang))||speechSynthesis.getVoices().find(x=>/^en/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u);}catch(e){} }
-  window.__pbSpeak=function(el){ if(!speakOn) return; const ps=[...el.querySelectorAll(':scope > p')].slice(0,2).map(p=>p.textContent.trim()).filter(Boolean);
-    say((ps.join(' ')||el.textContent).replace(/\s+/g,' ').slice(0,420)); };
-  $b('pbClose').addEventListener('click',()=>{try{speechSynthesis.cancel();}catch(e){}});
+  spk.addEventListener('click',()=>{
+    if(talking){try{speechSynthesis.cancel();}catch(e){}setTalk(false);setSub();return;}
+    if(!TTS){note('Reading answers aloud is not supported in this browser. Please open the dashboard in Chrome.',true);return;}
+    speakOn=!speakOn;try{localStorage.setItem('pbSpeak',speakOn?'1':'0');}catch(e){}sync();
+    if(!speakOn){try{speechSynthesis.cancel();}catch(e){}note('Voice answers off.');}
+    else{ note('Voice answers on.'); say('Voice answers on.',true); }   /* spoken inside the tap, which phones require to unlock sound */
+  });
+  window.__pbSpeak=function(el){ const va=vAsked&&Date.now()-vAsked<20000; vAsked=0; if(!speakOn) return; if(!TTS) return; const ps=[...el.querySelectorAll(':scope > p')].slice(0,2).map(p=>p.textContent.trim()).filter(Boolean);
+    say((ps.join(' ')||el.textContent).replace(/\s+/g,' ').slice(0,520)); };
+
+  /* spoken greeting with the popup. Browsers block sound before the first click/tap/key on a page, so if it is blocked it is spoken at the first interaction while the popup is still showing */
+  let gPend=null,gT=0;
+  function gSpeak(t){ if(!TTS) return false; try{
+      speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(prep(t)); const v=pick(); if(v){u.voice=v;u.lang=v.lang;}else u.lang='en-IN'; u.rate=vRate;u.pitch=1.05;u.volume=0.95;
+      u.onstart=()=>{gPend=null;setTalk(true);setSub();}; u.onend=()=>{setTalk(false);setSub();}; u.onerror=()=>setTalk(false); keep.push(u); if(keep.length>6)keep.shift(); speechSynthesis.speak(u); return true; }catch(e){return false;} }
+  window.__pbGreetSay=function(){ if(!TTS) return; const t=greetText(); gPend=t; gT=Date.now(); gSpeak(t); };
+  ['pointerdown','keydown','touchstart'].forEach(ev=>window.addEventListener(ev,()=>{ if(gPend&&Date.now()-gT<8000){const t=gPend;gPend=null;gSpeak(t);} else gPend=null; },{capture:true,passive:true}));
+
+  /* ---- voice settings: pick voice + speed ---- */
+  const vb=document.createElement('button');vb.type='button';vb.id='pbVoice';vb.title='Voice settings';vb.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h2M8 8v8M12 4v16M16 8v8M20 12h-2"/></svg>';
+  spk.parentNode.insertBefore(vb,spk);
+  const vm2=document.createElement('div');vm2.id='pbVMenu';panel.appendChild(vm2);
+  function fillMenu(){
+    const en=pickLang('en'),hi=pickLang('hi'); const nm=v=>v?v.name.replace(/^(Microsoft|Google)\s+/,'').replace(/\s*Online\s*\(Natural\)\s*-?\s*/,' · ').replace(/\s+-\s+.*$/,''):'';
+    const card=(l,ttl,sub,v,ic)=>'<button type="button" class="vc'+(vLang===l?' on':'')+'" data-l="'+l+'"><span class="vi">'+ic+'</span><span class="vt"><b>'+ttl+'</b><small>'+sub+'</small>'+(v?'':'<em>Not on this device — English voice is used</em>')+'</span><span class="vk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span></button>';
+    vm2.innerHTML='<div class="vh"><span class="vhi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h2M8 8v8M12 4v16M16 8v8M20 12h-2"/></svg></span><div><b>Voice settings</b><small>Choose how Aura speaks</small></div></div>'
+      +'<div class="vs">Voice</div>'
+      +card('en','Indian English','Female · English (India)',en,'EN')
+      +card('hi','हिन्दी','Female · Hindi',hi,'हि')
+      +'<div class="vs">Speed</div><div class="seg">'+[['Slow',0.8],['Normal',0.92],['Fast',1.08]].map(a=>'<button type="button" data-r="'+a[1]+'"'+(Math.abs(vRate-a[1])<.02?' class="on"':'')+'>'+a[0]+'</button>').join('')+'</div>'
+      +'<div class="vsw"><span><b>Read answers aloud</b><small>Greeting always plays</small></span><button type="button" id="pbVSw" class="sw'+(speakOn?' on':'')+'" role="switch" aria-checked="'+speakOn+'"><i></i></button></div>'
+      +'<button type="button" id="pbVTest"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Preview voice</button>';
+    const test=()=>say(vLang==='hi'&&pickLang('hi')?'नमस्कार, मैं ऑरा हूँ। मैं आपकी कैसे मदद कर सकती हूँ?':'Hello, I am Aura, your plant data assistant. How can I help you?',true);
+    vm2.querySelectorAll('.vc').forEach(b=>b.onclick=()=>{vLang=b.dataset.l;try{localStorage.setItem('pbVLang',vLang);}catch(e){}vm2.querySelectorAll('.vc').forEach(x=>x.classList.toggle('on',x===b));test();});
+    vm2.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{vRate=parseFloat(b.dataset.r);try{localStorage.setItem('pbVRate',vRate);}catch(e){}vm2.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));test();});
+    vm2.querySelector('#pbVSw').onclick=e=>{spk.click();const on=speakOn;e.currentTarget.classList.toggle('on',on);e.currentTarget.setAttribute('aria-checked',on);};
+    vm2.querySelector('#pbVTest').onclick=test; }
+  vb.addEventListener('click',e=>{e.stopPropagation(); if(!TTS){note('Voice is not supported in this browser.',true);return;} loadV(); fillMenu(); vm2.classList.toggle('open'); });
+  panel.addEventListener('click',e=>{ if(!vm2.contains(e.target)&&e.target!==vb&&!vb.contains(e.target))vm2.classList.remove('open'); });
+  $b('pbClose').addEventListener('click',()=>{try{speechSynthesis.cancel();}catch(e){}setTalk(false);releaseMic();});
+})();
+/* ---------- phones: keep the launcher and chat inside what the screen really shows ---------- */
+(function(){
+  const vv=window.visualViewport; let coarse=false; try{coarse=matchMedia('(pointer:coarse)').matches;}catch(e){}
+  if(!vv) return;
+  const set=(el,o)=>{for(const k in o)el.style.setProperty(k,o[k],'important');};
+  const KEYS=['left','top','width','height','right','bottom','max-width','max-height','border-radius'];
+  function fit(){
+    try{
+      const W=vv.width,H=vv.height,open=panel.classList.contains('open'),full=panel.classList.contains('wide');
+      if(coarse&&W<700){            /* phone: bottom sheet (Expand = full screen) */
+        panel.style.removeProperty('zoom');fab.style.removeProperty('zoom');
+        set(fab,{left:(vv.offsetLeft+W-64-14)+'px',top:(vv.offsetTop+H-64-58)+'px',right:'auto',bottom:'auto'});
+        const h=full?H:Math.round(H*0.56);
+        set(panel,{left:vv.offsetLeft+'px',top:(vv.offsetTop+H-h)+'px',width:W+'px',height:h+'px',right:'auto',bottom:'auto','max-width':'none','max-height':'none','border-radius':full?'0':'18px 18px 0 0'});
+      } else {                      /* tablet / big touch display / desktop: floating card at the corner, scaled to the screen size */
+        KEYS.forEach(k=>{panel.style.removeProperty(k);fab.style.removeProperty(k);});
+        const z=1; const zs=z>1.03?String(z):'';
+        if(zs){panel.style.setProperty('zoom',zs);fab.style.setProperty('zoom',zs);}else{panel.style.removeProperty('zoom');fab.style.removeProperty('zoom');}
+        const bw=full?760:395, mw=Math.floor((full?W*0.57:W*0.28)/z), mh=Math.floor(Math.min(H-70,full?H*0.88:H*0.56)/z);
+        set(panel,{width:Math.min(bw,mw)+'px',height:Math.min(full?1400:580,mh)+'px','max-width':mw+'px','max-height':mh+'px'});
+      }
+      if(open) document.documentElement.style.setProperty('--pb-open','1');
+    }catch(e){}
+  }
+  ['resize','scroll'].forEach(ev=>{vv.addEventListener(ev,fit);});window.addEventListener('scroll',fit,{passive:true});window.addEventListener('resize',fit);window.addEventListener('load',fit);
+  fit(); setTimeout(fit,500); setTimeout(fit,2000);
+  fab.addEventListener('click',()=>setTimeout(fit,30));
 })();
 function setSub(){}
-function openBot(){panel.classList.add('open');fab.style.display='none';fab.classList.remove('peek');setTimeout(()=>inp.focus(),50);}
+function openBot(){panel.classList.add('open');fab.style.display='none';try{hideBub();}catch(e){}setTimeout(()=>inp.focus(),50);}
 function closeBot(){panel.classList.remove('open');fab.style.display='block';}
 fab.addEventListener('click',openBot);
 fab.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openBot();}});
 $b('pbClose').onclick=closeBot;
 /* agent peeks out of the pocket, waves and says hi: on every page load, then every 5 minutes */
-function peek(){ if(panel.classList.contains('open')) return; fab.classList.remove('peek'); void fab.offsetWidth; fab.classList.add('peek'); setTimeout(()=>fab.classList.remove('peek'),7400); }
+let bubTimer=null,bubType=null;
+function typeInto(el,text){clearInterval(bubType);el.classList.remove('done');el.textContent='';fab.classList.add('talking');let i=0;bubType=setInterval(()=>{el.textContent=text.slice(0,++i);if(i>=text.length){clearInterval(bubType);el.classList.add('done');setTimeout(()=>fab.classList.remove('talking'),500);}},65);}
+function hideBub(){fab.classList.remove('peek');fab.classList.remove('talking');clearInterval(bubType);clearTimeout(bubTimer);}
+function peek(){ if(panel.classList.contains('open')) return;
+  fab.classList.remove('peek');void fab.offsetWidth;fab.classList.add('peek');
+  typeInto($b('pbBg'),greet()+'! I’m Aura');
+  clearTimeout(bubTimer);bubTimer=setTimeout(hideBub,7500);
+  try{window.__pbGreetSay&&window.__pbGreetSay(greet()+'! I am Aura. Ask me anything about the dashboard.');}catch(e){} }
 setTimeout(peek,1200); setInterval(peek,5*60*1000);
-$b('pbWide').onclick=()=>panel.classList.toggle('wide');
+$b('pbWide').onclick=()=>{panel.classList.toggle('wide');window.dispatchEvent(new Event('resize'));};
 $b('pbClear').onclick=()=>{CTX=null;aiHist=[];try{localStorage.removeItem(CHAT_KEY);}catch(e){}welcome();};
 function sendNow(){const v=inp.value;if(!v.trim())return;inp.value='';ask(v);}
 $b('pbSend').addEventListener('click',e=>{e.preventDefault();sendNow();});
