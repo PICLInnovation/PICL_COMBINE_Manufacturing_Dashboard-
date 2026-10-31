@@ -2575,7 +2575,7 @@ setupStuckShadow();
 .pbBot.photo:after{content:"Hii";position:absolute;right:-6px;bottom:-4px;background:#2f6fed;color:#fff;font:800 10px/1 var(--font-body,Inter,sans-serif);padding:4px 6px;border-radius:9px;border:2px solid #fff;animation:pbWave2 .45s ease-in-out infinite alternate;transform-origin:20% 80%}
 #pbFab.peek .pbBot.photo{animation:pbBotUp 7.2s ease-in-out both}
 .pbHome .big.photo{background:#fff;padding:0;overflow:hidden}.pbHome .big.photo img{width:100%;height:100%;object-fit:cover;border-radius:20px}
-/* ---- v22: Aura ---- */
+/* ---- v22: Naze ---- */
 #pbFab{width:60px;height:60px}
 .pbBadge{width:60px;height:60px;border-radius:20px;background:#2f6fed;padding:0;overflow:visible;border:2px solid rgba(255,255,255,.9);box-shadow:0 10px 26px -4px rgba(31,88,201,.65)}
 .pbBadge img{width:100%;height:100%;border-radius:18px;object-fit:cover;display:block;position:relative;z-index:1}
@@ -2613,7 +2613,7 @@ setupStuckShadow();
   text-shadow:0 0 3px var(--panel,#fff),0 0 6px var(--panel,#fff),0 0 10px var(--panel,#fff),0 2px 12px rgba(31,88,201,.35)}
 .pbBg:after{content:"";display:inline-block;width:2px;height:15px;background:var(--pb-blue);margin-left:3px;vertical-align:-2px;animation:pbCur .8s steps(1) infinite}
 .pbBg.done:after{display:none}
-/* ---- v25: Aura talks: speech bubble + moving mouth ---- */
+/* ---- v25: Naze talks: speech bubble + moving mouth ---- */
 #pbFab{width:64px;height:64px}
 .pbBadge{width:64px!important;height:64px!important;position:relative}
 .pbMouth{position:absolute;left:50%;top:61.2%;width:10.5%;height:7%;transform:translate(-50%,-50%) scaleY(0);background:#07104f;border-radius:50%;z-index:2;opacity:0;pointer-events:none}
@@ -2713,13 +2713,13 @@ setupStuckShadow();
 
 </style>
 
-<div id="pbFab" role="button" tabindex="0" aria-label="Open Aura" title="Ask Aura">
+<div id="pbFab" role="button" tabindex="0" aria-label="Open Naze" title="Ask Naze">
 <div class="pbBub" id="pbBub"><span class="pbBg" id="pbBg"></span></div>
 <div class="pbBadge"><img data-pblogo alt=""><span class="pbMouth"></span></div></div>
-<div id="pbPanel" role="dialog" aria-label="Aura">
+<div id="pbPanel" role="dialog" aria-label="Naze">
   <div id="pbHead">
     <div class="pbAv"><img data-pblogo alt=""></div>
-    <div class="t"><b>Aura</b><span id="pbSub">Ask me about your plant</span></div><div id="pbEq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="t"><b>Naze</b><span id="pbSub">Ask me about your plant</span></div><div id="pbEq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
     <button id="pbSpk" type="button" title="Read answers aloud (off)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
     <button id="pbWide" type="button" title="Expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
     <button id="pbClear" type="button" title="New chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg></button>
@@ -2729,8 +2729,8 @@ setupStuckShadow();
   <div id="pbTA"></div>
   <div id="pbVoiceMsg"></div>
   <div id="pbQuick"></div>
-  <div id="pbForm"><div id="pbWave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><span>Listening… speak now</span></div><input id="pbIn" type="text" placeholder="Ask Aura anything about the dashboard…" maxlength="300" autocomplete="off"><button id="pbMic" type="button" title="Speak your question" aria-label="Voice input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button id="pbSend" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
-  <div class="pbFoot">Aura answers only from this dashboard’s data</div>
+  <div id="pbForm"><div id="pbWave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><span>Listening… speak now</span></div><input id="pbIn" type="text" placeholder="Ask Naze anything about the dashboard…" maxlength="300" autocomplete="off"><button id="pbMic" type="button" title="Speak your question" aria-label="Voice input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button id="pbSend" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
+  <div class="pbFoot">Naze answers only from this dashboard’s data</div>
 </div>
 
 <script id="picl-bot-js">
@@ -3238,7 +3238,7 @@ function sentenceCore(p,spec,m,scope){
 }
 
 function answer(p){
-  if(p.intent==='hello') return {html:'<p><b>Hello! I’m Aura.</b> Ask me anything about this dashboard — production vs plan, rejections, OEE, losses, manpower, safety — for PSC and BLDC. You can ask in plain English.</p>',chips:SUGGEST};
+  if(p.intent==='hello') return {html:'<p><b>Hello! I’m Naze.</b> Ask me anything about this dashboard — production vs plan, rejections, OEE, losses, manpower, safety — for PSC and BLDC. You can ask in plain English.</p>',chips:SUGGEST};
   if(p.intent==='about') return aboutMsg();
   if(p.intent==='thanks') return {html:'<p>You’re welcome! Ask me anything else about the dashboard.</p>',chips:SUGGEST.slice(0,3)};
   if(p.intent==='bye') return {html:'<p>Goodbye! I’ll be right here whenever you need the numbers.</p>',chips:[]};
@@ -3411,7 +3411,7 @@ function howHTML(metric,p,rows,dr){
   const nd=new Set(rows.map(r=>r.date)).size;
   return '<details class="how"><summary>How this was calculated</summary><p>'+esc(f)+'</p><p>Based on <b>'+n0(rows.length)+'</b> production row(s) over <b>'+nd+'</b> day(s) ('+esc(dr.label)+'). Same formulas as the dashboard’s KPI cards.</p></details>';
 }
-function aboutMsg(){return {html:'<p><b>I’m Aura</b> — the assistant built into this dashboard.</p><p>I read every row on this page — production, plan, rejections, losses, manpower and safety for <b>PSC</b> and <b>BLDC</b> — and answer by <b>calculating from that data</b>. I never guess: if something isn’t in the data, I’ll tell you. Ask in plain English, or type any column name.</p>',chips:SUGGEST};}
+function aboutMsg(){return {html:'<p><b>I’m Naze</b> — the assistant built into this dashboard.</p><p>I read every row on this page — production, plan, rejections, losses, manpower and safety for <b>PSC</b> and <b>BLDC</b> — and answer by <b>calculating from that data</b>. I never guess: if something isn’t in the data, I’ll tell you. Ask in plain English, or type any column name.</p>',chips:SUGGEST};}
 const DEFS=[
  [/\boee\b|efficiency/,'OEE','OEE = Availability × Performance. Availability = (Actual man-hours − availability-loss man-hours) ÷ Actual man-hours. Performance = Target man-hours for the actual output ÷ (Actual man-hours − availability loss). It shows how much of the available time was used productively.'],
  [/availability/,'Availability','Availability = (Actual man-hours − availability-loss man-hours) ÷ Actual man-hours. Availability losses are stoppages such as material shortage, breakdown, power trip or model change.'],
@@ -3594,7 +3594,7 @@ function restoreChat(){try{const L=JSON.parse(localStorage.getItem(CHAT_KEY)||'[
   L.forEach(x=>{addUser(x.q);addBot({html:x.html,chips:x.chips,tsv:x.tsv,q:x.q});});}catch(e){}}
 function saveFeedback(q,v,a){try{const L=JSON.parse(localStorage.getItem('pbFeedback')||'[]');L.push({t:new Date().toISOString(),q:q,v:v,a:a});localStorage.setItem('pbFeedback',JSON.stringify(L.slice(-200)));}catch(e){}}
 function feedbackMsg(){let L=[];try{L=JSON.parse(localStorage.getItem('pbFeedback')||'[]');}catch(e){}const bad=L.filter(x=>x.v==='down');
-  return {noTools:1,html:'<p><b>Feedback saved in this browser</b>: '+L.filter(x=>x.v==='up').length+' helpful · '+bad.length+' marked wrong</p>'+(bad.length?'<p>Questions marked wrong:</p><ul>'+bad.slice(-15).map(x=>'<li>'+esc(x.q)+'</li>').join('')+'</ul><p class="note">Send this list to your developer to improve Aura.</p>':'<p class="note">Nothing marked wrong yet.</p>'),chips:[],tsv:bad.map(x=>x.q).join('\n')};}
+  return {noTools:1,html:'<p><b>Feedback saved in this browser</b>: '+L.filter(x=>x.v==='up').length+' helpful · '+bad.length+' marked wrong</p>'+(bad.length?'<p>Questions marked wrong:</p><ul>'+bad.slice(-15).map(x=>'<li>'+esc(x.q)+'</li>').join('')+'</ul><p class="note">Send this list to your developer to improve Naze.</p>':'<p class="note">Nothing marked wrong yet.</p>'),chips:[],tsv:bad.map(x=>x.q).join('\n')};}
 function ask(text){
   text=(text||'').trim(); if(!text) return;
   history.unshift(text);hIdx=-1;
@@ -3623,7 +3623,7 @@ function snapHTML(){try{const m=metrics(REC.filter(r=>r.date===GLOBAL_LATEST));i
 function welcome(){
   msgs.innerHTML='';
   const d=document.createElement('div');d.className='pbHome';
-  d.innerHTML='<div class="big"><img src="'+LOGO_IMG+'" alt=""></div><div class="gr">Your plant-data assistant</div><h3>'+greet()+'! I’m Aura</h3><p>What would you like to know today? Ask in plain English — or type any column name. Data up to <b>'+fmtD(GLOBAL_LATEST)+'</b>.</p>';
+  d.innerHTML='<div class="big"><img src="'+LOGO_IMG+'" alt=""></div><div class="gr">Your plant-data assistant</div><h3>'+greet()+'! I’m Naze</h3><p>What would you like to know today? Ask in plain English — or type any column name. Data up to <b>'+fmtD(GLOBAL_LATEST)+'</b>.</p>';
   const g=document.createElement('div');g.className='pbCards';
   [['Overall summary','PSC + BLDC, latest day','grid'],['Why was output low yesterday?','Shortfall, losses, rejects','search'],['Which line has the highest rejection this month?','Ranking by line','bars'],['This week vs last week production','Period comparison','trend'],['Top 5 loss reasons in BLDC winding','Pareto of losses','clock'],['What is OEE?','Formulas explained','book']].forEach(([q,sub,ic])=>{const b=document.createElement('button');b.type='button';b.innerHTML='<span class="ic">'+ICO[ic]+'</span>'+esc(q)+'<small>'+esc(sub)+'</small>';b.onclick=()=>ask(q);g.appendChild(b);});
   d.appendChild(g);msgs.appendChild(d);
@@ -3703,7 +3703,7 @@ buildQuick();
       voices.filter(v=>/^en[-_]/i.test(v.lang)&&isF(v)).find(v=>/Jenny|Aria|Sonia|Libby|Zira|Samantha|Female/i.test(v.name))||voices.find(v=>/^en[-_]/i.test(v.lang))||null;
   }
   function pick(){return pickLang(vLang)||pickLang('en')||voices[0]||null;}
-  function greetText(){ const h=new Date().getHours(); if(vLang==='hi'&&pickLang('hi')){ return (h<12?'शुभ प्रभात':h<17?'नमस्कार':'शुभ संध्या')+'! मैं ऑरा हूँ। आप डैशबोर्ड के बारे में कुछ भी पूछ सकते हैं।'; } return (h<12?'Good morning':h<17?'Good afternoon':'Good evening')+'! I am Aura. Ask me anything about the dashboard.'; }
+  function greetText(){ const h=new Date().getHours(); if(vLang==='hi'&&pickLang('hi')){ return (h<12?'शुभ प्रभात':h<17?'नमस्कार':'शुभ संध्या')+'! मैं ऑरा हूँ। आप डैशबोर्ड के बारे में कुछ भी पूछ सकते हैं।'; } return (h<12?'Good morning':h<17?'Good afternoon':'Good evening')+'! I am Naze. Ask me anything about the dashboard.'; }
   function say(t,test){
     if(!TTS||!t) return;
     try{
@@ -3742,14 +3742,14 @@ buildQuick();
   function fillMenu(){
     const en=pickLang('en'),hi=pickLang('hi'); const nm=v=>v?v.name.replace(/^(Microsoft|Google)\s+/,'').replace(/\s*Online\s*\(Natural\)\s*-?\s*/,' · ').replace(/\s+-\s+.*$/,''):'';
     const card=(l,ttl,sub,v,ic)=>'<button type="button" class="vc'+(vLang===l?' on':'')+'" data-l="'+l+'"><span class="vi">'+ic+'</span><span class="vt"><b>'+ttl+'</b><small>'+sub+'</small>'+(v?'':'<em>Not on this device — English voice is used</em>')+'</span><span class="vk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span></button>';
-    vm2.innerHTML='<div class="vh"><span class="vhi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h2M8 8v8M12 4v16M16 8v8M20 12h-2"/></svg></span><div><b>Voice settings</b><small>Choose how Aura speaks</small></div></div>'
+    vm2.innerHTML='<div class="vh"><span class="vhi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h2M8 8v8M12 4v16M16 8v8M20 12h-2"/></svg></span><div><b>Voice settings</b><small>Choose how Naze speaks</small></div></div>'
       +'<div class="vs">Voice</div>'
       +card('en','Indian English','Female · English (India)',en,'EN')
       +card('hi','हिन्दी','Female · Hindi',hi,'हि')
       +'<div class="vs">Speed</div><div class="seg">'+[['Slow',0.8],['Normal',0.92],['Fast',1.08]].map(a=>'<button type="button" data-r="'+a[1]+'"'+(Math.abs(vRate-a[1])<.02?' class="on"':'')+'>'+a[0]+'</button>').join('')+'</div>'
       +'<div class="vsw"><span><b>Read answers aloud</b><small>Greeting always plays</small></span><button type="button" id="pbVSw" class="sw'+(speakOn?' on':'')+'" role="switch" aria-checked="'+speakOn+'"><i></i></button></div>'
       +'<button type="button" id="pbVTest"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Preview voice</button>';
-    const test=()=>say(vLang==='hi'&&pickLang('hi')?'नमस्कार, मैं ऑरा हूँ। मैं आपकी कैसे मदद कर सकती हूँ?':'Hello, I am Aura, your plant data assistant. How can I help you?',true);
+    const test=()=>say(vLang==='hi'&&pickLang('hi')?'नमस्कार, मैं ऑरा हूँ। मैं आपकी कैसे मदद कर सकती हूँ?':'Hello, I am Naze, your plant data assistant. How can I help you?',true);
     vm2.querySelectorAll('.vc').forEach(b=>b.onclick=()=>{vLang=b.dataset.l;try{localStorage.setItem('pbVLang',vLang);}catch(e){}vm2.querySelectorAll('.vc').forEach(x=>x.classList.toggle('on',x===b));test();});
     vm2.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{vRate=parseFloat(b.dataset.r);try{localStorage.setItem('pbVRate',vRate);}catch(e){}vm2.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));test();});
     vm2.querySelector('#pbVSw').onclick=e=>{spk.click();const on=speakOn;e.currentTarget.classList.toggle('on',on);e.currentTarget.setAttribute('aria-checked',on);};
@@ -3798,9 +3798,9 @@ function typeInto(el,text){clearInterval(bubType);el.classList.remove('done');el
 function hideBub(){fab.classList.remove('peek');fab.classList.remove('talking');clearInterval(bubType);clearTimeout(bubTimer);}
 function peek(){ if(panel.classList.contains('open')) return;
   fab.classList.remove('peek');void fab.offsetWidth;fab.classList.add('peek');
-  typeInto($b('pbBg'),greet()+'! I’m Aura');
+  typeInto($b('pbBg'),greet()+'! I’m Naze');
   clearTimeout(bubTimer);bubTimer=setTimeout(hideBub,7500);
-  try{window.__pbGreetSay&&window.__pbGreetSay(greet()+'! I am Aura. Ask me anything about the dashboard.');}catch(e){} }
+  try{window.__pbGreetSay&&window.__pbGreetSay(greet()+'! I am Naze. Ask me anything about the dashboard.');}catch(e){} }
 setTimeout(peek,1200); setInterval(peek,5*60*1000);
 $b('pbWide').onclick=()=>{panel.classList.toggle('wide');window.dispatchEvent(new Event('resize'));};
 $b('pbClear').onclick=()=>{CTX=null;aiHist=[];try{localStorage.removeItem(CHAT_KEY);}catch(e){}welcome();};
