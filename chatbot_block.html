@@ -167,7 +167,7 @@
 .pbBot.photo:after{content:"Hii";position:absolute;right:-6px;bottom:-4px;background:#2f6fed;color:#fff;font:800 10px/1 var(--font-body,Inter,sans-serif);padding:4px 6px;border-radius:9px;border:2px solid #fff;animation:pbWave2 .45s ease-in-out infinite alternate;transform-origin:20% 80%}
 #pbFab.peek .pbBot.photo{animation:pbBotUp 7.2s ease-in-out both}
 .pbHome .big.photo{background:#fff;padding:0;overflow:hidden}.pbHome .big.photo img{width:100%;height:100%;object-fit:cover;border-radius:20px}
-/* ---- v22: Aura ---- */
+/* ---- v22: Naze ---- */
 #pbFab{width:60px;height:60px}
 .pbBadge{width:60px;height:60px;border-radius:20px;background:#2f6fed;padding:0;overflow:visible;border:2px solid rgba(255,255,255,.9);box-shadow:0 10px 26px -4px rgba(31,88,201,.65)}
 .pbBadge img{width:100%;height:100%;border-radius:18px;object-fit:cover;display:block;position:relative;z-index:1}
@@ -205,7 +205,7 @@
   text-shadow:0 0 3px var(--panel,#fff),0 0 6px var(--panel,#fff),0 0 10px var(--panel,#fff),0 2px 12px rgba(31,88,201,.35)}
 .pbBg:after{content:"";display:inline-block;width:2px;height:15px;background:var(--pb-blue);margin-left:3px;vertical-align:-2px;animation:pbCur .8s steps(1) infinite}
 .pbBg.done:after{display:none}
-/* ---- v25: Aura talks: speech bubble + moving mouth ---- */
+/* ---- v25: Naze talks: speech bubble + moving mouth ---- */
 #pbFab{width:64px;height:64px}
 .pbBadge{width:64px!important;height:64px!important;position:relative}
 .pbMouth{position:absolute;left:50%;top:61.2%;width:10.5%;height:7%;transform:translate(-50%,-50%) scaleY(0);background:#07104f;border-radius:50%;z-index:2;opacity:0;pointer-events:none}
@@ -305,13 +305,13 @@
 
 </style>
 
-<div id="pbFab" role="button" tabindex="0" aria-label="Open Aura" title="Ask Aura">
+<div id="pbFab" role="button" tabindex="0" aria-label="Open Naze" title="Ask Naze">
 <div class="pbBub" id="pbBub"><span class="pbBg" id="pbBg"></span></div>
 <div class="pbBadge"><img data-pblogo alt=""><span class="pbMouth"></span></div></div>
-<div id="pbPanel" role="dialog" aria-label="Aura">
+<div id="pbPanel" role="dialog" aria-label="Naze">
   <div id="pbHead">
     <div class="pbAv"><img data-pblogo alt=""></div>
-    <div class="t"><b>Aura</b><span id="pbSub">Ask me about your plant</span></div><div id="pbEq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="t"><b>Naze</b><span id="pbSub">Ask me about your plant</span></div><div id="pbEq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
     <button id="pbSpk" type="button" title="Read answers aloud (off)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
     <button id="pbWide" type="button" title="Expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
     <button id="pbClear" type="button" title="New chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg></button>
@@ -321,11 +321,14 @@
   <div id="pbTA"></div>
   <div id="pbVoiceMsg"></div>
   <div id="pbQuick"></div>
-  <div id="pbForm"><div id="pbWave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><span>Listening… speak now</span></div><input id="pbIn" type="text" placeholder="Ask Aura anything about the dashboard…" maxlength="300" autocomplete="off"><button id="pbMic" type="button" title="Speak your question" aria-label="Voice input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button id="pbSend" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
-  <div class="pbFoot">Aura answers only from this dashboard’s data</div>
+  <div id="pbForm"><div id="pbWave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><span>Listening… speak now</span></div><input id="pbIn" type="text" placeholder="Ask Naze anything about the dashboard…" maxlength="300" autocomplete="off"><button id="pbMic" type="button" title="Speak your question" aria-label="Voice input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button id="pbSend" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
+  <div class="pbFoot">Naze answers only from this dashboard’s data</div>
 </div>
 
 <script id="picl-bot-js">
+/* chatbot name: change BOT_NAME here and in the HTML/CSS text above if you rename it again. BOT_HI is how the name is written/spoken inside Hindi sentences (Latin letters are read fine by Hindi voices; use Devanagari like 'नाज़े' if you prefer) */
+const BOT_NAME='Naze', BOT_HI='Naze';
+
 (function(){
 'use strict';
 const LOGO_IMG='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQDAwMDAgQDAwMEBAQFBgoGBgUFBgwICQcKDgwPDg4MDQ0PERYTDxAVEQ0NExoTFRcYGRkZDxIbHRsYHRYYGRj/2wBDAQQEBAYFBgsGBgsYEA0QGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCADAAMADASIAAhEBAxEB/8QAHQAAAgIDAQEBAAAAAAAAAAAAAgMBBwQGCAUACf/EAEcQAAEDAwIEAgcFAwcMAwAAAAEAAgMEBREGIQcxQVESYQgTFCJxgZEVMkKhwVKx0xZDRmKSk5UXGCMkJTQ3R1NjotLC0fD/xAAcAQACAwEBAQEAAAAAAAAAAAABAgADBQYEBwj/xAAxEQACAgIBAgQDBwQDAAAAAAAAAQIDBBEFITESQVFhBhPBFCMycYGRsRUiQqHR4fD/2gAMAwEAAhEDEQA/ANMypQZUr9K6PmGxjXYO6YHDCRlECgTY8FFlJDkeUGgjM5RB2NuiWD1RAoEG8xlTlKDscijBykaIGpBwg3CnKQKehodnmUecJA2TA7bcqDhggo0sdwpDu+yUgzKlADtzU5Q0QMFGHb4KWD2U5StbINBRApQOCj80rRBoOeaIEjkkg+aJrkrRDUw4FSClAow4rU0UjF9lCpBStEDBRh26XlTlAOxwOyIFIDiEwEEcwgwjVOUsFECgQaHd0SSjDkrRBgKnKAHIypSNaIMa4hGCD0SsqQcFAZSGjbl9ETXZSw7J6Itj1SjDAVOUGVOVCDAVIJ6IApQ0QaDlSlAo2noUjRDU1OUIKlaeikMHCIHKUiQINzupyltPREl0QPKlACpBQ0HY0P7pmSkZysqko6usdimgc4Dm7kB80raS2xkt9iAeSnKzxQUEH+/XVgd1jgb4z9U0P02wY9XcZvPxNb+Sqdq8k2Mq35s81EHd16Yk0xJs6K5w+Yc1yaLRbKs/7NvcReeUVU0xk/PkkldFfiTX6B+W32Z5PMKQe6fW2y4Wx4FZSvjB5P5td8CNlj5yimpLaEaa6MIFE1xCWESgU2OBU5SQcIw7KGhhoPnsiylBEHZPVAgzKkHugBU5Q0Q1IPIPvHKMOB3SQe6IH6LTKNj8hfJYcMc0YKDQQsog5AvslJog0HIRZ25JQO/NezSsjtdCy5VTA+okGaaJ3If1yknLSClsKOhpqGBtTdcl7hmOlafed5u7BJqrrU1bfVjEMI5QxbNA/VLpaa53y7spaOCetrZ3e7HG3xOcf0H5BXTpLgE0sjrNYVzsnf2CjdjHk+T9G/VZedyONgrxZEuvp3f7Hqoxrb3qtdCjs7hvLyXo01nvFW0Gls9xnB5GKlkcD9AuwLHpDS2n4gyz2KhpnD+cEQc8/Fzsk/VbKx5AADiPgVzGR8ZPf3VPT3f/AAa1fCb/ABzOHZ7NeaRpdVWe4QNH4pKaRo/MLCDgSW5B7hd7se53ulzz5Z2Xk3jRWk9SRmO96et1WT/OOhDZB8HtwR9VVV8btP72np7P6NfUafA9P7J/ujjO336uoGmEuFTSuGH00/vMcP0+SzZbbR3WnfW2AObI0eKWgecuZ5sPUK4tYeji3wSVmiLkfGPe+z652x8mS/o76qjKqku2nL86lraapt9wpne9HK3wvaf1B+hC6LB5LFz054ktS812f6r6ozMjGtx+ly6epig9CpXt1sUF8tj7xRRNjrIhmsp2fi/7jR+9eE0nOCtSufjXuu6PJOHhDyiBwcoFIKbQgwP77ogQlZUgkFAdPY8EKcpbTnqiB3Q0E1EFSlogVp6POGD2TGuxslZUgoaDseD5okgOI5JrcvIa0FznHAAGSSlfuE9K0UcdTVulqBimp2+tlPkOQ+ay6Ggu2sNWR0NvhL6iodhjeTYmDqT0aBuV7VLorUs+k4oaSgbG+of62b1zxGQB90YO6uDhXor+SdhfV3CNn2rWbykHxerYPusB/M+Z8lgcjy1eNXKcGnPsl9WaGNhytmotaXmbJofRNo0XaRBRtE1ZIB7TWOHvynsOzR0b9clbjG/kBlYEbuRWTGeuD9F82vnO6bnY9tnT1xjXFRh0SM5jt1kRvw5YTHEjkVkNyTyK8U0XRZnMfvnP0WVG4+EEHdYEb/6pWTG52cbryz0Xpma05zkrWNe8O7HxBsfs1ewU9fE0+y18bcvhPY/tMPVv0wVsbCQc4KewgnIVVd06LFZVLUl2aJOuNkXCS2mcN3G3XrQWuZbbdKcx1VK7wyMG7Zoz1aerXDcH9QsS+UMVFcGy0hzR1LPXQHsDzHyK6p4ycNzrzS8VZa44m3uhP+hc93hEsZPvRuP/AJDsQe6pGt4Va2pdFyU9RboaqSmk9bAKSYSuLT95uNj5r6hxXxBRlVwttkoz7SX1OUy+Osqk4QTce6KzBwiByhkikgmdFNG+KRh8LmPaWuaR0IO4UArqVpraMjt0GKcoA7uiStECHNGHJeVIKUZM1QOHdSlqQVqFIzKIHulg5RAoNEDBHPork0JpSntFuiudbCHXCZocPEM+paeTR59z8lVNhp2Vup7fSyfckqGNcO4zn9F0Ex4PLZYPNXySVUX37mhg1xbcmerQsFRXQx9HO3+S2uoraW32+euraiOnpaeN0ss0hw2NjQS5xPQAAlavYyDcgSeTSVXHpXX+ps3o4VdNSSuYbpWwUMjm8/VnxPcPn6sD4FcRlx3YonQ468XQo/ir6W+sL7e6i28Oqt9gssbixlWxg9rqgPxlxz6tp6NbvjmegqJ3GPiw5xceJOqcnc4uco/+Sfwi0fQaz4hCkurS+hpoXVU0QODLggBuRuAS4Zx0C6PvPDDRN7sL7UdP0FG4tLYaikhEckLuhBHPfoc5Xvx+PUobSRbfm1Y81W0c2M4x8Vz/AMydV/4pN/7J7eMXFcj/AIl6r/xOX/2Wi1tNJQXOoopCC+CV0TiORLXEH9yW1++EIxh5xRox0WMzjHxYHLiZqv53OX/7WQzjHxWLQf8AKZqz5XSUfqq5Y8Y3KzaKF1XXQUkRHjmkbE3PLLnAD969UIVP/FfsixSSXUsGPjLxYY9pHEvVeRuM3OU/vKunhD6YWs9OX6mtvEitk1DYZHBktZJGPbKQfthzQPWtHVrhnHI52PoWXhvo6zWRtsNhoashobNUVMIkkmd1JJ5fAYAVC8UdL0Wj9emjtmW0VTC2pgjcS4xAktLMnmAQceR8ldfxuNfBwsgvzS00eLF5OrJm60tH60W+vpLjbKevoaiKppKmJs0M8Z8TZGOGWuB6gggrwaqP2e4SwjYNdt8FUHobakqr56MFJR1b3PdaK+ot0RceUQ8MjB8hIR8AFcl3IF3JP4mNJXzf5DoyJ0vy2j0WorLipw+pdU6fmvFugay90kZe1zBj2lgGTG7ucfdPPO3IrmUHIyu3mPxgjpuuOdYUUdt4h3u3wDwxQ10rWAdAXEgfmu/+EsyclPGk9pdV7epzHMUKLVi8zyQe6kHdBlSuz0Yg7IPJfZSweyIO6JGiGpNOUWUkHqiDt8ndajRUhoODlED3Sw5SCl0E9C1Vn2ffKOu6QzNefgDv+WV0DFIySNr43eJjgC09x0XOAO+VYmitbwUtLHZ7vMGMZ7sFQ47NH7Lu3kVjcriysSsgux7cO5Qfhl5lx2SXw3RgP4mkLVvSE0bV644BXe322F01fRllxp4WDJkdFkuaB1JY5+PPC9ekqPVyxVER8YaQ4FpyCFu0Moe1sjDsRkFcPmwcZqSOgxp66n5e6H1hWaG1jFeqWETtDXRTQOPhEsbuYz0OwIPcK5r36Rdn+wJBp60132k9hDDVhrY4XH8WxJdjoNlb3FD0U9N61vU9/wBLXJunbnUOMlRAYvWUszzzd4QQY3HmcZBPQKq/8yviEThuqNMEd/FP/DVlWc4R1vR7LKaLpKc11RzZLI+aZ8sri57yXOceZJOSUC6ZHoT8RD/SjS/9uf8Ahox6EPEZ3LVOlv7c/wDDVP2qteZ61OPqcytdhZMM7o5mSMeWuaQ5pHMEbghdKj0HOJB/pTpb+8n/AIaYPQZ4ldNVaU/vKj+GjHPqj3kN40eXZPSEtX2CwX60VxuLGAONL4XRzED7wyQW56jdVRrDWFZrPV016qoxA0tEcMDT4hFG3kM9TuST1JV5x+gxxMc7H8rNKAd/HUfw1dfB/wBD7TGhb5Tak1hdG6nu1K8S01O2H1VHA8bh5a4l0jgdx4sAHfBV1vOVVw6PfseejFppm5wXVlkejDoet0B6OVmt11gfT3KvfJdKqB4w6J0xBaxw6EMazI6HKsG8SB13cBv4WgL1RIGMdI84AHiK1KtuMERlra2oip4sl7nzPDGtHxK5CtyvvlbLu/qW3TSM41EUFM+onkayKNpe9zjgNaBkn6LjW/3U3nVdyu++KuqkmAPRpccflhWbxQ4rU11t8umtMzGSlk92rrRsJW/sM7t7u68gqdBX0T4Z4yePGV9q05dEvZHK8nlRtkoQe0h4dkbIgUgHCNr9+S6oyhoKIFLyiBSkNQBRg5SgUQK1CkZyKMHbnukh2EQPVI0QdlEClB2+6IEJdDbNmlrKyo0pS19LV1EctIfZ5xHI5vu/hOx+SsnhDrczg6Xu1S504JfRyyuyXg7mMk8yOY8sjoqkslwioa10dUPFSVDfVTt8j+L5Ia+jqbNdw1sjh4SJIKhjsZHNrgR1WVmYFeTCVEuj7pnspyJVSU1+p2Ax3IhZDH5CqPh/xVpLrHDadSTsprgPdjqXENjqPj0a78j+StaJ+Oa+fZeJZjTddq0zoqboWx8UGZ8bsEE/d64VOWnjmdI60uujuNfqdP1bKmSS13ZkDxRV1KT7mHDOHgbHPzwRvbrHb5CGsttsu1J7JdrdRV8Gc+qq4GTMz3w4EZWe4rfVHqhJLuVVceOr9Xa2tOjeCYg1DWPqmSXW7SQPNDQUoPv5ccZcRsMfLJO18scDyO3ReJbLdbLRRiktFuo6Cnzn1VJC2Fme+GgBemx/JeaxJ9Ei3xb7GexwB81lMeBuFgMcMZVS8SuNVFZKeayaUnjq7qfckrGYdFS98Hk5/wCQ69kuNg3ZlnyqI7f8fmJbkwoj45sxuPPEf1FN/Iiy1JFQ4iS4TROwY282xZHInYnsMDquf56upqgPaqmafHL1sjn4+pSZZpZ53zzyPllkcXve85c5xOSSepJQg7r6pxXF18fQqo9X3b13ZyWXlzyLHN9vQYEQKWHBEtNo8gYKlACpS6ChrXfRMacpAKkOPdAJqYKIHqgXwK09FI0FSD2SwUQKBBoOQiBwUoHsiByOaDRBocCdtl7lvrqWsoG2e7P8EYP+rVR5wu7H+qV4AO+QiDjndUzgprTGjLwvZn3C3VVsqjT1TAOrXDdrx3B6ratMcT9T6ajZSsnbX0TeVNVku8I7Nfzb+Y8lr1Benw0woa+EVtF/03nDo/Nh6LINlpbg0y2KvZL3ppyGSt8uxXkvprtj8vIimvX/AN2L4TcXupl22fjlpiqa1l1pa22ynmQz10f1bv8AktqpuJug58ObqigZ5SFzCPqFyzJbrjDVMpZaGobK9wYxnqzlxJwAMc1cenPR7r62hjqNSXz7PleM+y00Qlezyc4nGfIA/FctyfFcZipTsscd9l3/AOzUxsvKseoxT/0WXJxQ0DTMJk1VQO8oi55/ILXbtx90pQtc200VfdJMbHwiCP5l2/0C12/+jncKa3yVWmb6LjM0ZFJVRCJ7/JrgcZ8iB8VSUkcsE8kE8b45Y3Fj2PGC1wOCCOhyq+N4bjM3cq7HPXddn/A2TnZVHSUUjfNV8W9XaqifSOqW223v2NLREt8Y7Pf953w2HktHacABKBUjuF1uPiU40Pl0xSRkWXTte5vY8FSlNfvhMBV7WyskFGHHGyBfJWtEGg5CkHdLa7CJrs7FLogxSDsg+akFK0Q1TO+UWUkO23Rg756LU0Vh8kWUAdkqUCB5RApeUWUGQYDjCLIPVL8SkHqEGiDQSEYd7wIOCEoOzz5qUjRDa9J6vrLFqy21tbUzz0UFQ18sTvfPg64z1HP5Lry03Whuluir7bVRVVNKPEyaF3iaR/8Aui4b8QxzWbb7tdbVIX2u51lE53M00zo8/HB3XO8zwKz2p1y8Ml09jSwuQePtNbTO5qu7UFotclwulXFR0sTfE+aZ3ha0fqfIbri/WN4ptQcQbxfKOIxU9ZVvmjaRg+E7AkdzjPzXl194u12e190udZWuby9pmdJj4ZOyxgRgDKr4TgP6bKVsp7k1r20HOz/tKUUtJBgoktFldCZwYRh+OfJKyiBQ0MPBBGVOUgEgbFMDwhogxTlCCpHJK4kDacFGDlJyiDsJSGpZUh26AEFStPRWNDsnzTAVjgpg5BK0QapBSwcIsglAgYKIFLUgoMgzKIHBS8qQUCDlIcQlAo/EMJWiDQeyIFJyRyRhwStB2M8RwjByMhKypz2StBG5RApTT0KIFDRBgPZSCgypygHY0PwEwHbKxwUYdjkUNBHZUpbX557IwdtkjRDTwfNGHd0tTnbdaeilS9RqnO6WDhEDlAYYHIweqTlEHFLog4E53Rc0sHI2UgkFDRBgKnKHIPJfIEDBRg5SgUQOEpBod3Ujkl5RZPdDRBwOdlIKUDlECUjRBoKlpwd0AORsVOUNDDQVOUsE5RAgpdEDB2RA9QgBU8kCBgpjXDGDskgohuhoKP/Z';
@@ -830,7 +833,7 @@ function sentenceCore(p,spec,m,scope){
 }
 
 function answer(p){
-  if(p.intent==='hello') return {html:'<p><b>Hello! I’m Aura.</b> Ask me anything about this dashboard — production vs plan, rejections, OEE, losses, manpower, safety — for PSC and BLDC. You can ask in plain English.</p>',chips:SUGGEST};
+  if(p.intent==='hello') return {html:'<p><b>Hello! I’m Naze.</b> Ask me anything about this dashboard — production vs plan, rejections, OEE, losses, manpower, safety — for PSC and BLDC. You can ask in plain English.</p>',chips:SUGGEST};
   if(p.intent==='about') return aboutMsg();
   if(p.intent==='thanks') return {html:'<p>You’re welcome! Ask me anything else about the dashboard.</p>',chips:SUGGEST.slice(0,3)};
   if(p.intent==='bye') return {html:'<p>Goodbye! I’ll be right here whenever you need the numbers.</p>',chips:[]};
@@ -1003,7 +1006,7 @@ function howHTML(metric,p,rows,dr){
   const nd=new Set(rows.map(r=>r.date)).size;
   return '<details class="how"><summary>How this was calculated</summary><p>'+esc(f)+'</p><p>Based on <b>'+n0(rows.length)+'</b> production row(s) over <b>'+nd+'</b> day(s) ('+esc(dr.label)+'). Same formulas as the dashboard’s KPI cards.</p></details>';
 }
-function aboutMsg(){return {html:'<p><b>I’m Aura</b> — the assistant built into this dashboard.</p><p>I read every row on this page — production, plan, rejections, losses, manpower and safety for <b>PSC</b> and <b>BLDC</b> — and answer by <b>calculating from that data</b>. I never guess: if something isn’t in the data, I’ll tell you. Ask in plain English, or type any column name.</p>',chips:SUGGEST};}
+function aboutMsg(){return {html:'<p><b>I’m Naze</b> — the assistant built into this dashboard.</p><p>I read every row on this page — production, plan, rejections, losses, manpower and safety for <b>PSC</b> and <b>BLDC</b> — and answer by <b>calculating from that data</b>. I never guess: if something isn’t in the data, I’ll tell you. Ask in plain English, or type any column name.</p>',chips:SUGGEST};}
 const DEFS=[
  [/\boee\b|efficiency/,'OEE','OEE = Availability × Performance. Availability = (Actual man-hours − availability-loss man-hours) ÷ Actual man-hours. Performance = Target man-hours for the actual output ÷ (Actual man-hours − availability loss). It shows how much of the available time was used productively.'],
  [/availability/,'Availability','Availability = (Actual man-hours − availability-loss man-hours) ÷ Actual man-hours. Availability losses are stoppages such as material shortage, breakdown, power trip or model change.'],
@@ -1186,7 +1189,7 @@ function restoreChat(){try{const L=JSON.parse(localStorage.getItem(CHAT_KEY)||'[
   L.forEach(x=>{addUser(x.q);addBot({html:x.html,chips:x.chips,tsv:x.tsv,q:x.q});});}catch(e){}}
 function saveFeedback(q,v,a){try{const L=JSON.parse(localStorage.getItem('pbFeedback')||'[]');L.push({t:new Date().toISOString(),q:q,v:v,a:a});localStorage.setItem('pbFeedback',JSON.stringify(L.slice(-200)));}catch(e){}}
 function feedbackMsg(){let L=[];try{L=JSON.parse(localStorage.getItem('pbFeedback')||'[]');}catch(e){}const bad=L.filter(x=>x.v==='down');
-  return {noTools:1,html:'<p><b>Feedback saved in this browser</b>: '+L.filter(x=>x.v==='up').length+' helpful · '+bad.length+' marked wrong</p>'+(bad.length?'<p>Questions marked wrong:</p><ul>'+bad.slice(-15).map(x=>'<li>'+esc(x.q)+'</li>').join('')+'</ul><p class="note">Send this list to your developer to improve Aura.</p>':'<p class="note">Nothing marked wrong yet.</p>'),chips:[],tsv:bad.map(x=>x.q).join('\n')};}
+  return {noTools:1,html:'<p><b>Feedback saved in this browser</b>: '+L.filter(x=>x.v==='up').length+' helpful · '+bad.length+' marked wrong</p>'+(bad.length?'<p>Questions marked wrong:</p><ul>'+bad.slice(-15).map(x=>'<li>'+esc(x.q)+'</li>').join('')+'</ul><p class="note">Send this list to your developer to improve Naze.</p>':'<p class="note">Nothing marked wrong yet.</p>'),chips:[],tsv:bad.map(x=>x.q).join('\n')};}
 function ask(text){
   text=(text||'').trim(); if(!text) return;
   history.unshift(text);hIdx=-1;
@@ -1215,7 +1218,7 @@ function snapHTML(){try{const m=metrics(REC.filter(r=>r.date===GLOBAL_LATEST));i
 function welcome(){
   msgs.innerHTML='';
   const d=document.createElement('div');d.className='pbHome';
-  d.innerHTML='<div class="big"><img src="'+LOGO_IMG+'" alt=""></div><div class="gr">Your plant-data assistant</div><h3>'+greet()+'! I’m Aura</h3><p>What would you like to know today? Ask in plain English — or type any column name. Data up to <b>'+fmtD(GLOBAL_LATEST)+'</b>.</p>';
+  d.innerHTML='<div class="big"><img src="'+LOGO_IMG+'" alt=""></div><div class="gr">Your plant-data assistant</div><h3>'+greet()+'! I’m Naze</h3><p>What would you like to know today? Ask in plain English — or type any column name. Data up to <b>'+fmtD(GLOBAL_LATEST)+'</b>.</p>';
   const g=document.createElement('div');g.className='pbCards';
   [['Overall summary','PSC + BLDC, latest day','grid'],['Why was output low yesterday?','Shortfall, losses, rejects','search'],['Which line has the highest rejection this month?','Ranking by line','bars'],['This week vs last week production','Period comparison','trend'],['Top 5 loss reasons in BLDC winding','Pareto of losses','clock'],['What is OEE?','Formulas explained','book']].forEach(([q,sub,ic])=>{const b=document.createElement('button');b.type='button';b.innerHTML='<span class="ic">'+ICO[ic]+'</span>'+esc(q)+'<small>'+esc(sub)+'</small>';b.onclick=()=>ask(q);g.appendChild(b);});
   d.appendChild(g);msgs.appendChild(d);
@@ -1295,7 +1298,7 @@ buildQuick();
       voices.filter(v=>/^en[-_]/i.test(v.lang)&&isF(v)).find(v=>/Jenny|Aria|Sonia|Libby|Zira|Samantha|Female/i.test(v.name))||voices.find(v=>/^en[-_]/i.test(v.lang))||null;
   }
   function pick(){return pickLang(vLang)||pickLang('en')||voices[0]||null;}
-  function greetText(){ const h=new Date().getHours(); if(vLang==='hi'&&pickLang('hi')){ return (h<12?'शुभ प्रभात':h<17?'नमस्कार':'शुभ संध्या')+'! मैं ऑरा हूँ। आप डैशबोर्ड के बारे में कुछ भी पूछ सकते हैं।'; } return (h<12?'Good morning':h<17?'Good afternoon':'Good evening')+'! I am Aura. Ask me anything about the dashboard.'; }
+  function greetText(){ const h=new Date().getHours(); if(vLang==='hi'&&pickLang('hi')){ return (h<12?'शुभ प्रभात':h<17?'नमस्कार':'शुभ संध्या')+'! मैं '+BOT_HI+' हूँ। आप डैशबोर्ड के बारे में कुछ भी पूछ सकते हैं।'; } return (h<12?'Good morning':h<17?'Good afternoon':'Good evening')+'! I am '+BOT_NAME+'. Ask me anything about the dashboard.'; }
   function say(t,test){
     if(!TTS||!t) return;
     try{
@@ -1334,14 +1337,14 @@ buildQuick();
   function fillMenu(){
     const en=pickLang('en'),hi=pickLang('hi'); const nm=v=>v?v.name.replace(/^(Microsoft|Google)\s+/,'').replace(/\s*Online\s*\(Natural\)\s*-?\s*/,' · ').replace(/\s+-\s+.*$/,''):'';
     const card=(l,ttl,sub,v,ic)=>'<button type="button" class="vc'+(vLang===l?' on':'')+'" data-l="'+l+'"><span class="vi">'+ic+'</span><span class="vt"><b>'+ttl+'</b><small>'+sub+'</small>'+(v?'':'<em>Not on this device — English voice is used</em>')+'</span><span class="vk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span></button>';
-    vm2.innerHTML='<div class="vh"><span class="vhi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h2M8 8v8M12 4v16M16 8v8M20 12h-2"/></svg></span><div><b>Voice settings</b><small>Choose how Aura speaks</small></div></div>'
+    vm2.innerHTML='<div class="vh"><span class="vhi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h2M8 8v8M12 4v16M16 8v8M20 12h-2"/></svg></span><div><b>Voice settings</b><small>Choose how Naze speaks</small></div></div>'
       +'<div class="vs">Voice</div>'
       +card('en','Indian English','Female · English (India)',en,'EN')
       +card('hi','हिन्दी','Female · Hindi',hi,'हि')
       +'<div class="vs">Speed</div><div class="seg">'+[['Slow',0.8],['Normal',0.92],['Fast',1.08]].map(a=>'<button type="button" data-r="'+a[1]+'"'+(Math.abs(vRate-a[1])<.02?' class="on"':'')+'>'+a[0]+'</button>').join('')+'</div>'
       +'<div class="vsw"><span><b>Read answers aloud</b><small>Greeting always plays</small></span><button type="button" id="pbVSw" class="sw'+(speakOn?' on':'')+'" role="switch" aria-checked="'+speakOn+'"><i></i></button></div>'
       +'<button type="button" id="pbVTest"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Preview voice</button>';
-    const test=()=>say(vLang==='hi'&&pickLang('hi')?'नमस्कार, मैं ऑरा हूँ। मैं आपकी कैसे मदद कर सकती हूँ?':'Hello, I am Aura, your plant data assistant. How can I help you?',true);
+    const test=()=>say(vLang==='hi'&&pickLang('hi')?'नमस्कार, मैं '+BOT_HI+' हूँ। मैं आपकी कैसे मदद कर सकती हूँ?':'Hello, I am '+BOT_NAME+', your plant data assistant. How can I help you?',true);
     vm2.querySelectorAll('.vc').forEach(b=>b.onclick=()=>{vLang=b.dataset.l;try{localStorage.setItem('pbVLang',vLang);}catch(e){}vm2.querySelectorAll('.vc').forEach(x=>x.classList.toggle('on',x===b));test();});
     vm2.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{vRate=parseFloat(b.dataset.r);try{localStorage.setItem('pbVRate',vRate);}catch(e){}vm2.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));test();});
     vm2.querySelector('#pbVSw').onclick=e=>{spk.click();const on=speakOn;e.currentTarget.classList.toggle('on',on);e.currentTarget.setAttribute('aria-checked',on);};
@@ -1390,9 +1393,9 @@ function typeInto(el,text){clearInterval(bubType);el.classList.remove('done');el
 function hideBub(){fab.classList.remove('peek');fab.classList.remove('talking');clearInterval(bubType);clearTimeout(bubTimer);}
 function peek(){ if(panel.classList.contains('open')) return;
   fab.classList.remove('peek');void fab.offsetWidth;fab.classList.add('peek');
-  typeInto($b('pbBg'),greet()+'! I’m Aura');
+  typeInto($b('pbBg'),greet()+'! I’m Naze');
   clearTimeout(bubTimer);bubTimer=setTimeout(hideBub,7500);
-  try{window.__pbGreetSay&&window.__pbGreetSay(greet()+'! I am Aura. Ask me anything about the dashboard.');}catch(e){} }
+  try{window.__pbGreetSay&&window.__pbGreetSay(greet()+'! I am '+BOT_NAME+'. Ask me anything about the dashboard.');}catch(e){} }
 setTimeout(peek,1200); setInterval(peek,5*60*1000);
 $b('pbWide').onclick=()=>{panel.classList.toggle('wide');window.dispatchEvent(new Event('resize'));};
 $b('pbClear').onclick=()=>{CTX=null;aiHist=[];try{localStorage.removeItem(CHAT_KEY);}catch(e){}welcome();};
