@@ -1396,7 +1396,7 @@ function peek(){ if(panel.classList.contains('open')) return;
   typeInto($b('pbBg'),greet()+'! I’m Naze');
   clearTimeout(bubTimer);bubTimer=setTimeout(hideBub,7500);
   try{window.__pbGreetSay&&window.__pbGreetSay(greet()+'! I am '+BOT_NAME+'. Ask me anything about the dashboard.');}catch(e){} }
-setTimeout(peek,1200); setInterval(peek,5*60*1000);
+if(window.__piclIntroActive){window.addEventListener('piclIntroDone',function(){setTimeout(peek,700);},{once:true});}else{setTimeout(peek,1200);} setInterval(peek,5*60*1000);
 $b('pbWide').onclick=()=>{panel.classList.toggle('wide');window.dispatchEvent(new Event('resize'));};
 $b('pbClear').onclick=()=>{CTX=null;aiHist=[];try{localStorage.removeItem(CHAT_KEY);}catch(e){}welcome();};
 function sendNow(){const v=inp.value;if(!v.trim())return;inp.value='';ask(v);}
