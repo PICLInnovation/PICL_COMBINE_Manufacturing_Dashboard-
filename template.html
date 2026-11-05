@@ -2661,13 +2661,6 @@ const TODAY_SET=QSETS[((dayIdx()%3)+3)%3];
 (function(){ const sb=document.getElementById('sidebar'); const set=()=>document.documentElement.style.setProperty('--sb-w',(sb.offsetWidth||0)+'px');
   set(); if(window.ResizeObserver) new ResizeObserver(set).observe(sb); window.addEventListener('resize',set); })();
 
-/* PICL auto-update: when hosted online, check every 5 minutes and reload if a new version was published */
-(function(){ if(!/^https?:/.test(location.protocol)) return;
-  let base=null;
-  const chk=async()=>{ try{ const r=await fetch(location.pathname+'?v='+Date.now(),{method:'HEAD',cache:'no-store'});
-    const k=(r.headers.get('etag')||'')+'|'+(r.headers.get('last-modified')||''); if(k==='|') return;
-    if(base===null) base=k; else if(k!==base) location.reload(); }catch(e){} };
-  chk(); setInterval(chk,5*60*1000); })();
 
 (function(){ const m=RAW.meta&&RAW.meta.lastUpdated; const f=document.querySelector('.sb-foot'); if(m&&f){ const d=new Date(m+'T00:00'); f.innerHTML='Updated <b>'+d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+'</b>'; } })();
 /* ============================================================
