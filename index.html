@@ -2687,7 +2687,7 @@ function setupStuckShadow(){
   const kpiTop = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--kpi-sticky-top')) || 132;
   window.addEventListener('scroll', ()=>{
     document.querySelectorAll('.kpi-row').forEach(row=>{
-      const stuck = row.getBoundingClientRect().top <= kpiTop + 1;
+      const stuck = getComputedStyle(row).position==='sticky' && row.getBoundingClientRect().top <= kpiTop + 1;
       row.classList.toggle('is-stuck', stuck);
     });
   }, { passive: true });
