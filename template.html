@@ -729,7 +729,9 @@ body.sb-hidden .content,body.focus .content{width:100%;}
 <body>
 <!-- PICL-INTRO:START (v1.0) — opening animation. Self-contained (no libraries, no video file). Edit the CFG line in the script to change it. -->
 <style id="picl-intro-css">
-html.intro-on,html.intro-on body{overflow:hidden!important}
+html.intro-on,html.intro-on body,html.intro-reveal,html.intro-reveal body{overflow:hidden!important}
+/* while the intro plays the dashboard behind it is not painted (saves a lot of work on phones) */
+html.intro-on body>*:not(#piclIntro){visibility:hidden!important}
 #piclIntro{position:fixed;inset:0;z-index:2147483000;overflow:hidden;background:#020a1a;color:#fff;font-family:Inter,"Segoe UI",system-ui,sans-serif;opacity:1;transition:opacity .75s ease;-webkit-user-select:none;user-select:none;cursor:pointer;contain:strict}
 #piclIntro.out{opacity:0;pointer-events:none}
 #piclIntro .pi-bg{position:absolute;inset:0;background:
@@ -739,8 +741,11 @@ html.intro-on,html.intro-on body{overflow:hidden!important}
 #piclIntro canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 #piclIntro .pi-hud{position:absolute;left:0;right:0;bottom:0;width:100%;height:36vh;min-height:170px;pointer-events:none}
 #piclIntro .pi-hud .arc{fill:none;stroke-linecap:round}
-#piclIntro .pi-hud .g{stroke:#e9b73a;stroke-width:2.2;filter:drop-shadow(0 0 5px rgba(233,183,58,.7))}
-#piclIntro .pi-hud .c{stroke:#4aa8ff;stroke-width:1.6;opacity:.8;filter:drop-shadow(0 0 6px rgba(74,168,255,.8))}
+#piclIntro .pi-hud .g{stroke:#e9b73a;stroke-width:2.2}
+#piclIntro .pi-hud .glow{stroke:#e9b73a;stroke-width:7;opacity:.16}
+#piclIntro .pi-hud .c{stroke:#4aa8ff;stroke-width:1.6;opacity:.85}
+#piclIntro .pi-hud .cglow{stroke:#4aa8ff;stroke-width:7;opacity:.14}
+#piclIntro.lite .pi-hud .dash,#piclIntro.lite .pi-hud .dash2{animation:none}
 #piclIntro .pi-hud .dash{stroke-dasharray:46 28;animation:piDash 9s linear infinite}
 #piclIntro .pi-hud .dash2{stroke-dasharray:12 18;animation:piDash 14s linear infinite reverse}
 @keyframes piDash{to{stroke-dashoffset:-1000}}
@@ -755,7 +760,7 @@ html.intro-on,html.intro-on body{overflow:hidden!important}
 #piclIntro .pi-msg{font-size:clamp(10px,1.1vw,13px);letter-spacing:.28em;color:#a9cdf5;text-transform:uppercase;margin-bottom:10px;min-height:1.2em}
 #piclIntro .pi-bar{height:4px;border-radius:4px;background:rgba(255,255,255,.14);overflow:hidden}
 #piclIntro .pi-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2f6fed,#5ee1ff 60%,#e9b73a);box-shadow:0 0 14px rgba(94,225,255,.8);border-radius:4px}
-#piclIntro .pi-skip{position:absolute;right:clamp(14px,3vw,36px);bottom:clamp(16px,4.5vh,44px);border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:9px 18px;font:600 12px/1 Inter,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(4px);opacity:0;animation:piIn .6s 1.2s ease forwards}
+#piclIntro .pi-skip{position:absolute;right:clamp(14px,3vw,36px);bottom:clamp(16px,4.5vh,44px);border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:9px 18px;font:600 12px/1 Inter,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;opacity:0;animation:piIn .6s 1.2s ease forwards}
 #piclIntro .pi-skip:hover{background:rgba(255,255,255,.2)}
 @keyframes piIn{to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){#piclIntro .pi-hud .dash,#piclIntro .pi-hud .dash2{animation:none}}
@@ -769,6 +774,7 @@ html.intro-on,html.intro-on body{overflow:hidden!important}
       <radialGradient id="piFloor" cx="50%" cy="78%" r="62%"><stop offset="0" stop-color="#2f8dff" stop-opacity=".55"/><stop offset=".55" stop-color="#1457b8" stop-opacity=".22"/><stop offset="1" stop-color="#020a1a" stop-opacity="0"/></radialGradient>
     </defs>
     <ellipse cx="600" cy="238" rx="640" ry="118" fill="url(#piFloor)"/>
+    <ellipse class="arc cglow" cx="600" cy="236" rx="250" ry="52"/><ellipse class="arc glow" cx="600" cy="238" rx="470" ry="100"/>
     <ellipse class="arc c" cx="600" cy="236" rx="250" ry="52"/>
     <ellipse class="arc c" cx="600" cy="236" rx="360" ry="76" opacity=".55"/>
     <ellipse class="arc g dash" cx="600" cy="238" rx="470" ry="100"/>
@@ -792,10 +798,13 @@ html.intro-on,html.intro-on body{overflow:hidden!important}
 (function(){
   var CFG={ENABLED:true,          /* false = never show the opening animation */
            SECONDS:7.2,           /* length of the animation */
-           ONCE_PER_SESSION:false /* true = show only the first time the tab is opened */};
+           ONCE_PER_SESSION:false, /* true = show only the first time the tab is opened */
+           PHONES:true             /* false = do not show the animation on phones/tablets */};
   var root=document.getElementById('piclIntro'); if(!root) return;
   var off=!CFG.ENABLED||/[?&]nointro\b/.test(location.search);
   try{ if(CFG.ONCE_PER_SESSION&&sessionStorage.getItem('piclIntroSeen')) off=true; }catch(e){}
+  var phone=false; try{phone=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent)||matchMedia('(pointer:coarse)').matches;}catch(e){}
+  if(!CFG.PHONES&&phone) off=true;
   if(off){ root.parentNode.removeChild(root); return; }
   var reduce=false; try{reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;}catch(e){}
   var T=reduce?1.6:CFG.SECONDS;
@@ -803,7 +812,9 @@ html.intro-on,html.intro-on body{overflow:hidden!important}
 
   var rainC=document.getElementById('piRain'), motC=document.getElementById('piMotor'), rctx=rainC.getContext('2d'), mctx=motC.getContext('2d');
   var bar=document.getElementById('piBar'), msg=document.getElementById('piMsg');
-  var W=0,H=0,dpr=1,quality=1,done=false,raf=0,t=0,last=0,loaded=(document.readyState==='complete'),frames=0,slow=0,seekMode=false;
+  var LITE=false; try{LITE=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent)||matchMedia('(pointer:coarse)').matches||(navigator.hardwareConcurrency||8)<=6||(navigator.deviceMemory||8)<=4;}catch(e){}
+  if(LITE)root.classList.add('lite'); var NSEG=LITE?24:40, rainScale=1, S=0, noRain=false;
+  var wN=0,wS=0,bad=0,W=0,H=0,dpr=1,quality=1,done=false,raf=0,t=0,last=0,loaded=(document.readyState==='complete'),frames=0,slow=0,seekMode=false;
   window.addEventListener('load',function(){loaded=true;});
   /* logo: reuse the one already in the dashboard header */
   document.addEventListener('DOMContentLoaded',function(){try{var s=document.querySelector('.logo-box img');if(s)document.getElementById('piLogo').src=s.src;else document.querySelector('.pi-logo').style.display='none';}catch(e){}});
@@ -811,8 +822,13 @@ html.intro-on,html.intro-on body{overflow:hidden!important}
   /* ---------- sizing: sharp on hi-dpi / 4K, but capped so it never lags ---------- */
   function size(){
     W=Math.max(1,root.clientWidth||innerWidth); H=Math.max(1,root.clientHeight||innerHeight);
-    var d=Math.min(window.devicePixelRatio||1,2)*(quality<1?.75:1); var maxPx=8.3e6; if(W*H*d*d>maxPx)d=Math.sqrt(maxPx/(W*H)); dpr=Math.max(1,d>1.01?d:Math.max(d,.75));
-    [rainC,motC].forEach(function(c){c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);});
+    var d=Math.min(window.devicePixelRatio||1,LITE?1.5:2)*(quality<1?.75:1); var maxPx=LITE?1.6e6:8.3e6;
+    S=Math.round(Math.min(W*.92,H*.72)); if(d*d*S*S>maxPx)d=Math.sqrt(maxPx/(S*S)); dpr=Math.max(.75,d);
+    /* motor: small square canvas (not full screen) -> far fewer pixels to clear/composite every frame */
+    motC.style.cssText='position:absolute;width:'+S+'px;height:'+S+'px;left:'+Math.round((W-S)/2)+'px;top:'+Math.round(H*.6-S/2)+'px';
+    motC.width=Math.round(S*dpr); motC.height=Math.round(S*dpr);
+    /* rain: soft glow layer, drawn at reduced resolution on phones */
+    rainScale=LITE?.55:Math.min(dpr,1.5); rainC.width=Math.round(W*rainScale); rainC.height=Math.round(H*rainScale);
     buildGlyphs(); initRain();
   }
   window.addEventListener('resize',function(){if(!done)size();});
@@ -820,25 +836,25 @@ html.intro-on,html.intro-on body{overflow:hidden!important}
   /* ---------- binary rain ---------- */
   var glyph=[],cols=[],CS=16;
   function buildGlyphs(){
-    glyph=[]; var gs=Math.round(13*dpr);
+    glyph=[]; var gs=Math.round(13*rainScale);
     ['0','1'].forEach(function(ch){var lv=[];for(var k=0;k<4;k++){var c=document.createElement('canvas');c.width=c.height=gs+4;var x=c.getContext('2d');x.font='600 '+Math.round(gs*.95)+'px ui-monospace,Consolas,monospace';x.textAlign='center';x.textBaseline='middle';
       var a=[.25,.5,.78,1][k];x.shadowColor='rgba(90,200,255,'+a+')';x.shadowBlur=gs*.5*a;x.fillStyle='rgba('+(k===3?'225,248,255':'120,205,255')+','+(.35+a*.65)+')';x.fillText(ch,(gs+4)/2,(gs+4)/2);lv.push(c);}glyph.push(lv);});
   }
   function initRain(){
-    cols=[]; CS=Math.max(13,Math.round(W/96)); var n=Math.ceil(W/CS), cx=W*.46, sg=W*.27;
+    cols=[]; CS=Math.max(LITE?18:13,Math.round(W/(LITE?44:96))); var n=Math.ceil(W/CS), cx=W*.46, sg=W*.27;
     for(var i=0;i<n;i++){var x=i*CS+CS/2, env=.22+.78*Math.exp(-Math.pow((x-cx)/sg,2)); if(x<W*.03||x>W*.97&&env<.3)continue;
-      cols.push({x:x,env:env,speed:(40+Math.random()*90)*(H/800+.4),len:8+Math.floor(Math.random()*16),y:Math.random()*H*1.2,seed:Math.random()*1000|0});}
+      cols.push({x:x,env:env,speed:(40+Math.random()*90)*(H/800+.4),len:(LITE?6:8)+Math.floor(Math.random()*(LITE?8:16)),y:Math.random()*H*1.2,seed:Math.random()*1000|0});}
   }
   var rainAcc=0;
   function drawRain(dt){
-    rainAcc+=dt; if(rainAcc<1/30&&!seekMode) return; var step=rainAcc; rainAcc=0;
+    if(noRain)return; rainAcc+=dt; if(rainAcc<(LITE?1/20:1/30)&&!seekMode) return; var step=rainAcc; rainAcc=0;
     rctx.setTransform(1,0,0,1,0,0); rctx.clearRect(0,0,rainC.width,rainC.height);
-    var gs=Math.round(13*dpr)+4, half=gs/2, fade=Math.min(1,t/1.0);
+    var gs=Math.round(13*rainScale)+4, half=gs/2, fade=Math.min(1,t/1.0);
     for(var i=0;i<cols.length;i++){var c=cols[i]; c.y+=c.speed*step; if(c.y-c.len*CS>H*.98) {c.y=-Math.random()*H*.3;c.seed=(Math.random()*1000)|0;}
       for(var k=0;k<c.len;k++){var gy=c.y-k*CS; if(gy<-CS||gy>H*.9)continue;
         var a=Math.pow(1-k/c.len,.8)*c.env*fade; if(a<.05)continue; var lv=k===0?3:(a>.55?2:(a>.3?1:0));
         rctx.globalAlpha=Math.min(1,a*1.5);
-        rctx.drawImage(glyph[(c.seed+k*7+(Math.floor(t*2)&&0))&1][lv],(c.x*dpr)-half,(gy*dpr)-half);}
+        rctx.drawImage(glyph[(c.seed+k*7+(Math.floor(t*2)&&0))&1][lv],(c.x*rainScale)-half,(gy*rainScale)-half);}
     }
     rctx.globalAlpha=1;
   }
@@ -865,8 +881,8 @@ html.intro-on,html.intro-on body{overflow:hidden!important}
   function build(){
     var h=[],s=[],sh=[],ec=[],cl=[],sc=[];
     /* rotor cup / housing with ribbed face and hub */
-    cylSide(h,1.0,-.6,.6,40,WHITE); cylSide(h,.94,-.6,.6,40,WHITE2,true,.25); annulus(h,.94,1.0,.6,40,WHITE,1);
-    annulus(h,.2,1.0,-.6,40,WHITE,-1);
+    cylSide(h,1.0,-.6,.6,NSEG,WHITE); cylSide(h,.94,-.6,.6,NSEG,WHITE2,true,.25); annulus(h,.94,1.0,.6,NSEG,WHITE,1);
+    annulus(h,.2,1.0,-.6,NSEG,WHITE,-1);
     for(var i=0;i<8;i++){var an=i/8*6.2832; box(h,Math.cos(an)*.6,Math.sin(an)*.6,-.64,.78,.055,.07,an,WHITE2);}
     cylSide(h,.2,-.6,-.76,24,WHITE2); disc(h,.2,-.76,24,SILVER,-1); disc(h,.085,-.765,16,DARK,-1);
     for(var q=0;q<3;q++){var ao=q*2.0944+.5; box(h,Math.cos(ao)*.97,Math.sin(ao)*.97,.5,.14,.28,.2,ao,WHITE2);}
@@ -878,7 +894,7 @@ html.intro-on,html.intro-on body{overflow:hidden!important}
     cylSide(sh,.085,-1.5,1.55,14,SILVER); disc(sh,.085,-1.5,14,SILVER,-1); disc(sh,.085,1.55,14,SILVER,1);
     cylSide(sh,.17,-.62,-.5,18,DARK); cylSide(sh,.14,.5,.58,18,DARK);
     /* end cap with rings and lugs */
-    cylSide(ec,1.0,.64,.78,40,WHITE); disc(ec,1.0,.78,40,WHITE,1);
+    cylSide(ec,1.0,.64,.78,NSEG,WHITE); disc(ec,1.0,.78,NSEG,WHITE,1);
     cylSide(ec,.58,.78,.95,32,WHITE2); annulus(ec,.5,.58,.95,32,WHITE,1);
     cylSide(ec,.3,.78,1.0,24,WHITE); disc(ec,.3,1.0,24,WHITE2,1); disc(ec,.1,1.005,16,DARK,1);
     for(var r=0;r<4;r++){var ar=r*1.5708+.78; box(ec,Math.cos(ar)*.44,Math.sin(ar)*.44,.84,.46,.06,.13,ar,WHITE2);}
@@ -901,7 +917,7 @@ html.intro-on,html.intro-on body{overflow:hidden!important}
     var spin=.7+tt*.95, tilt=-1.05+Math.sin(tt*.8)*.12, roll=.55+Math.sin(tt*.55)*.18;
     var R=mul(rot(0,spin*0,roll),mul(rot(tilt,0,0),rot(0,0,spin)));   /* spin about the motor's own axis, whole body tilted toward viewer */
     var R2=mul(rot(0,.42+Math.sin(tt*.6)*.25,0),R);
-    var Cw=motC.width,Ch=motC.height,sc=(Cw<Ch*.8?Cw*.88:Math.min(Cw*.5,Ch))*.112*(1-.05*e), cx=Cw*.5, cy=Ch*.6, D=7.0, f=sc*D;
+    var Cw=motC.width,Ch=motC.height,sc=Cw*.15*(1-.05*e), cx=Cw*.5, cy=Ch*.5, D=7.0, f=sc*D;
     var list=[], ex=e;
     var offs={housing:[0,0,-1.6*ex], stator:[0,0,.1*ex], shaft:[0,0,-1.6*ex], cap:[.3*ex,-.2*ex,1.75*ex]};
     function addPart(polys,o,Rp,extra){
@@ -931,15 +947,18 @@ html.intro-on,html.intro-on body{overflow:hidden!important}
   function frame(now){
     if(done) return; raf=requestAnimationFrame(frame);
     var dt=last?(now-last)/1000:.016; last=now; if(dt>.1)dt=.016; t+=dt; frames++;
-    if(t>.8&&frames<140){ if(dt>.034)slow++; if(frames===120&&slow>30&&quality===1){quality=.7;size();} }
+    if(t>1.0&&loaded){ wN++; wS+=dt; if(wN===30){ var avg=wS/wN*1000; wN=0; wS=0; /* average ms/frame over the last 30 frames, measured after the dashboard finished loading */
+        if(avg>26&&quality===1){ quality=.75; size(); }
+        else if(avg>32&&!noRain){ noRain=true; rctx.clearRect(0,0,rainC.width,rainC.height); }
+        else if(avg>70&&noRain&&quality<1){ if(++bad>=2){ finish(); return; } } else bad=0; } }
     drawRain(dt); drawMotor(t); progress();
     if(t>=T&&loaded) finish();
   }
   function finish(){ if(done)return; done=true; cancelAnimationFrame(raf);
     try{if(CFG.ONCE_PER_SESSION)sessionStorage.setItem('piclIntroSeen','1');}catch(e){}
-    root.classList.add('out');
+    root.classList.add('out'); document.documentElement.classList.add('intro-reveal'); document.documentElement.classList.remove('intro-on');
     setTimeout(function(){ try{ rainC.width=rainC.height=motC.width=motC.height=0; root.parentNode&&root.parentNode.removeChild(root);}catch(e){}
-      document.documentElement.classList.remove('intro-on'); window.__piclIntroActive=false; try{window.dispatchEvent(new Event('piclIntroDone'));}catch(e){}
+      document.documentElement.classList.remove('intro-reveal'); window.__piclIntroActive=false; try{window.dispatchEvent(new Event('piclIntroDone'));}catch(e){}
       try{window.dispatchEvent(new Event('resize'));}catch(e){} },780);
   }
   function skip(){ if(done)return; t=Math.max(t,T); loaded=true; finish(); }
@@ -1513,7 +1532,7 @@ function renderShopKPIs(records, m, qs, oee){
     {tag:'Q', label:'Rejections', status:rejStatus, value: qs.hasData?`${n0(qs.rejTotal)}`:'N/A', sub: rejRate!==null?`Rate <b>${n1(rejRate)}%</b>`:'No reload data'},
     {tag:'D', label:'Production vs Plan', status:achStatus, value:`${n0(m.actual)}<span class="unit">/ ${n0(m.plan)}</span>`, sub:`Achv <b>${n1(m.achievementPct)}%</b>`},
     {tag:'D', slot:'oee'},
-    {tag:'D', label:'UPH · Target vs Actual', status: pctStatus(m.performance,90,75), value:`${n0(m.uphActual)}<span class="unit">/${n0(m.uphTarget)}</span>`, sub:''},
+    {tag:'D', label:'UPH · Target vs Actual', status: pctStatus(m.uphTarget>0?(m.uphActual/m.uphTarget*100):0,90,75), value:`${n0(m.uphActual)}<span class="unit">/${n0(m.uphTarget)}</span>`, sub:''},
     {tag:'D', label:'UPPH · Target vs Actual', status: pctStatus(m.upphTarget>0?(m.upphActual/m.upphTarget*100):0,90,75), value:`${n1(m.upphActual)}<span class="unit">/${n1(m.upphTarget)}</span>`, sub:`Units per person-hr`},
     {tag:'C', label:'Manpower · Target vs Actual', status:'na', value:`${n0(manpower/days)}<span class="unit">/${n0(targetManpower/days)}</span>`, sub: days>1?`Avg/day over ${days} days`:'Lines reporting'},
   ];
@@ -2053,7 +2072,7 @@ function renderLeadKPIs(m, qm, oee, records){
     {tag:'Q', label:'Rejections', status:rejStatus, value: qm.hasData?`${n0(qm.rejTotal)}`:'N/A', sub: rejRate!==null?`Rate <b>${n1(rejRate)}%</b>`:'No reload data'},
     {tag:'D', label:'Production vs Plan', status:achStatus, value:`${n0(m.actual)}<span class="unit">/ ${n0(m.plan)}</span>`, sub:`Achv <b>${n1(m.achievementPct)}%</b>`},
     {tag:'D', slot:'oee'},
-    {tag:'D', label:'UPH · Target vs Actual', status: pctStatus(m.performance,90,75), value:`${n0(m.uphActual)}<span class="unit">/${n0(m.uphTarget)}</span>`, sub:''},
+    {tag:'D', label:'UPH · Target vs Actual', status: pctStatus(m.uphTarget>0?(m.uphActual/m.uphTarget*100):0,90,75), value:`${n0(m.uphActual)}<span class="unit">/${n0(m.uphTarget)}</span>`, sub:''},
     {tag:'D', label:'UPPH · Target vs Actual', status: pctStatus(m.upphTarget>0?(m.upphActual/m.upphTarget*100):0,90,75), value:`${n1(m.upphActual)}<span class="unit">/${n1(m.upphTarget)}</span>`, sub:'Units per person-hr'},
     {tag:'C', label:'Manpower · Target vs Actual', status:'na', value:`${n0(manpower/days)}<span class="unit">/${n0(targetManpower/days)}</span>`, sub: days>1?`Avg/day over ${days} days`:'Lines reporting'},
   ];
