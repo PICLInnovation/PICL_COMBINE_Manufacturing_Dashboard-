@@ -2698,6 +2698,8 @@ updateStickyOffsets();
 setupStuckShadow();
 </script>
 </div></div>
+<!-- PICL AI SETTINGS: paste your Cloudflare Worker URL between the quotes to switch the chatbot to real-AI mode. Leave "" for the old rule-based mode. Never put an API key here. -->
+<script>window.PICL_BOT_AI={endpoint:""};</script>
 <!-- PICL-CHATBOT:START (v2.0) — self-contained; reads the dashboard's JSON data at runtime, so it needs no change when data refreshes -->
 <style id="picl-bot-css">
 :root{--pb-blue:#2f6fed;--pb-navy:#0b2545;--pb-cyan:#5ee1ff}
@@ -3163,9 +3165,44 @@ const APPEND=[
  [/\b(percent|percentage|per cent)\b.*\b(reject\w*|defect\w*|scrap)\b|\b(reject\w*|defect\w*|scrap)\b.*\b(percent|percentage|per cent)\b/,' rate '],
  [/\b(last night|previous day|day before)\b(?!\s*yesterday)/,' yesterday ']
 ];
+/* ---------- Hinglish / Hindi support: translate common Hinglish words to the English the parser understands ---------- */
+const HG_MARK=/\b(kal|aaj|aj|kitna|kitni|kitne|kya|batao|bataiye|bataye|batayiye|bata|dikhao|dikhaiye|dikha|dijiye|mahine|mahina|hafte|hafta|sabse|kis|konsi|konsa|kaunsi|kaunsa|kaun|hai|hain|tha|thi|ka|ki|ke|zyada|jyada|pichle|pichhle|nuksan|nuksaan|wajah|vajah|karan|kyun|kyu|kyon|aur|mujhe|karo|kijiye|utpadan|din|yojana|lakshya)\b|[ऀ-ॿ]/;
+function hinglish(t){
+  if(!HG_MARK.test(t)) return t;
+  // Devanagari (basic)
+  [['उत्पादन',' production '],['प्रोडक्शन',' production '],['रिजेक्शन',' rejection '],['नुकसान',' loss '],['हानि',' loss '],['मैनपावर',' manpower '],['सुरक्षा',' safety '],['कितना',' '],['कितने',' '],['कितनी',' '],['बताओ',' '],['बताइए',' '],['दिखाओ',' '],['पिछले हफ्ते',' last week '],['पिछले महीने',' last month '],['इस हफ्ते',' this week '],['इस महीने',' this month '],['हफ्ते',' week '],['महीने',' month '],['कल',' yesterday '],['आज',' today '],['का',' '],['की',' '],['के',' '],['में',' '],['है',' '],['था',' ']].forEach(([a,b])=>{t=t.split(a).join(b);});
+  const R=[
+   [/\b(pichle|pichhle|pichla|pichhla|guzre|guzra)\s+(\d+)\s+(din|dino|days?)\b/g,' last $2 days '],
+   [/\b(pichle|pichhle|pichla|pichhla|guzre|guzra)\s+(hafte|hafta|haphte)\b/g,' last week '],
+   [/\b(pichle|pichhle|pichla|pichhla|guzre|guzra)\s+(mahine|mahina|mahin)\b/g,' last month '],
+   [/\b(is|iss|ye|yeh|isi|chalu|current)\s+(hafte|hafta|haphte)\b/g,' this week '],
+   [/\b(is|iss|ye|yeh|isi|chalu|current)\s+(mahine|mahina|mahin)\b/g,' this month '],
+   [/\b(hafte|hafta|haphte)\b/g,' week '],[/\b(mahine|mahina|mahin)\b/g,' month '],
+   [/\b(kal)\b/g,' yesterday '],[/\b(aaj|aj)\b/g,' today '],[/\b(din|dino)\b/g,' day '],
+   [/\bsabse\s+(zyada|jyada|jada|adhik|badi|bada)\b/g,' highest '],
+   [/\bsabse\s+(kam|kum|chhoti|chhota)\b/g,' lowest '],
+   [/\bsabse\s+(kharab|bura|buri|ganda|gandi)\b/g,' worst '],
+   [/\bsabse\s+(accha|acha|achha|badhiya|best)\b/g,' best '],
+   [/\b(kis|konsi|konsa|kaunsi|kaunsa|kaun si|kaun sa)\s+(line|shift|model|frame|shop|dept|department|din|day|date)\b/g,' by $2 '],
+   [/\b(har|every|each)\s+(line|shift|model|frame|shop|dept|din|day)\b/g,' by $2 '],
+   [/\b(utpadan|utpaadan|produksan)\b/g,' production '],
+   [/\b(nuksan|nuksaan|rukawat|rukavat|ruka|rukna|stoppage|downtime)\b/g,' loss '],
+   [/\b(kharab piece|kharab pieces|kharabi|kharab)\b/g,' rejection '],
+   [/\b(karigar|karigars|karmchari|mazdoor|mazdoors|aadmi|logon|log)\b/g,' manpower '],
+   [/\b(yojana)\b/g,' plan '],[/\b(lakshya)\b/g,' target '],[/\b(upalabdhi)\b/g,' achievement '],
+   [/\b(wajah|vajah|karan|kaaran|karano)\b/g,' reason '],[/\b(kyun|kyu|kyon)\b/g,' why '],
+   [/\b(tulna|muqabla|muqabala|banam)\b/g,' compare '],[/\b(kul)\b/g,' total '],[/\b(aur)\b/g,' and '],
+   [/\b(sabhi|sab|saari|sare|saare)\b/g,' all ']
+  ];
+  R.forEach(([re,to])=>{t=t.replace(re,to);});
+  // polite / grammar particles (only removed when the sentence is Hinglish)
+  t=t.replace(/\b(ka|ki|ke|ko|me|mein|mai|main|se|par|pe|hai|hain|hota|hoti|hote|tha|thi|the|kitna|kitni|kitne|kya|kaun|kaise|kaisa|batao|bataiye|bataye|batayiye|bata|dikhao|dikhaiye|dikha|dijiye|dedo|do|karo|kijiye|zara|mujhe|mereko|humko|hume|hamara|hamare|yahan|wahan|toh|to|bhi|ji|bhai|sir|madam|abhi|wala|wali|wale|chahiye|jaanna|janna|janna|jana|hua|hui|hue|raha|rahi|rahe|gaya|gayi|gaye)\b/g,' ');
+  return t.replace(/\s+/g,' ');
+}
 function preprocess(raw){
   let t=' '+String(raw).toLowerCase().replace(/[’‘`]/g,"'").replace(/\bwhat's\b/g,'what is').replace(/\bhow's\b/g,'how is').replace(/\bwho's\b/g,'who is').replace(/&/g,' and ').replace(/[?!,;=:]+/g,' ').replace(/'s\b/g,'').replace(/\s+/g,' ').trim()+' ';
   t=t.replace(FILLERS,' ').replace(/\btodays\b/g,' today ').replace(/\bpsc's\b/g,' psc ');
+  t=hinglish(t);
   t=spellfix(t);
   APPEND.forEach(([re,add])=>{ if(re.test(t)) t+=add; });
   return t.replace(/\s+/g,' ');
@@ -3276,6 +3313,17 @@ function splitPeriods(q){
   if(A.d.from===B.d.from&&A.d.to===B.d.to) return null;
   return [Object.assign({},A.d,{rel:A.rel}),Object.assign({},B.d,{rel:B.rel})];
 }
+let _NL=null;
+function namedLines(){
+  if(_NL) return _NL;
+  const m=new Map();
+  REC.forEach(r=>{ const l=String(r.line); if(/^\d+$/.test(l)) return; const key=l.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(); if(key.length<2) return;
+    if(!m.has(key)) m.set(key,{key:key,line:l,depts:new Set(),alias:[]}); m.get(key).depts.add(r.dept); });
+  _NL=[...m.values()].map(n=>{ const w=n.key.split(' '); const al=[];
+    if(w.length>=2&&/^\d+$/.test(w[w.length-1])){ const ini=w.slice(0,-1).map(x=>x[0]).join(''); al.push(ini+' '+w[w.length-1], ini+w[w.length-1]); }
+    return {key:n.key,line:n.line,depts:[...n.depts],alias:al}; });
+  return _NL;
+}
 function parse(raw){
   let q=preprocess(raw);
   const p={raw,units:[],depts:[],lines:[],shifts:[],frames:[],models:[],lossReasons:[],lossDepts:[],remarks:[],rejReasons:[],rejCats:[],colObj:null,agg:'sum',metric:null,group:null,rank:null,n:null,date:null,dateInfo:null,intent:null};
@@ -3295,6 +3343,15 @@ function parse(raw){
   if(/\bshell\b/.test(q)) p.depts.push('shell');
   let lm=q.match(/\blines?\s*(?:no\.?|number|#)?\s*(\d+(?:\s*(?:,|and|&|vs|versus|or|\/)?\s*\d+)*)/);
   if(lm) p.lines=(lm[1].match(/\d+/g)||[]);
+  /* named (non-numeric) lines such as "Projection Machine - 1": read from the data, so any line name works */
+  try{
+    const qn=' '+String(raw).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()+' ';  /* original text: the spell-corrector would turn 'projection' into 'production' */
+    const hit=namedLines().filter(n=>qn.includes(' '+n.key+' ')||n.alias.some(a=>qn.includes(' '+a+' ')));
+    if(hit.length){
+      hit.forEach(h=>{ if(!p.lines.includes(h.line)) p.lines.push(h.line); });
+      if(!p.depts.length){ const ds=[...new Set([].concat.apply([],hit.map(h=>h.depts)))]; if(ds.length===1) p.depts.push(ds[0]); }
+    }
+  }catch(e){ console.warn('named lines',e); }
   const sm=q.match(/\bshifts?\s*-?\s*([abc])\b(?:\s*(?:,|and|&|vs|versus|or|\/)\s*([abc])\b)?/);
   if(sm){p.shifts.push(sm[1].toUpperCase());if(sm[2])p.shifts.push(sm[2].toUpperCase());}
   else{const s2=q.match(/\b([abc])\s*shift\b/);if(s2)p.shifts.push(s2[1].toUpperCase());}
@@ -3440,7 +3497,7 @@ function scopeText(p,dr,latestNote){
   const parts=[];
   parts.push(p.units.length?p.units.join(' + '):'PSC + BLDC');
   if(p.depts.length) parts.push(p.depts.map(d=>DEPT_LABEL[d]).join(' + '));
-  if(p.lines.length) parts.push('Line '+p.lines.join(', '));
+  if(p.lines.length) parts.push(p.lines.every(l=>/^\d+$/.test(l))?'Line '+p.lines.join(', '):p.lines.map(l=>/^\d+$/.test(l)?'Line '+l:l).join(', '));
   if(p.shifts.length) parts.push('Shift '+p.shifts.join(', '));
   if(p.frames.length) parts.push('Frame '+p.frames.map(f=>f.toUpperCase()).join(', '));
   if(p.models.length) parts.push(p.models.join(', '));
@@ -3746,7 +3803,7 @@ function compareAnswer(p){
     else leads.push((units.length>1?'<b>'+u+'</b>: ':'')+'one of the two periods has no data for this selection.');
   });
   if(!any) return notFound(p);
-  const sc=[p.units.join(' + ')||'PSC + BLDC'].concat(p.depts.map(d=>DEPT_LABEL[d]),p.lines.length?['Line '+p.lines.join(', ')]:[],p.shifts.length?['Shift '+p.shifts.join(', ')]:[]).join(' · ');
+  const sc=[p.units.join(' + ')||'PSC + BLDC'].concat(p.depts.map(d=>DEPT_LABEL[d]),p.lines.length?[p.lines.every(l=>/^\d+$/.test(l))?'Line '+p.lines.join(', '):p.lines.map(l=>/^\d+$/.test(l)?'Line '+l:l).join(', ')]:[],p.shifts.length?['Shift '+p.shifts.join(', ')]:[]).join(' · ');
   return {html:'<div class="scope">Comparison · '+esc(sc)+' · '+esc(short(A.label))+' vs '+esc(short(B.label))+'</div><p>'+leads.join('<br>')+'</p>'+html+(note?'<div class="note">'+esc(note)+'</div>':'')+'<details class="how"><summary>How this was calculated</summary><p>Each period is calculated separately with the dashboard’s formulas; “Change” = first period − second period. “Production / day” divides by the days that have data, so periods of different length compare fairly.</p></details>',chips:['By line','Why','Show losses'],tsv:tsvAll};
 }
 function topN(arr,keyf,n){return arr.slice().sort((x,y)=>keyf(y)-keyf(x)).slice(0,n);}
@@ -3890,15 +3947,89 @@ function restoreChat(){try{const L=JSON.parse(localStorage.getItem(CHAT_KEY)||'[
 function saveFeedback(q,v,a){try{const L=JSON.parse(localStorage.getItem('pbFeedback')||'[]');L.push({t:new Date().toISOString(),q:q,v:v,a:a});localStorage.setItem('pbFeedback',JSON.stringify(L.slice(-200)));}catch(e){}}
 function feedbackMsg(){let L=[];try{L=JSON.parse(localStorage.getItem('pbFeedback')||'[]');}catch(e){}const bad=L.filter(x=>x.v==='down');
   return {noTools:1,html:'<p><b>Feedback saved in this browser</b>: '+L.filter(x=>x.v==='up').length+' helpful · '+bad.length+' marked wrong</p>'+(bad.length?'<p>Questions marked wrong:</p><ul>'+bad.slice(-15).map(x=>'<li>'+esc(x.q)+'</li>').join('')+'</ul><p class="note">Send this list to your developer to improve Naze.</p>':'<p class="note">Nothing marked wrong yet.</p>'),chips:[],tsv:bad.map(x=>x.q).join('\n')};}
+/* ---------- dashboard navigation: typing "PSC winding", "open BLDC overview", "shop floor", "leadership" opens that page ---------- */
+function navTargets(){
+  const out=[];
+  document.querySelectorAll('.sb-item[data-unit]').forEach(b=>{
+    const label=(b.textContent||'').replace(/No data/i,'').trim();
+    out.push({unit:b.dataset.unit,tab:b.dataset.tab,label:label,name:b.dataset.unit+' '+label,btn:b});
+  });
+  document.querySelectorAll('.mode-btn[data-mode]').forEach(b=>{
+    const l=((b.querySelector('b')||b).textContent||'').trim();
+    out.push({mode:b.dataset.mode,label:l,name:l,btn:b});
+  });
+  return out;
+}
+const navNorm=t=>String(t||'').toLowerCase().replace(/moulding/g,'molding').replace(/\bassy\b/g,'assembly').replace(/shop\s*floor|shopfloor/g,'shopfloor').replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();
+function navMatch(text){
+  const FILL=/\b(open|go|goto|to|show|me|take|navigate|switch|dashboard|dashboards|page|tab|view|screen|section|the|of|please|pls|kholo|khol|dikhao|dikha|do|mode|department|dept|shop)\b/g;
+  let t=navNorm(text);
+  const hasShopWord=/shopfloor/.test(t);
+  t=t.replace(/shopfloor/g,' SF ').replace(FILL,' ').replace(/\s+/g,' ').trim();
+  const toks=t.split(' ').filter(Boolean).map(x=>x==='sf'?'SF':x);
+  const VOC=['psc','bldc','overview','overall','assembly','winding','molding','shell','SF','leadership'];
+  if(!toks.length||toks.some(x=>VOC.indexOf(x)<0)) return null;
+  const all=navTargets(); if(!all.length) return null;
+  const unit=toks.includes('psc')?'PSC':toks.includes('bldc')?'BLDC':null;
+  const dept=['assembly','winding','molding','shell'].find(d=>toks.includes(d))||null;
+  const over=toks.includes('overview')||toks.includes('overall');
+  const mode=toks.includes('SF')?'shopfloor':toks.includes('leadership')?'leadership':null;
+  const views=all.filter(n=>n.unit);
+  let view=null;
+  if(dept){
+    const cands=views.filter(n=>navNorm(n.label)===dept&&(!unit||n.unit===unit));
+    view=cands.find(n=>n.unit===(unit||state.unit))||cands[0]||null;
+    if(!view&&unit) return {miss:unit+' has no '+dept+' dashboard'};
+  }else if(over||unit){
+    const u=unit||state.unit;
+    view=views.find(n=>n.unit===u&&navNorm(n.label)==='overview')||null;
+  }
+  if(!view&&!mode) return null;
+  return {view:view,mode:mode?all.find(n=>n.mode===mode):null};
+}
+function tryNav(text){
+  let m; try{ m=navMatch(text); }catch(e){ console.warn('nav',e); return false; }
+  if(!m) return false;
+  let res;
+  if(m.miss){ res={html:'<p>Sorry — '+esc(m.miss)+'. Try “PSC winding”, “BLDC molding” or “PSC overview”.</p>',chips:[]}; }
+  else{
+    const done=[];
+    try{
+      if(m.mode){ if(!m.mode.btn.classList.contains('active')) m.mode.btn.click(); done.push(m.mode.label); }
+      if(m.view){
+        m.view.btn.click();
+        document.querySelectorAll('.sb-group').forEach(g=>g.classList.toggle('open',g.dataset.unit===m.view.unit));
+        done.unshift(m.view.unit+' › '+m.view.label);
+      }
+    }catch(e){ console.error(e); }
+    res={html:'<p>Opened <b>'+esc(done.join(' · '))+'</b> dashboard.</p><p style="color:var(--text-dim,#5b6b83);font-size:12px">You can ask me about it, e.g. the questions below.</p>',
+         chips:m.view?[m.view.unit+' '+m.view.label.toLowerCase()+' summary','top loss reasons','rejections by line']:[]};
+  }
+  res.q=text; addBot(res); saveChat(text,res); return true;
+}
+/* Page context: if the question does not name a unit/shop, use the dashboard page that is open (e.g. PSC > Shell). Say "overall", "all" or "both" to look across everything. */
+function pageScope(p){
+  try{
+    if((p.intent&&p.intent!=='diagnose')||p.units.length) return p;
+    if(p.depts.length&&!(typeof state!=='undefined'&&state.unit&&p.depts.every(d=>(DEPTS_BY_UNIT[state.unit]||[]).indexOf(d)>=0))) return p;
+    if(/\b(overall|all|both|every|everything|plant|total|entire|whole|company|across|combined)\b/i.test(p.raw||'')) return p;
+    if(typeof state==='undefined'||!state.unit) return p;
+    p.units=[state.unit];
+    if(!p.depts.length&&state.tab&&state.tab!=='overall'&&(DEPTS_BY_UNIT[state.unit]||[]).indexOf(state.tab)>=0) p.depts=[state.tab];
+    p.pageScoped=true;
+  }catch(e){ console.warn('pageScope',e); }
+  return p;
+}
 function ask(text){
   text=(text||'').trim(); if(!text) return;
   history.unshift(text);hIdx=-1;
   addUser(text);
+  if(tryNav(text)) return;
   const typing=document.createElement('div');typing.className='pbm b';typing.innerHTML='<span class="pbdot"></span><span class="pbdot"></span><span class="pbdot"></span> <span style="font-size:11px;color:var(--text-dim,#5b6b83)">reading the data…</span>';const trow=wrapRow(typing,'b');msgs.appendChild(trow);typing.remove=()=>trow.remove();msgs.scrollTop=msgs.scrollHeight;
   if(typeof aiOn==='function'&&aiOn()){runAI(text,typing);return;}
   setTimeout(()=>{
     let res;
-    try{ res=/^\s*(show |my )?feedback\s*$/i.test(text)?feedbackMsg():answer(applyFollowUp(parse(text))); res.q=text; }
+    try{ res=/^\s*(show |my )?feedback\s*$/i.test(text)?feedbackMsg():answer(pageScope(applyFollowUp(parse(text)))); res.q=text; }
     catch(e){ console.error(e); res={html:'<p>Sorry — something went wrong while reading the data for that question. Try rephrasing it, e.g. “PSC assembly production on 15 Oct”.</p>',chips:SUGGEST}; }
     typing.remove();addBot(res);saveChat(text,res);
   },120);
@@ -3928,7 +4059,11 @@ function buildQuick(){const q=$b('pbQuick');q.innerHTML='';[['Summary','Overall 
 const TA_POOL=(function(){const a=['production yesterday','rejection rate this month','OEE by line','manpower by shift','top loss reasons','compare this week vs last week','why was output low yesterday','what went wrong today','which line is the worst','show rows for yesterday'];try{NUMCOLS.forEach(c=>a.push(c.label));Object.keys(V).forEach(k=>{[...V[k].keys()].slice(0,25).forEach(x=>a.push(x));});}catch(e){}return [...new Set(a)];})();
 const ta=$b('pbTA');
 function showTA(){const v=inp.value.trim().toLowerCase();ta.innerHTML='';if(v.length<2){ta.style.display='none';return;}
-  const m=TA_POOL.filter(x=>String(x).toLowerCase().includes(v)).slice(0,5);if(!m.length){ta.style.display='none';return;}
+  const nv=navNorm(v); let navs=[];
+  try{ navs=navTargets().filter(n=>navNorm(n.name).includes(nv)||navNorm(n.label).includes(nv)).slice(0,4); }catch(e){}
+  const m=TA_POOL.filter(x=>String(x).toLowerCase().includes(v)).slice(0,Math.max(5-navs.length,2));
+  if(!navs.length&&!m.length){ta.style.display='none';return;}
+  navs.forEach(n=>{const b=document.createElement('button');b.type='button';b.textContent='↗ '+n.name+(n.unit?' dashboard':' view');b.onmousedown=e=>{e.preventDefault();inp.value='';ta.style.display='none';ask('Open '+n.name);};ta.appendChild(b);});
   m.forEach(x=>{const b=document.createElement('button');b.type='button';b.textContent=x;b.onmousedown=e=>{e.preventDefault();inp.value=x;ta.style.display='none';sendNow();};ta.appendChild(b);});ta.style.display='block';}
 inp.addEventListener('input',showTA);inp.addEventListener('blur',()=>setTimeout(()=>ta.style.display='none',150));
 buildQuick();
@@ -4182,7 +4317,7 @@ function SYSTEM(){
   const lines=[...new Set(REC.map(r=>r.line))].sort().join(', ');
   return 'You are the data assistant inside the PICL India Manufacturing Performance Dashboard (PSC and BLDC motor plants; shops: Assembly, Winding, Moulding (BLDC), Shell (PSC)).\n'+
   'Today is '+TODAY+'. The latest day with data is '+GLOBAL_LATEST+'. Data was last updated '+(META.lastUpdated||GLOBAL_LATEST)+'.\n'+
-  'RULES:\n1. Answer ONLY from tool results. Never guess, estimate or use outside knowledge for numbers. Call tools before answering any data question; make several calls if needed (e.g. compare periods, then compute differences yourself).\n'+
+  (function(){try{if(state&&state.unit){return 'The user is currently viewing the '+state.unit+(state.tab&&state.tab!=='overall'?' '+state.tab:' overview')+' dashboard page. If their question does not name a unit or shop, filter to this one (units/depts) unless they ask for overall/all/both.\n';}}catch(e){}return '';})()+'RULES:\n1. Answer ONLY from tool results. Never guess, estimate or use outside knowledge for numbers. Call tools before answering any data question; make several calls if needed (e.g. compare periods, then compute differences yourself).\n'+
   '2. If the tools show the data is not present (no rows, unknown model/line/date, metric not tracked), reply exactly in this spirit: "That information isn\'t available in the dashboard data." and say briefly what IS available (e.g. date range). Do not invent.\n'+
   '3. If the question is unrelated to this dashboard (general knowledge, chit-chat beyond a greeting), say you can only answer questions about the dashboard data.\n'+
   '4. Convert relative dates yourself ("yesterday" = '+addDays(TODAY,-1)+'; weeks run Mon–Sun). If a requested day has no data, say so and offer the latest available day.\n'+
@@ -4221,7 +4356,7 @@ async function runAI(text,typing){
     document.getElementById('pbMsgs').appendChild(d); document.getElementById('pbMsgs').scrollTop=1e9;
   }catch(e){
     console.error('PICL AI error',e); typing.remove();
-    let res; try{res=answer(applyFollowUp(parse(text)));}catch(_){res={html:'<p>Sorry, something went wrong.</p>',chips:SUGGEST};}
+    let res; try{res=answer(pageScope(applyFollowUp(parse(text))));}catch(_){res={html:'<p>Sorry, something went wrong.</p>',chips:SUGGEST};}
     const why=e.status===401?'The API key was rejected (check ⚙ settings).':e.status===429?'The AI service is rate-limited right now.':'Could not reach the AI service ('+esc(e.message.slice(0,120))+').';
     res.html='<div class="warn">'+why+' Showing a basic answer instead.</div>'+res.html; addBot(res);
   }
@@ -4229,7 +4364,7 @@ async function runAI(text,typing){
 
 function refreshMode(){$b('pbSub').textContent='Online · data to '+fmtD(GLOBAL_LATEST);}
 setSub();refreshMode();welcome();restoreChat();
-window.piclBotRun=function(t){const r=answer(applyFollowUp(parse(t)));const d=document.createElement('div');d.innerHTML=r.html;return {html:r.html,text:d.textContent,tsv:r.tsv||''};};
+window.piclBotRun=function(t){const r=answer(pageScope(applyFollowUp(parse(t))));const d=document.createElement('div');d.innerHTML=r.html;return {html:r.html,text:d.textContent,tsv:r.tsv||''};};
 window.piclBotAsk=ask; // handy for testing: piclBotAsk('PSC summary')
 })();
 </script>
