@@ -3328,6 +3328,60 @@ function parse(raw){
   let q=preprocess(raw);
   const p={raw,units:[],depts:[],lines:[],shifts:[],frames:[],models:[],lossReasons:[],lossDepts:[],remarks:[],rejReasons:[],rejCats:[],colObj:null,agg:'sum',metric:null,group:null,rank:null,n:null,date:null,dateInfo:null,intent:null};
   if(/\b(who are you|your name|what are you|are you (a )?(bot|ai|robot|human)|introduce yourself|what is avishkaar|about you)\b/.test(q)){p.intent='about';return p;}
+  { /* small talk: "how are you / kaise ho", "mai thik hu" */
+    const rl=String(raw).toLowerCase().replace(/[’‘`]/g,"'").replace(/[?!.,;:]+/g,' ').replace(/\s+/g,' ').trim();
+    if(rl&&rl.split(' ').length<=9&&!/\d/.test(rl)&&!/\b(psc|bldc|line|shift|production|plan|loss|reject\w*|oee|manpower|assembly|winding|moulding|molding|shell|safety|model|frame)\b/.test(rl)){
+      { /* more small talk: [pattern, English reply, Hinglish reply] (a reply may be a function) */
+        const hg=/\b(kya|kaun|kon|tum|tumhara|tumhe|aap|aapka|aapko|shukriya|dhanyavad|dhanyawad|alvida|phir|chalo|haan|ji|kisne|sakte|sakta|maaf|bahut|mujhe|hai|ho|hu|hoon|rahe|rahi|kar|karo|thak|thaka|chutkula|mazak|subah|suprabhat|shubh|tata|banaya|kahan|insaan|bataiye|sunao|theek|thik|accha|achha|kaisa|mausam|khabar|gana|bor)\b/.test(rl);
+        const tod=()=>{const m=rl.match(/\b(morning|afternoon|evening)\b/);if(m)return m[1];if(/suprabhat|subah/.test(rl))return 'morning';const h=new Date().getHours();return h<12?'morning':h<17?'afternoon':'evening';};
+        const ST=[
+         [/\b(weather|mausam|cricket|ipl|news|khabar|movie|film|song|gana|recipe|stock market|share price|petrol|politics|election)\b/,
+          'That’s outside what I can help with — I only know this dashboard’s production data. Try “top loss reasons” or “PSC assembly production yesterday”.',
+          'Yeh mere dayre se bahar hai — main sirf is dashboard ke production data ke baare mein bata sakta hoon. “top loss reasons” ya “PSC assembly production kal” poochhkar dekhiye.'],
+         [/\b(good (morning|afternoon|evening)|suprabhat|subah bakhair)\b/,
+          ()=>'Good '+tod()+'! '+(tod()==='morning'?'☀️':tod()==='afternoon'?'🌤️':'🌆')+' Ready when you are — what would you like to check on the dashboard?',
+          ()=>'Namaste, good '+tod()+'! '+(tod()==='morning'?'☀️':tod()==='afternoon'?'🌤️':'🌆')+' Bataiye, dashboard mein aaj kya dekhna hai?'],
+         [/\b(good night|gud night|shubh ratri|shubh raatri)\b/,'Good night! 🌙 Rest well — I’ll be here whenever you need the numbers.','Shubh ratri! 🌙 Aaram kijiye — jab bhi data chahiye, main yahin hoon.'],
+         [/\b(shukriya|shukria|dhanyavad|dhanyawad|dhanyvad|thank u|thanku|thanx|tysm|thanks a lot|thank you so much|bahut shukriya)\b/,'You’re most welcome! 😊 Ask me anything else about the dashboard.','Aapka bahut swagat hai! 😊 Dashboard ke baare mein aur kuch poochhna ho to bataiye.'],
+         [/\b(alvida|phir milte hain|phir milenge|chalo bye|bye bye|tata|see you later|see you soon|take care|chalta hu|chalti hu|good bye)\b/,'Bye! 👋 Come back anytime you need the numbers.','Alvida! 👋 Jab bhi data chahiye, wapas aaiye.'],
+         [/\b(tum kaun ho|aap kaun ho|tum kon ho|aap kon ho|tumhara naam|aapka naam|apna naam|tera naam|what is your name|your name|who made you|who built you|who created you|kisne banaya|tumhe kisne|aapko kisne|who are you)\b/,
+          'I’m Naze 🤖 — the assistant built into this PICL dashboard. I read the PSC and BLDC data on this page and answer your questions about production, rejection, OEE, losses and manpower.',
+          'Main Naze hoon 🤖 — is PICL dashboard ke andar bana assistant. Main PSC aur BLDC ka data padhkar production, rejection, OEE, loss aur manpower ke sawaalon ke jawab deta hoon.'],
+         [/\b(insaan ho|insan ho|human ho|robot ho|bot ho|are you (a )?(human|robot|bot|real|ai)|ai ho)\b/,'I’m Naze, a software assistant built into this dashboard — not a person. I answer from the dashboard’s data.','Main Naze hoon, is dashboard mein bana ek software assistant — koi insaan nahi. Main sirf dashboard ke data se jawab deta hoon.'],
+         [/\b(kya kar rahe ho|kya kar rahi ho|kya kar raha hai|kya chal raha hai|what are you doing|what r u doing|kya haal chaal|kya chal raha)\b/,'Just here reading the dashboard data, waiting for your question 😊 What shall we look at?','Bas yahin dashboard ka data dekh raha tha, aapke sawaal ka intezaar tha 😊 Bataiye, kya dekhna hai?'],
+         [/\b(are you there|you there|anyone there|sun rahe ho|sunte ho|kya tum yahan ho|yahan ho|hello kya|koi hai)\b/,'Yes, I’m here! 👋 What would you like to know?','Ji haan, main yahin hoon! 👋 Bataiye, kya jaanna hai?'],
+         [/\b(joke|jokes|chutkula|chutkule|mazak|hasao|funny)\b/,'Here’s a quick one: why did the machine go to the doctor? It had too much downtime! 😄 Now — shall we look at today’s losses?','Ek chhota sa: machine doctor ke paas gayi — bola “mujhe bahut downtime ho raha hai!” 😄 Chaliye ab aaj ka loss dekhte hain?'],
+         [/\b(sorry|my bad|maaf karna|maaf kijiye|maaf kar do|galti ho gayi)\b/,'No problem at all! 😊 What would you like to check?','Koi baat nahi! 😊 Bataiye, kya dekhna hai?'],
+         [/\b(shabash|shabaash|well done|good job|great job|nice work|good bot|bahut accha|bahut achha|bahut badhiya|zabardast|kamaal|mast kaam|you are smart|you are great|tum smart ho|tum achhe ho|tum acche ho)\b/,'Thank you, that’s kind of you! 😊 Anything else you’d like to check?','Bahut shukriya, aapne dil khush kar diya! 😊 Aur kuch dekhna ho to bataiye.'],
+         [/\b(love you|i love you|luv u|tum mere dost|dost ho)\b/,'That’s sweet — thank you! 😊 I’m always here to help with the dashboard.','Aapka shukriya! 😊 Dashboard ke kaam mein main hamesha aapke saath hoon.'],
+         [/\b(bore ho raha|bored|bor ho raha|bore hu|bore ho gaya)\b/,'Let’s find something interesting — try “which line has the highest loss” or “compare PSC and BLDC this month”.','Chaliye kuch dilchasp dekhte hain — “sabse zyada loss kis line me hai” ya “PSC aur BLDC compare karo” poochhkar dekhiye.'],
+         [/\b(kahan se ho|kaha se ho|where are you from|where do you live|kahan rehte ho|kaha rehte ho)\b/,'I live right inside this dashboard 😄 — so wherever you open it, I’m there.','Main isi dashboard ke andar rehta hoon 😄 — aap jahan bhi ise kholte hain, main wahin hoon.'],
+         [/\b(aaj (kya|kaun sa|konsa) (date|din|tareekh|tarikh)|aaj ki (date|tareekh|tarikh)|what is today s date|todays date|today s date|what day is it|what is the date today)\b/,
+          ()=>'Today is '+fmtD(TODAY)+'. The latest data in the dashboard is for '+fmtD(GLOBAL_LATEST)+'.',
+          ()=>'Aaj '+fmtD(TODAY)+' hai. Dashboard mein sabse naya data '+fmtD(GLOBAL_LATEST)+' tak ka hai.'],
+         [/\b(theek hai|thik hai|ok theek hai|accha ji|achha ji|accha|achha|haan ji|ji haan|hmm+|hm+|acha|samajh gaya|samajh gayi|got it|understood)\b/,'Alright! 😊 Let me know whenever you want to look at something.','Theek hai! 😊 Aur kuch dekhna ho to bataiye.']
+        ];
+        for(const [re,en,hi] of ST){
+          if(re.test(rl)){ const r=hg?hi:en; p.intent='smalltalk'; p.reply=typeof r==='function'?r():r; return p; }
+        }
+      }
+      if(/\b(tum kya kar sakte ho|aap kya kar sakte ho|kya kar sakte ho|kya kar sakta hai|madad|help chahiye|mujhe help|kaise use|kaise istemal|kya puch sakta|kya pooch sakta|what can i ask)\b/.test(rl)){p.intent='help';return p;}
+      const askHow=/\b(how are you|how are u|how r u|how do you do|how is it going|how's it going|hows it going|how have you been|whats up|what's up|wassup)\b|\b(kaise|kese|kesa|kaisey|kesey)\s+(ho|hain|ho aap|hain aap)\b|\bkya haal\b|\bsab (theek|thik|badhiya)\b/.test(rl);
+      const tellFine=/\b(i am|i'm|im|i m)\s+(fine|good|great|well|ok|okay|doing (good|well|great))\b|\b(mai|main|mein|me|hum)\s+(bhi\s+)?(theek|thik|badhiya|accha|achha|mast|bilkul theek|bilkul thik|fine|ok|okay)\b|^(theek|thik|badhiya|mast|accha|achha)( hu| hoon| hun)?$/.test(rl);
+      if(askHow||tellFine){
+        const hing=/\b(kaise|kese|kaisa|kesa|kaisi|haal|theek|thik|badhiya|mai|main|mein|hu|hoon|hun|aap|tum|accha|achha|mast|hum)\b/.test(rl);
+        p.intent='smalltalk';
+        p.reply=hing
+          ? (tellFine&&askHow?'Yeh sunkar achha laga! 😊 Main bhi bilkul theek hoon, shukriya. Bataiye, dashboard ke baare mein aaj kya dekhna hai?'
+            :tellFine?'Yeh sunkar achha laga! 😊 Bataiye, dashboard ke baare mein kya jaanna hai?'
+            :'Main bilkul theek hoon, shukriya! 😊 Aap kaise hain? Bataiye, dashboard ke baare mein kya jaanna hai?')
+          : (tellFine&&askHow?'Glad to hear that! 😊 I’m doing great too, thanks. What would you like to see on the dashboard today?'
+            :tellFine?'Glad to hear that! 😊 What would you like to know about the dashboard?'
+            :'I’m doing great, thanks for asking! 😊 How are you? What would you like to know about the dashboard?');
+        return p;
+      }
+    }
+  }
   if(/^\s*(thanks|thank you|thx|ok thanks|great|awesome|good job|well done|nice|perfect|cool|ok|okay|got it)\s*$/.test(q)){p.intent='thanks';return p;}
   if(/^\s*(bye|goodbye|see you|good night|ok bye)\s*$/.test(q)){p.intent='bye';return p;}
   if((/\b(hi+|hello+|hey+|hii+|namaste|namaskar|good (morning|afternoon|evening))\b/.test(q))&&q.trim().split(' ').length<=4){p.intent='hello';return p;}
@@ -3592,6 +3646,7 @@ function sentenceCore(p,spec,m,scope){
 function answer(p){
   if(p.intent==='hello') return {html:'<p><b>Hello! I’m Naze.</b> Ask me anything about this dashboard — production vs plan, rejections, OEE, losses, manpower, safety — for PSC and BLDC. You can ask in plain English.</p>',chips:SUGGEST};
   if(p.intent==='about') return aboutMsg();
+  if(p.intent==='smalltalk') return {html:'<p>'+p.reply+'</p>',chips:SUGGEST.slice(0,3)};
   if(p.intent==='thanks') return {html:'<p>You’re welcome! Ask me anything else about the dashboard.</p>',chips:SUGGEST.slice(0,3)};
   if(p.intent==='bye') return {html:'<p>Goodbye! I’ll be right here whenever you need the numbers.</p>',chips:[]};
   if(p.intent==='define') return defineMsg(p);
@@ -4319,7 +4374,7 @@ function SYSTEM(){
   'Today is '+TODAY+'. The latest day with data is '+GLOBAL_LATEST+'. Data was last updated '+(META.lastUpdated||GLOBAL_LATEST)+'.\n'+
   (function(){try{if(state&&state.unit){return 'The user is currently viewing the '+state.unit+(state.tab&&state.tab!=='overall'?' '+state.tab:' overview')+' dashboard page. If their question does not name a unit or shop, filter to this one (units/depts) unless they ask for overall/all/both.\n';}}catch(e){}return '';})()+'RULES:\n1. Answer ONLY from tool results. Never guess, estimate or use outside knowledge for numbers. Call tools before answering any data question; make several calls if needed (e.g. compare periods, then compute differences yourself).\n'+
   '2. If the tools show the data is not present (no rows, unknown model/line/date, metric not tracked), reply exactly in this spirit: "That information isn\'t available in the dashboard data." and say briefly what IS available (e.g. date range). Do not invent.\n'+
-  '3. If the question is unrelated to this dashboard (general knowledge, chit-chat beyond a greeting), say you can only answer questions about the dashboard data.\n'+
+  '3. Brief pleasantries (hello, how are you, thanks, I am fine) get a short, warm reply in the user\'s language, then offer to help with the dashboard. If the question is otherwise unrelated to this dashboard (general knowledge, long chit-chat), say you can only answer questions about the dashboard data.\n'+
   '4. Convert relative dates yourself ("yesterday" = '+addDays(TODAY,-1)+'; weeks run Mon–Sun). If a requested day has no data, say so and offer the latest available day.\n'+
   '5. Reply in the user\'s language (English/Hindi/Hinglish). Be concise: lead with the answer, then 1-3 supporting figures. Use **bold** for key numbers and "-" bullets for lists. Mention the date/scope the figures refer to.\n'+
   '6. Metric definitions: Achievement = actual/plan; Rejection rate = rejects/(actual+rejects); OEE = Availability × Performance; Loss is in man-hours. Gap = plan − actual.\n'+
