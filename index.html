@@ -1532,9 +1532,9 @@ function renderShopKPIs(records, m, qs, oee){
     {tag:'Q', label:'Rejections', status:rejStatus, value: qs.hasData?`${n0(qs.rejTotal)}`:'N/A', sub: rejRate!==null?`Rate <b>${n1(rejRate)}%</b>`:'No reload data'},
     {tag:'D', label:'Production vs Plan', status:achStatus, value:`${n0(m.actual)}<span class="unit">/ ${n0(m.plan)}</span>`, sub:`Achv <b>${n1(m.achievementPct)}%</b>`},
     {tag:'D', slot:'oee'},
-    {tag:'D', label:'UPH · Target vs Actual', status: pctStatus(m.uphTarget>0?(m.uphActual/m.uphTarget*100):0,90,75), value:`${n0(m.uphActual)}<span class="unit">/${n0(m.uphTarget)}</span>`, sub:''},
-    {tag:'D', label:'UPPH · Target vs Actual', status: pctStatus(m.upphTarget>0?(m.upphActual/m.upphTarget*100):0,90,75), value:`${n1(m.upphActual)}<span class="unit">/${n1(m.upphTarget)}</span>`, sub:`Units per person-hr`},
-    {tag:'C', label:'Manpower · Target vs Actual', status:'na', value:`${n0(manpower/days)}<span class="unit">/${n0(targetManpower/days)}</span>`, sub: days>1?`Avg/day over ${days} days`:'Lines reporting'},
+    {tag:'D', label:'UPH · Actual vs Target', status: pctStatus(m.uphTarget>0?(m.uphActual/m.uphTarget*100):0,90,75), value:`${n0(m.uphActual)}<span class="unit">/${n0(m.uphTarget)}</span>`, sub:''},
+    {tag:'D', label:'UPPH · Actual vs Target', status: pctStatus(m.upphTarget>0?(m.upphActual/m.upphTarget*100):0,90,75), value:`${n1(m.upphActual)}<span class="unit">/${n1(m.upphTarget)}</span>`, sub:`Units per person-hr`},
+    {tag:'C', label:'Manpower · Actual vs Target', status:'na', value:`${n0(manpower/days)}<span class="unit">/${n0(targetManpower/days)}</span>`, sub: days>1?`Avg/day over ${days} days`:'Lines reporting'},
   ];
   $('kpiRow').innerHTML = cards.map(c=> {
     if(c.slot==='oee') return oeeCardHTML(m, qs, oee, c.tag);
@@ -2021,8 +2021,8 @@ function renderLeadership(container){
 
     <div class="section-title">UPH &amp; UPPH Trend</div>
     <div class="grid-2">
-      <div class="card"><div class="card-head"><div class="card-title">UPH <span class="dim">Target vs Actual</span></div></div><div class="chart-wrap"><canvas id="chartUPHTrend"></canvas></div></div>
-      <div class="card"><div class="card-head"><div class="card-title">UPPH <span class="dim">Target vs Actual</span></div></div><div class="chart-wrap"><canvas id="chartUPPHTrend"></canvas></div></div>
+      <div class="card"><div class="card-head"><div class="card-title">UPH <span class="dim">Actual vs Target</span></div></div><div class="chart-wrap"><canvas id="chartUPHTrend"></canvas></div></div>
+      <div class="card"><div class="card-head"><div class="card-title">UPPH <span class="dim">Actual vs Target</span></div></div><div class="chart-wrap"><canvas id="chartUPPHTrend"></canvas></div></div>
     </div>
 
     <div class="section-title">Loss Man-Hours &amp; Reasons Analysis</div>
@@ -2072,9 +2072,9 @@ function renderLeadKPIs(m, qm, oee, records){
     {tag:'Q', label:'Rejections', status:rejStatus, value: qm.hasData?`${n0(qm.rejTotal)}`:'N/A', sub: rejRate!==null?`Rate <b>${n1(rejRate)}%</b>`:'No reload data'},
     {tag:'D', label:'Production vs Plan', status:achStatus, value:`${n0(m.actual)}<span class="unit">/ ${n0(m.plan)}</span>`, sub:`Achv <b>${n1(m.achievementPct)}%</b>`},
     {tag:'D', slot:'oee'},
-    {tag:'D', label:'UPH · Target vs Actual', status: pctStatus(m.uphTarget>0?(m.uphActual/m.uphTarget*100):0,90,75), value:`${n0(m.uphActual)}<span class="unit">/${n0(m.uphTarget)}</span>`, sub:''},
-    {tag:'D', label:'UPPH · Target vs Actual', status: pctStatus(m.upphTarget>0?(m.upphActual/m.upphTarget*100):0,90,75), value:`${n1(m.upphActual)}<span class="unit">/${n1(m.upphTarget)}</span>`, sub:'Units per person-hr'},
-    {tag:'C', label:'Manpower · Target vs Actual', status:'na', value:`${n0(manpower/days)}<span class="unit">/${n0(targetManpower/days)}</span>`, sub: days>1?`Avg/day over ${days} days`:'Lines reporting'},
+    {tag:'D', label:'UPH · Actual vs Target', status: pctStatus(m.uphTarget>0?(m.uphActual/m.uphTarget*100):0,90,75), value:`${n0(m.uphActual)}<span class="unit">/${n0(m.uphTarget)}</span>`, sub:''},
+    {tag:'D', label:'UPPH · Actual vs Target', status: pctStatus(m.upphTarget>0?(m.upphActual/m.upphTarget*100):0,90,75), value:`${n1(m.upphActual)}<span class="unit">/${n1(m.upphTarget)}</span>`, sub:'Units per person-hr'},
+    {tag:'C', label:'Manpower · Actual vs Target', status:'na', value:`${n0(manpower/days)}<span class="unit">/${n0(targetManpower/days)}</span>`, sub: days>1?`Avg/day over ${days} days`:'Lines reporting'},
   ];
   $('kpiRowLead').innerHTML = cards.map(c=> {
     if(c.slot==='oee') return oeeCardHTML(m, qm, oee, c.tag);
